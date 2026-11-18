@@ -1,0 +1,118 @@
+enum BrandScale {
+  solo
+  small
+  mid
+  enterprise
+}
+
+enum OperatingModel {
+  b2b
+  b2c
+  d2c
+  marketplace
+  mixed
+}
+
+// Every child of Brand references (id, workspace_id), so a row can never point at
+// a brand in another workspace. RLS is the second line of defence.
+model Brand {
+  id          String     @id @default(uuid(7)) @db.Uuid
+  workspaceId String     @map("workspace_id") @db.Uuid
+  name        String
+  industry    String?
+  websiteUrl  String?    @map("website_url")
+  scale       BrandScale @default(small)
+  timeZone    String     @default("Asia/Kolkata") @map("time_zone")
+  languages   String[]   @default(["en"])
+  createdAt   DateTime   @default(now()) @map("created_at")
+  updatedAt   DateTime   @updatedAt @map("updated_at")
+  workspace   Workspace  @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+
+  profile            BrandProfile?
+  onboardingSessions OnboardingSession[]
+  websiteScans       WebsiteScan[]
+  knowledgeSources   KnowledgeSource[]
+  knowledgeDocuments KnowledgeDocument[]
+  extractions        KnowledgeExtraction[]
+  chunks             KnowledgeChunk[]
+  embeddings         KnowledgeEmbedding[]
+  products           BrandProduct[]
+  services           BrandService[]
+  policies           BrandPolicy[]
+  faqs               BrandFaq[]
+  audiences          BrandAudience[]
+  socialAccounts     BrandSocialAccount[]
+  competitors        BrandCompetitor[]
+  competitorRuns     CompetitorDiscovery[]
+  facts              MemoryFact[]
+  preferences        MemoryPreference[]
+  outboxEvents       OutboxEvent[]
+  conversations      Conversation[]
+  pendingActions     PendingAction[]
+
+  @@unique([id, workspaceId])
+  @@index([workspaceId])
+  @@map("brand")
+}
+
+model BrandProfile {
+  id          String @id @default(uuid(7)) @db.Uuid
+  workspaceId String @map("workspace_id") @db.Uuid
+  brandId     String @unique @map("brand_id") @db.Uuid
+
+  // Profile sections the owner switched off as not relevant; they leave completeness.
+  skippedSections String[]        @default([]) @map("skipped_sections")
+  legalName       String?         @map("legal_name")
+  category        String?
+  subcategory     String?
+  categoryPack    String?         @map("category_pack")
+  description     String?
+  tagline         String?
+  yearEstablished Int?            @map("year_established")
+  employeeRange   String?         @map("employee_range")
+  operatingModel  OperatingModel? @map("operating_model")
+  country         String          @default("IN")
+  state           String?
+  city            String?
+  addressLine     String?         @map("address_line")
+  postalCode      String?         @map("postal_code")
+  serviceAreas    String[]        @default([]) @map("service_areas")
+  branches        Json            @default("[]")
+  contactEmail    String?         @map("contact_email")
+  contactPhone    String?         @map("contact_phone")
+  operatingHours  Json?           @map("operating_hours")
+
+  logoUrl         String?  @map("logo_url")
+  primaryColors   String[] @default([]) @map("primary_colors")
+  secondaryColors String[] @default([]) @map("secondary_colors")
+  fonts           String[] @default([])
+  mission         String?
+  vision          String?
+  values          String[] @default([])
+  personality     String[] @default([])
+  positioning     String?
+  story           String?
+  toneOfVoice     String?  @map("tone_of_voice")
+  wordsToUse      String[] @default([]) @map("words_to_use")
+  wordsToAvoid    String[] @default([]) @map("words_to_avoid")
+  topicsToAvoid   String[] @default([]) @map("topics_to_avoid")
+
+  primaryObjective    String?  @map("primary_objective")
+  secondaryObjectives String[] @default([]) @map("secondary_objectives")
+  monthlyBudgetMinor  Int?     @map("monthly_budget_minor")
+  budgetCurrency      String   @default("INR") @map("budget_currency")
+  preferredChannels   String[] @default([]) @map("preferred_channels")
+
+  niche      String?
+  attributes Json     @default("{}")
+  provenance Json     @default("{}")
+  version    Int      @default(1)
+  createdAt  DateTime @default(now()) @map("created_at")
+  updatedAt  DateTime @updatedAt @map("updated_at")
+
+  brand Brand @relation(fields: [brandId, workspaceId], references: [id, workspaceId], onDelete: Cascade)
+
+  @@unique([brandId, workspaceId])
+  @@index([workspaceId])
+  @@map("brand_profile")
+}

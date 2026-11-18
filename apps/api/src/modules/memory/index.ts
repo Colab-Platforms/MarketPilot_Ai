@@ -1,0 +1,12 @@
+export * from './memory.module';
+export { MemoryService } from './memory.service';
+export { MemoryAgentTools } from './agent-tools';
+export type { Passage, RetrievalResult, RetrieveOptions } from './knowledge/retrieval/retriever';
+export type { BrandContext, ContextRequest } from './knowledge/context/context-builder';
+export type { ContextFact, Offering } from './knowledge/context/assemble';
+export { KnowledgeModule } from './knowledge/knowledge.module';
+export { ScanService } from './knowledge/scan.service';
+export { ScanReviewService } from './knowledge/scan-review.service';
+export { CompetitorService } from './knowledge/competitors/competitor.service';
+export { CompetitorDiscoveryService } from './knowledge/competitors/competitor-discovery.service';
+export * from './ports/memory-store.port';

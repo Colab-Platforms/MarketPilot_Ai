@@ -1,0 +1,188 @@
+enum KnowledgeSourceKind {
+  website
+  document
+  manual
+  social
+  integration
+}
+
+enum PageType {
+  home
+  about
+  product
+  service
+  contact
+  policy
+  faq
+  blog
+  other
+}
+
+enum ExtractionKind {
+  business_profile
+  brand_identity
+  product
+  service
+  policy
+  faq
+  audience
+  social_link
+  // An AI suggestion for any brand profile field (payload carries the field key).
+  profile_field
+}
+
+enum VersionState {
+  active
+  superseded
+  deleted
+}
+
+enum EmbeddingStatus {
+  pending
+  ready
+  failed
+}
+
+// Original input. Never mutated; reprocessing reads from here.
+model KnowledgeSource {
+  id            String              @id @default(uuid(7)) @db.Uuid
+  workspaceId   String              @map("workspace_id") @db.Uuid
+  brandId       String              @map("brand_id") @db.Uuid
+  kind          KnowledgeSourceKind
+  uri           String
+  label         String?
+  lastFetchedAt DateTime?           @map("last_fetched_at")
+  meta          Json                @default("{}")
+  createdAt     DateTime            @default(now()) @map("created_at")
+  updatedAt     DateTime            @updatedAt @map("updated_at")
+
+  brand     Brand               @relation(fields: [brandId, workspaceId], references: [id, workspaceId], onDelete: Cascade)
+  scans     WebsiteScan[]
+  documents KnowledgeDocument[]
+  chunks    KnowledgeChunk[]
+
+  @@unique([brandId, kind, uri])
+  @@index([workspaceId])
+  @@map("knowledge_source")
+}
+
+// One fetched page or uploaded file at one version. Raw snapshot lives in
+// StoragePort (`rawStorageKey`); `content` is the normalised text.
+model KnowledgeDocument {
+  id            String       @id @default(uuid(7)) @db.Uuid
+  workspaceId   String       @map("workspace_id") @db.Uuid
+  brandId       String       @map("brand_id") @db.Uuid
+  sourceId      String       @map("source_id") @db.Uuid
+  scanId        String?      @map("scan_id") @db.Uuid
+  url           String
+  canonicalUrl  String       @map("canonical_url")
+  pageType      PageType     @default(other) @map("page_type")
+  title         String?
+  language      String?
+  httpStatus    Int?         @map("http_status")
+  content       String       @default("")
+  contentHash   String       @map("content_hash")
+  rawStorageKey String?      @map("raw_storage_key")
+  metadata      Json         @default("{}")
+  version       Int          @default(1)
+  state         VersionState @default(active)
+  fetchedAt     DateTime     @map("fetched_at")
+  createdAt     DateTime     @default(now()) @map("created_at")
+
+  brand       Brand                 @relation(fields: [brandId, workspaceId], references: [id, workspaceId], onDelete: Cascade)
+  source      KnowledgeSource       @relation(fields: [sourceId], references: [id], onDelete: Cascade)
+  scan        WebsiteScan?          @relation(fields: [scanId], references: [id], onDelete: SetNull)
+  extractions KnowledgeExtraction[]
+  chunks      KnowledgeChunk[]
+
+  @@unique([sourceId, canonicalUrl, version])
+  @@index([brandId, state])
+  @@index([contentHash])
+  @@index([workspaceId])
+  @@map("knowledge_document")
+}
+
+// Raw structured output of one extraction run. A candidate until the owner
+// reviews it; approval writes the verified entity or profile rows.
+model KnowledgeExtraction {
+  id               String         @id @default(uuid(7)) @db.Uuid
+  workspaceId      String         @map("workspace_id") @db.Uuid
+  brandId          String         @map("brand_id") @db.Uuid
+  documentId       String         @map("document_id") @db.Uuid
+  kind             ExtractionKind
+  method           String
+  schemaVersion    Int            @map("schema_version")
+  payload          Json
+  model            String?
+  promptVersion    String?        @map("prompt_version")
+  sourceTrust      Float          @default(0) @map("source_trust") @db.Real
+  status           RecordStatus   @default(candidate)
+  reviewedByUserId String?        @map("reviewed_by_user_id") @db.Uuid
+  reviewedAt       DateTime?      @map("reviewed_at")
+  createdAt        DateTime       @default(now()) @map("created_at")
+
+  brand    Brand             @relation(fields: [brandId, workspaceId], references: [id, workspaceId], onDelete: Cascade)
+  document KnowledgeDocument @relation(fields: [documentId], references: [id], onDelete: Cascade)
+
+  @@index([brandId, kind, status])
+  @@index([documentId])
+  @@index([workspaceId])
+  @@map("knowledge_extraction")
+}
+
+// Searchable unit. `search_text` is a generated tsvector added in the SQL
+// migration (Prisma cannot express generated columns).
+model KnowledgeChunk {
+  id          String                   @id @default(uuid(7)) @db.Uuid
+  workspaceId String                   @map("workspace_id") @db.Uuid
+  brandId     String                   @map("brand_id") @db.Uuid
+  sourceId    String                   @map("source_id") @db.Uuid
+  documentId  String?                  @map("document_id") @db.Uuid
+  entityType  String?                  @map("entity_type")
+  entityId    String?                  @map("entity_id") @db.Uuid
+  ordinal     Int
+  content     String
+  contentHash String                   @map("content_hash")
+  tokenCount  Int                      @map("token_count")
+  language    String?
+  version     Int                      @default(1)
+  state       VersionState             @default(active)
+  metadata    Json                     @default("{}")
+  searchText  Unsupported("tsvector")? @map("search_text")
+  createdAt   DateTime                 @default(now()) @map("created_at")
+  updatedAt   DateTime                 @updatedAt @map("updated_at")
+
+  brand      Brand                @relation(fields: [brandId, workspaceId], references: [id, workspaceId], onDelete: Cascade)
+  source     KnowledgeSource      @relation(fields: [sourceId], references: [id], onDelete: Cascade)
+  document   KnowledgeDocument?   @relation(fields: [documentId], references: [id], onDelete: Cascade)
+  embeddings KnowledgeEmbedding[]
+
+  @@unique([brandId, contentHash, version])
+  @@index([brandId, state])
+  @@index([documentId, ordinal])
+  @@index([entityType, entityId])
+  @@index([workspaceId])
+  @@map("knowledge_chunk")
+}
+
+// Derived search representation, rebuildable from the chunk. Dimension is fixed
+// at 1024 (ADR 0002); the HNSW index is created in the SQL migration.
+model KnowledgeEmbedding {
+  id               String                        @id @default(uuid(7)) @db.Uuid
+  workspaceId      String                        @map("workspace_id") @db.Uuid
+  brandId          String                        @map("brand_id") @db.Uuid
+  chunkId          String                        @map("chunk_id") @db.Uuid
+  embeddingModel   String                        @map("embedding_model")
+  embeddingVersion String                        @map("embedding_version")
+  status           EmbeddingStatus               @default(pending)
+  embedding        Unsupported("halfvec(1024)")?
+  createdAt        DateTime                      @default(now()) @map("created_at")
+
+  brand Brand          @relation(fields: [brandId, workspaceId], references: [id, workspaceId], onDelete: Cascade)
+  chunk KnowledgeChunk @relation(fields: [chunkId], references: [id], onDelete: Cascade)
+
+  @@unique([chunkId, embeddingModel, embeddingVersion])
+  @@index([brandId, status])
+  @@index([workspaceId])
+  @@map("knowledge_embedding")
+}

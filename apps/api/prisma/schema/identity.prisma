@@ -1,0 +1,109 @@
+enum WorkspaceRole {
+  owner
+  admin
+  manager
+  creator
+  approver
+  analyst
+  client
+}
+
+enum WorkspaceStatus {
+  active
+  suspended
+}
+
+enum AccountType {
+  creator
+  business
+}
+
+model User {
+  id              String         @id @default(uuid(7)) @db.Uuid
+  email           String         @unique
+  name            String
+  passwordHash    String?        @map("password_hash")
+  phone           String?        @unique
+  // Google's stable account id (`sub`). Email can change; this cannot.
+  googleSub       String?        @unique @map("google_sub")
+  emailVerifiedAt DateTime?      @map("email_verified_at")
+  createdAt       DateTime       @default(now()) @map("created_at")
+  updatedAt       DateTime       @updatedAt @map("updated_at")
+  memberships     Membership[]
+  sessions        AuthSession[]
+  emailOtps       EmailOtp[]
+  conversations   Conversation[]
+
+  @@map("user")
+}
+
+model Workspace {
+  id            String          @id @default(uuid(7)) @db.Uuid
+  name          String
+  plan          String          @default("starter")
+  status        WorkspaceStatus @default(active)
+  accountType   AccountType     @default(business) @map("account_type")
+  autonomyLevel Int             @default(1) @map("autonomy_level")
+  createdAt     DateTime        @default(now()) @map("created_at")
+  updatedAt     DateTime        @updatedAt @map("updated_at")
+  memberships   Membership[]
+  brands        Brand[]
+
+  @@map("workspace")
+}
+
+model Membership {
+  id          String        @id @default(uuid(7)) @db.Uuid
+  workspaceId String        @map("workspace_id") @db.Uuid
+  userId      String        @map("user_id") @db.Uuid
+  role        WorkspaceRole
+  brandScope  String[]      @default([]) @map("brand_scope")
+  createdAt   DateTime      @default(now()) @map("created_at")
+  workspace   Workspace     @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  user        User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([workspaceId, userId])
+  @@index([userId])
+  @@map("membership")
+}
+
+// One row per signed-in device. The refresh token is `<id>.<secret>`; only the
+// SHA-256 of the current secret is stored. A presented secret that does not match
+// the current hash means a rotated token was replayed, and the session is revoked,
+// except within a short grace window after rotation (two tabs refreshing at once).
+model AuthSession {
+  id                String    @id @default(uuid(7)) @db.Uuid
+  userId            String    @map("user_id") @db.Uuid
+  workspaceId       String    @map("workspace_id") @db.Uuid
+  tokenHash         String    @map("token_hash")
+  previousTokenHash String?   @map("previous_token_hash")
+  rotatedAt         DateTime? @map("rotated_at")
+  userAgent         String?   @map("user_agent")
+  ipAddress         String?   @map("ip_address")
+  expiresAt         DateTime  @map("expires_at")
+  lastUsedAt        DateTime  @default(now()) @map("last_used_at")
+  revokedAt         DateTime? @map("revoked_at")
+  createdAt         DateTime  @default(now()) @map("created_at")
+  user              User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, revokedAt])
+  @@index([expiresAt])
+  @@map("auth_session")
+}
+
+// One-time email codes. Only an HMAC of the code is stored. Each send supersedes the
+// previous unconsumed code; `attempts` caps guessing; rows are kept so the hourly
+// send limit can be counted without Redis.
+model EmailOtp {
+  id         String    @id @default(uuid(7)) @db.Uuid
+  userId     String    @map("user_id") @db.Uuid
+  codeHash   String    @map("code_hash")
+  attempts   Int       @default(0)
+  expiresAt  DateTime  @map("expires_at")
+  consumedAt DateTime? @map("consumed_at")
+  createdAt  DateTime  @default(now()) @map("created_at")
+  user       User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, createdAt])
+  @@map("email_otp")
+}

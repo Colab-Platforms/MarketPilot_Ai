@@ -1,0 +1,26 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["postgresqlExtensions"]
+}
+
+datasource db {
+  provider   = "postgresql"
+  url        = env("DATABASE_URL")
+  directUrl  = env("DIRECT_URL")
+  extensions = [vector]
+}
+
+// Provenance vocabulary shared by every extracted or stated record.
+enum SourceType {
+  user_stated
+  crawled
+  integration
+  ai_inferred
+}
+
+enum RecordStatus {
+  candidate
+  verified
+  rejected
+  stale
+}

@@ -1,0 +1,80 @@
+enum OutboxStatus {
+  pending
+  processed
+  failed
+}
+
+// Long-tail facts that do not warrant an entity table.
+model MemoryFact {
+  id             String    @id @default(uuid(7)) @db.Uuid
+  workspaceId    String    @map("workspace_id") @db.Uuid
+  brandId        String    @map("brand_id") @db.Uuid
+  category       String
+  statement      String
+  supersededById String?   @map("superseded_by_id") @db.Uuid
+  expiresAt      DateTime? @map("expires_at")
+
+  sourceType       SourceType   @map("source_type")
+  sourceUrl        String?      @map("source_url")
+  sourceTrust      Float        @default(0) @map("source_trust") @db.Real
+  status           RecordStatus @default(candidate)
+  extractionId     String?      @map("extraction_id") @db.Uuid
+  extractedAt      DateTime?    @map("extracted_at")
+  verifiedAt       DateTime?    @map("verified_at")
+  verifiedByUserId String?      @map("verified_by_user_id") @db.Uuid
+  createdAt        DateTime     @default(now()) @map("created_at")
+  updatedAt        DateTime     @updatedAt @map("updated_at")
+
+  brand Brand @relation(fields: [brandId, workspaceId], references: [id, workspaceId], onDelete: Cascade)
+
+  @@index([brandId, category, status])
+  @@index([workspaceId])
+  @@map("memory_fact")
+}
+
+// How the business wants things done (tone, channels, approval rules).
+model MemoryPreference {
+  id          String    @id @default(uuid(7)) @db.Uuid
+  workspaceId String    @map("workspace_id") @db.Uuid
+  brandId     String    @map("brand_id") @db.Uuid
+  key         String
+  value       Json
+  expiresAt   DateTime? @map("expires_at")
+
+  sourceType       SourceType   @map("source_type")
+  sourceTrust      Float        @default(0) @map("source_trust") @db.Real
+  status           RecordStatus @default(candidate)
+  verifiedAt       DateTime?    @map("verified_at")
+  verifiedByUserId String?      @map("verified_by_user_id") @db.Uuid
+  createdAt        DateTime     @default(now()) @map("created_at")
+  updatedAt        DateTime     @updatedAt @map("updated_at")
+
+  brand Brand @relation(fields: [brandId, workspaceId], references: [id, workspaceId], onDelete: Cascade)
+
+  @@unique([brandId, key])
+  @@index([workspaceId])
+  @@map("memory_preference")
+}
+
+// Transactional outbox: written in the same transaction as the change it
+// announces, drained by a worker (chunking, embedding, cache invalidation).
+model OutboxEvent {
+  id             String       @id @default(uuid(7)) @db.Uuid
+  workspaceId    String       @map("workspace_id") @db.Uuid
+  brandId        String?      @map("brand_id") @db.Uuid
+  type           String
+  payload        Json
+  idempotencyKey String       @unique @map("idempotency_key")
+  status         OutboxStatus @default(pending)
+  attempts       Int          @default(0)
+  availableAt    DateTime     @default(now()) @map("available_at")
+  processedAt    DateTime?    @map("processed_at")
+  lastError      String?      @map("last_error")
+  createdAt      DateTime     @default(now()) @map("created_at")
+
+  brand Brand? @relation(fields: [brandId, workspaceId], references: [id, workspaceId], onDelete: Cascade)
+
+  @@index([status, availableAt])
+  @@index([workspaceId])
+  @@map("outbox_event")
+}

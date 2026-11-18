@@ -1,0 +1,31 @@
+@import '@marketpilot/ui/tokens.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    font-family: var(--font-sans);
+    background-color: var(--bg-canvas);
+    color: var(--text-primary);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  body {
+    @apply bg-canvas text-body text-ink;
+    font-variant-numeric: tabular-nums;
+  }
+
+  :lang(hi),
+  :lang(mr),
+  :lang(gu),
+  :lang(bn),
+  :lang(ta),
+  :lang(te),
+  :lang(kn),
+  :lang(ml),
+  :lang(pa) {
+    line-height: 1.7;
+  }
+}

@@ -1,0 +1,295 @@
+// Verified business entities (structured memory). Each row carries the shared
+// provenance fields: source_type, source_url, source_trust, status,
+// extraction_id, content_hash, extracted_at, verified_at, verified_by_user_id.
+// Prices are integer minor units (paise).
+
+enum Availability {
+  in_stock
+  out_of_stock
+  preorder
+  unknown
+}
+
+enum PolicyKind {
+  return_policy
+  refund
+  shipping
+  cancellation
+  warranty
+  privacy
+  terms
+  other
+}
+
+enum AudienceKind {
+  primary
+  secondary
+  persona
+}
+
+enum SocialProvider {
+  instagram
+  facebook
+  whatsapp
+  youtube
+  linkedin
+  tiktok
+  pinterest
+  x
+}
+
+enum SocialConnectionStatus {
+  url_only
+  connected
+  expired
+  revoked
+}
+
+model BrandProduct {
+  id             String       @id @default(uuid(7)) @db.Uuid
+  workspaceId    String       @map("workspace_id") @db.Uuid
+  brandId        String       @map("brand_id") @db.Uuid
+  externalId     String?      @map("external_id")
+  canonicalUrl   String?      @map("canonical_url")
+  name           String
+  description    String?
+  category       String?
+  sku            String?
+  priceMinor     Int?         @map("price_minor")
+  compareAtMinor Int?         @map("compare_at_minor")
+  currency       String       @default("INR")
+  availability   Availability @default(unknown)
+  imageUrls      String[]     @default([]) @map("image_urls")
+  tags           String[]     @default([])
+  variants       Json         @default("[]")
+  attributes     Json         @default("{}")
+
+  sourceType       SourceType   @map("source_type")
+  sourceUrl        String?      @map("source_url")
+  sourceTrust      Float        @default(0) @map("source_trust") @db.Real
+  status           RecordStatus @default(candidate)
+  extractionId     String?      @map("extraction_id") @db.Uuid
+  contentHash      String?      @map("content_hash")
+  extractedAt      DateTime?    @map("extracted_at")
+  verifiedAt       DateTime?    @map("verified_at")
+  verifiedByUserId String?      @map("verified_by_user_id") @db.Uuid
+  createdAt        DateTime     @default(now()) @map("created_at")
+  updatedAt        DateTime     @updatedAt @map("updated_at")
+
+  brand Brand @relation(fields: [brandId, workspaceId], references: [id, workspaceId], onDelete: Cascade)
+
+  @@unique([brandId, externalId])
+  @@index([brandId, status])
+  @@index([brandId, canonicalUrl])
+  @@index([workspaceId])
+  @@map("brand_product")
+}
+
+model BrandService {
+  id              String   @id @default(uuid(7)) @db.Uuid
+  workspaceId     String   @map("workspace_id") @db.Uuid
+  brandId         String   @map("brand_id") @db.Uuid
+  canonicalUrl    String?  @map("canonical_url")
+  name            String
+  description     String?
+  priceMinor      Int?     @map("price_minor")
+  currency        String   @default("INR")
+  durationMinutes Int?     @map("duration_minutes")
+  benefits        String[] @default([])
+  bookingProcess  String?  @map("booking_process")
+  attributes      Json     @default("{}")
+
+  sourceType       SourceType   @map("source_type")
+  sourceUrl        String?      @map("source_url")
+  sourceTrust      Float        @default(0) @map("source_trust") @db.Real
+  status           RecordStatus @default(candidate)
+  extractionId     String?      @map("extraction_id") @db.Uuid
+  contentHash      String?      @map("content_hash")
+  extractedAt      DateTime?    @map("extracted_at")
+  verifiedAt       DateTime?    @map("verified_at")
+  verifiedByUserId String?      @map("verified_by_user_id") @db.Uuid
+  createdAt        DateTime     @default(now()) @map("created_at")
+  updatedAt        DateTime     @updatedAt @map("updated_at")
+
+  brand Brand @relation(fields: [brandId, workspaceId], references: [id, workspaceId], onDelete: Cascade)
+
+  @@index([brandId, status])
+  @@index([workspaceId])
+  @@map("brand_service")
+}
+
+model BrandPolicy {
+  id          String     @id @default(uuid(7)) @db.Uuid
+  workspaceId String     @map("workspace_id") @db.Uuid
+  brandId     String     @map("brand_id") @db.Uuid
+  kind        PolicyKind
+  title       String?
+  content     String
+
+  sourceType       SourceType   @map("source_type")
+  sourceUrl        String?      @map("source_url")
+  sourceTrust      Float        @default(0) @map("source_trust") @db.Real
+  status           RecordStatus @default(candidate)
+  extractionId     String?      @map("extraction_id") @db.Uuid
+  contentHash      String?      @map("content_hash")
+  extractedAt      DateTime?    @map("extracted_at")
+  verifiedAt       DateTime?    @map("verified_at")
+  verifiedByUserId String?      @map("verified_by_user_id") @db.Uuid
+  createdAt        DateTime     @default(now()) @map("created_at")
+  updatedAt        DateTime     @updatedAt @map("updated_at")
+
+  brand Brand @relation(fields: [brandId, workspaceId], references: [id, workspaceId], onDelete: Cascade)
+
+  @@index([brandId, kind])
+  @@index([workspaceId])
+  @@map("brand_policy")
+}
+
+model BrandFaq {
+  id          String @id @default(uuid(7)) @db.Uuid
+  workspaceId String @map("workspace_id") @db.Uuid
+  brandId     String @map("brand_id") @db.Uuid
+  question    String
+  answer      String
+
+  sourceType       SourceType   @map("source_type")
+  sourceUrl        String?      @map("source_url")
+  sourceTrust      Float        @default(0) @map("source_trust") @db.Real
+  status           RecordStatus @default(candidate)
+  extractionId     String?      @map("extraction_id") @db.Uuid
+  contentHash      String?      @map("content_hash")
+  extractedAt      DateTime?    @map("extracted_at")
+  verifiedAt       DateTime?    @map("verified_at")
+  verifiedByUserId String?      @map("verified_by_user_id") @db.Uuid
+  createdAt        DateTime     @default(now()) @map("created_at")
+  updatedAt        DateTime     @updatedAt @map("updated_at")
+
+  brand Brand @relation(fields: [brandId, workspaceId], references: [id, workspaceId], onDelete: Cascade)
+
+  @@index([brandId, status])
+  @@index([workspaceId])
+  @@map("brand_faq")
+}
+
+model BrandAudience {
+  id          String       @id @default(uuid(7)) @db.Uuid
+  workspaceId String       @map("workspace_id") @db.Uuid
+  brandId     String       @map("brand_id") @db.Uuid
+  kind        AudienceKind
+  name        String
+  description String?
+  ageRange    String?      @map("age_range")
+  locations   String[]     @default([])
+  interests   String[]     @default([])
+  painPoints  String[]     @default([]) @map("pain_points")
+  attributes  Json         @default("{}")
+
+  sourceType       SourceType   @map("source_type")
+  sourceUrl        String?      @map("source_url")
+  sourceTrust      Float        @default(0) @map("source_trust") @db.Real
+  status           RecordStatus @default(candidate)
+  extractionId     String?      @map("extraction_id") @db.Uuid
+  contentHash      String?      @map("content_hash")
+  extractedAt      DateTime?    @map("extracted_at")
+  verifiedAt       DateTime?    @map("verified_at")
+  verifiedByUserId String?      @map("verified_by_user_id") @db.Uuid
+  createdAt        DateTime     @default(now()) @map("created_at")
+  updatedAt        DateTime     @updatedAt @map("updated_at")
+
+  brand Brand @relation(fields: [brandId, workspaceId], references: [id, workspaceId], onDelete: Cascade)
+
+  @@index([brandId, kind, status])
+  @@index([workspaceId])
+  @@map("brand_audience")
+}
+
+// A competitor of the brand: found once by AI web search (ADR 0007) and kept or removed
+// by the owner, or added by the owner. `candidate` rows are suggestions awaiting review.
+model BrandCompetitor {
+  id          String   @id @default(uuid(7)) @db.Uuid
+  workspaceId String   @map("workspace_id") @db.Uuid
+  brandId     String   @map("brand_id") @db.Uuid
+  name        String
+  websiteUrl  String?  @map("website_url")
+  // Lower-case host without "www.", so the same company is never listed twice.
+  domain      String?
+  logoUrl     String?  @map("logo_url")
+  summary     String?
+  whySimilar  String?  @map("why_similar")
+  offerings   String[] @default([])
+  priceRange  String?  @map("price_range")
+  positioning String?
+  // Search result URLs that back an AI suggestion.
+  evidence    Json     @default("[]")
+
+  sourceType       SourceType   @map("source_type")
+  status           RecordStatus @default(candidate)
+  verifiedAt       DateTime?    @map("verified_at")
+  verifiedByUserId String?      @map("verified_by_user_id") @db.Uuid
+  createdAt        DateTime     @default(now()) @map("created_at")
+  updatedAt        DateTime     @updatedAt @map("updated_at")
+
+  brand Brand @relation(fields: [brandId, workspaceId], references: [id, workspaceId], onDelete: Cascade)
+
+  @@unique([brandId, domain])
+  @@index([brandId, status])
+  @@index([workspaceId])
+  @@map("brand_competitor")
+}
+
+enum CompetitorDiscoveryStatus {
+  running
+  completed
+  failed
+}
+
+// Automatic discovery runs once per workspace; the unique key is that rule. A run that
+// failed before finding anything may be retried.
+model CompetitorDiscovery {
+  id               String                    @id @default(uuid(7)) @db.Uuid
+  workspaceId      String                    @unique @map("workspace_id") @db.Uuid
+  brandId          String                    @map("brand_id") @db.Uuid
+  status           CompetitorDiscoveryStatus @default(running)
+  found            Int                       @default(0)
+  message          String?
+  model            String?
+  promptTokens     Int                       @default(0) @map("prompt_tokens")
+  completionTokens Int                       @default(0) @map("completion_tokens")
+  costUsd          Float?                    @map("cost_usd")
+  startedAt        DateTime                  @default(now()) @map("started_at")
+  finishedAt       DateTime?                 @map("finished_at")
+
+  brand Brand @relation(fields: [brandId, workspaceId], references: [id, workspaceId], onDelete: Cascade)
+
+  @@map("competitor_discovery")
+}
+
+// Profile URLs are stored here; OAuth tokens belong to the M6 connection model
+// (envelope-encrypted via KeyPort) and are intentionally not on this table.
+model BrandSocialAccount {
+  id          String                 @id @default(uuid(7)) @db.Uuid
+  workspaceId String                 @map("workspace_id") @db.Uuid
+  brandId     String                 @map("brand_id") @db.Uuid
+  provider    SocialProvider
+  profileUrl  String                 @map("profile_url")
+  handle      String?
+  connection  SocialConnectionStatus @default(url_only)
+  externalId  String?                @map("external_id")
+
+  sourceType       SourceType   @map("source_type")
+  sourceUrl        String?      @map("source_url")
+  sourceTrust      Float        @default(0) @map("source_trust") @db.Real
+  status           RecordStatus @default(candidate)
+  extractionId     String?      @map("extraction_id") @db.Uuid
+  extractedAt      DateTime?    @map("extracted_at")
+  verifiedAt       DateTime?    @map("verified_at")
+  verifiedByUserId String?      @map("verified_by_user_id") @db.Uuid
+  createdAt        DateTime     @default(now()) @map("created_at")
+  updatedAt        DateTime     @updatedAt @map("updated_at")
+
+  brand Brand @relation(fields: [brandId, workspaceId], references: [id, workspaceId], onDelete: Cascade)
+
+  @@unique([brandId, provider, profileUrl])
+  @@index([workspaceId])
+  @@map("brand_social_account")
+}
