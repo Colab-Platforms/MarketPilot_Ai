@@ -1,5 +1,6 @@
 import { Check, X } from 'lucide-react';
 import { Spinner, cn } from '@marketpilot/ui';
+import { SentImages } from './copilot-attachments';
 import { BlockView } from './copilot-blocks';
 import { RichText } from './rich-text';
 import type { ChatTurn, ToolStep } from './use-copilot-chat';
@@ -31,7 +32,8 @@ interface MessageProps {
 export function CopilotMessage({ turn, busy, onDecide }: MessageProps) {
   if (turn.role === 'user') {
     return (
-      <div className="flex justify-end">
+      <div className="flex flex-col items-end gap-2">
+        {turn.images && turn.images.length > 0 && <SentImages urls={turn.images} />}
         <p className="max-w-prose whitespace-pre-wrap rounded-md bg-accent-subtle px-3 py-2 text-body text-ink">{turn.content}</p>
       </div>
     );

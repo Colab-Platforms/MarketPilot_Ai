@@ -1,19 +1,43 @@
 :root {
-  --bg-canvas: #faf9f7;
+  --bg-canvas: #f2f4f5;
   --bg-surface: #ffffff;
-  --bg-subtle: #f3f1ee;
-  --bg-muted: #e9e6e1;
-  --border-default: #e2ded8;
-  --border-strong: #c9c4bc;
-  --text-primary: #1c1a17;
-  --text-secondary: #5e5a54;
-  --text-tertiary: #8a857e;
+  --bg-subtle: #e8ecee;
+  --bg-muted: #dde3e6;
+  --border-default: #d9dfe2;
+  --border-strong: #8a949b;
+  --text-primary: #16222b;
+  --text-secondary: #36444e;
+  --text-tertiary: #59666f;
 
-  --accent-solid: #0f6b66;
-  --accent-solid-hover: #0b5854;
-  --accent-subtle: #e3f2f0;
-  --accent-border: #a9d6d1;
+  --accent-solid: #2f5873;
+  --accent-solid-hover: #24465c;
+  --accent-subtle: #e3ecf2;
+  --accent-border: #a9c2d3;
   --on-accent: #ffffff;
+
+  /* Monsoon yellow: badges, progress, selection marks. Never text on a light surface (fails contrast). */
+  --highlight-solid: #f5c432;
+  --on-highlight: #121413;
+  --highlight-subtle: #fff4cc;
+  --highlight-text: #6a4d00;
+  --highlight-marker: #f8d86a;
+
+  /* Sample content tiles and the closing band keep their colours in both themes. */
+  --tile-ink: #16222b;
+  --tile-sky: #c9dce6;
+  --tile-navy: #2f5873;
+  --tile-white: #ffffff;
+  --tile-mist: #e8ecee;
+  --tile-mute: #59666f;
+  --band: #22445a;
+  /* Product tour panel on sign-in and setup: sky gradient over three hills. */
+  --tour-sky: #2b5068;
+  --tour-band: #22445a;
+  --tour-hill-1: #33607a;
+  --tour-hill-2: #234559;
+  --tour-hill-3: #172f3e;
+  /* Frosted fill for labels and buttons on dark tiles and the band. */
+  --glass: rgba(255, 255, 255, 0.14);
 
   --success-solid: #2f7d4f;
   --success-subtle: #e6f3ea;
@@ -27,10 +51,15 @@
   --radius-sm: 6px;
   --radius-md: 10px;
   --radius-lg: 14px;
+  --radius-xl: 20px;
+  --radius-2xl: 28px;
 
-  --shadow-1: 0 1px 2px rgba(28, 26, 23, 0.06);
-  --shadow-2: 0 8px 24px rgba(28, 26, 23, 0.1);
-  --shadow-3: 0 16px 48px rgba(28, 26, 23, 0.16);
+  --shadow-1: 0 1px 2px rgba(22, 34, 43, 0.06);
+  --shadow-2: 0 8px 24px rgba(22, 34, 43, 0.1);
+  --shadow-3: 0 16px 48px rgba(22, 34, 43, 0.16);
+  /* Marketing only: long, soft drops under sample cards and app mock-ups. */
+  --shadow-card: 0 24px 50px -28px rgba(22, 34, 43, 0.35);
+  --shadow-window: 0 60px 100px -50px rgba(22, 34, 43, 0.55);
 
   --ease-standard: cubic-bezier(0.2, 0, 0, 1);
   --duration-fast: 120ms;
@@ -41,25 +70,37 @@
     'Noto Sans Bengali', 'Noto Sans Tamil', 'Noto Sans Telugu', 'Noto Sans Kannada',
     'Noto Sans Malayalam', 'Noto Sans Gurmukhi', system-ui, sans-serif;
   --font-mono: var(--font-geist-mono), ui-monospace, monospace;
-  --font-display: var(--font-display-face), Georgia, 'Times New Roman', serif;
+  --font-display: system-ui, sans-serif;
 }
 
 [data-theme='dark'] {
-  --bg-canvas: #131211;
-  --bg-surface: #1b1a18;
-  --bg-subtle: #232120;
-  --bg-muted: #2c2a28;
-  --border-default: #34312f;
-  --border-strong: #4a4643;
-  --text-primary: #f3f1ee;
-  --text-secondary: #b5b0a9;
-  --text-tertiary: #8a857e;
+  --bg-canvas: #121413;
+  --bg-surface: #1a1d1c;
+  --bg-subtle: #232726;
+  --bg-muted: #2a2f2d;
+  --border-default: #313635;
+  --border-strong: #747c7a;
+  --text-primary: #eff1ef;
+  --text-secondary: #d3d8d6;
+  --text-tertiary: #a2aaa7;
 
-  --accent-solid: #3fb5ad;
-  --accent-solid-hover: #5cc7bf;
-  --accent-subtle: #14302e;
-  --accent-border: #1f5a56;
-  --on-accent: #0b1b1a;
+  --accent-solid: #eff1ef;
+  --accent-solid-hover: #d3d8d6;
+  --accent-subtle: #1e2b33;
+  --accent-border: #3a5568;
+  --on-accent: #121413;
+
+  --highlight-solid: #f5c432;
+  --on-highlight: #121413;
+  --highlight-subtle: #322d17;
+  --highlight-text: #f5c432;
+  --highlight-marker: #f5c432;
+
+  --tour-sky: #21405a;
+  --tour-band: #1b3646;
+  --tour-hill-1: #28495e;
+  --tour-hill-2: #1a3445;
+  --tour-hill-3: #10222c;
 
   --success-solid: #5fbf86;
   --success-subtle: #16291e;
@@ -73,6 +114,15 @@
   --shadow-1: 0 1px 2px rgba(0, 0, 0, 0.4);
   --shadow-2: 0 8px 24px rgba(0, 0, 0, 0.5);
   --shadow-3: 0 16px 48px rgba(0, 0, 0, 0.6);
+  --shadow-card: 0 24px 50px -28px rgba(0, 0, 0, 0.7);
+  --shadow-window: 0 60px 100px -50px rgba(0, 0, 0, 0.8);
+}
+
+/* The marketing route loads its own faces on this element. Custom properties resolve where they
+   are declared, so both stacks are redeclared here rather than on :root. */
+[data-surface='marketing'] {
+  --font-sans: var(--font-marketing-sans), var(--font-devanagari-face), system-ui, sans-serif;
+  --font-display: var(--font-display-face), var(--font-devanagari-face), system-ui, sans-serif;
 }
 
 @media (prefers-reduced-motion: reduce) {

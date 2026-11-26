@@ -1,0 +1,72 @@
+/* Decorative fills for the landing page. Tailwind cannot express layered gradients
+   with tokens, so they live here and only ever reference token variables. */
+
+.mk-hero-backdrop {
+  background:
+    radial-gradient(ellipse 60% 50% at 50% 62%, color-mix(in srgb, var(--highlight-solid) 14%, transparent), transparent 70%),
+    radial-gradient(circle, color-mix(in srgb, var(--text-primary) 7%, transparent) 1px, transparent 1.6px) 0 0 / 22px 22px,
+    var(--bg-canvas);
+}
+
+.mk-tile-ink {
+  background:
+    radial-gradient(circle, color-mix(in srgb, var(--highlight-solid) 55%, transparent) 1.4px, transparent 2px) 0 0 / var(--mk-dot, 12px) var(--mk-dot, 12px),
+    var(--tile-ink);
+  color: var(--tile-white);
+}
+
+.mk-tile-navy {
+  background:
+    radial-gradient(circle, color-mix(in srgb, var(--tile-white) 22%, transparent) 1.4px, transparent 2px) 0 0 / var(--mk-dot, 12px) var(--mk-dot, 12px),
+    var(--tile-navy);
+  color: var(--tile-white);
+}
+
+.mk-tile-sky {
+  background:
+    repeating-linear-gradient(135deg, color-mix(in srgb, var(--tile-ink) 11%, transparent) 0 var(--mk-stripe, 6px), transparent var(--mk-stripe, 6px) calc(var(--mk-stripe, 6px) * 2)),
+    var(--tile-sky);
+  color: var(--tile-ink);
+}
+
+/* Larger pattern for full-size sample posts. */
+.mk-pattern-lg {
+  --mk-dot: 16px;
+  --mk-stripe: 12px;
+}
+
+.mk-tour-backdrop {
+  background:
+    radial-gradient(ellipse 60% 45% at 50% 30%, color-mix(in srgb, var(--tile-white) 7%, transparent), transparent 70%),
+    linear-gradient(180deg, var(--tour-sky) 0%, var(--tour-band) 70%);
+  color: var(--tile-white);
+}
+
+.mk-hill-1 { fill: var(--tour-hill-1); }
+.mk-hill-2 { fill: var(--tour-hill-2); }
+.mk-hill-3 { fill: var(--tour-hill-3); }
+
+@keyframes mk-slide-in {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: none; }
+}
+
+.mk-slide-in {
+  animation: mk-slide-in var(--duration-slow) var(--ease-standard) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mk-slide-in { animation: none; }
+}
+
+.mk-marker {
+  color: var(--text-primary);
+  background: linear-gradient(transparent 60%, var(--highlight-marker) 60%, var(--highlight-marker) 92%, transparent 92%);
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+
+[data-theme='dark'] .mk-marker {
+  color: var(--highlight-solid);
+  background: none;
+}

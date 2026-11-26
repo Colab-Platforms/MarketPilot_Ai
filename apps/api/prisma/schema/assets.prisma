@@ -1,0 +1,71 @@
+enum AssetKind {
+  image
+  video
+}
+
+enum AssetSource {
+  upload
+  generated
+}
+
+// One file in the library (ADR 0009): uploaded by the owner, or produced by the studio.
+// Removing one from the library only hides it (`deleted_at`); the file stays in storage.
+model Asset {
+  id               String      @id @default(uuid(7)) @db.Uuid
+  workspaceId      String      @map("workspace_id") @db.Uuid
+  brandId          String      @map("brand_id") @db.Uuid
+  createdByUserId  String?     @map("created_by_user_id") @db.Uuid
+  kind             AssetKind
+  source           AssetSource
+  url              String
+  mediaType        String?     @map("media_type")
+  name             String?
+  width            Int?
+  height           Int?
+  bytes            Int?
+  durationSeconds  Float?      @map("duration_seconds")
+  // Set for generated assets, so the studio output and its library entry stay linked.
+  studioOutputId   String?     @unique @map("studio_output_id") @db.Uuid
+  // Set for an assembled reel, so the render and its library entry stay linked.
+  reelRenderId     String?     @unique @map("reel_render_id") @db.Uuid
+  // When the owner starred it as a style reference for new images; null when not starred.
+  styleReferenceAt DateTime?   @map("style_reference_at")
+  createdAt        DateTime    @default(now()) @map("created_at")
+  updatedAt        DateTime    @updatedAt @map("updated_at")
+  deletedAt        DateTime?   @map("deleted_at")
+
+  brand    Brand           @relation(fields: [brandId, workspaceId], references: [id, workspaceId], onDelete: Cascade)
+  feedback AssetFeedback[]
+
+  // Saving the same uploaded file twice keeps one entry.
+  @@unique([workspaceId, url])
+  @@unique([id, workspaceId])
+  @@index([workspaceId, createdAt, id])
+  @@index([brandId, styleReferenceAt])
+  @@map("asset")
+}
+
+enum FeedbackRating {
+  like
+  dislike
+}
+
+// What one person thinks of a generated image: a like, or a dislike with reasons. One row
+// per person and asset, replaced when they change their mind. Likes pick style references
+// for new images; reasons later become learned guidance (ADR 0010).
+model AssetFeedback {
+  id          String         @id @default(uuid(7)) @db.Uuid
+  workspaceId String         @map("workspace_id") @db.Uuid
+  assetId     String         @map("asset_id") @db.Uuid
+  userId      String         @map("user_id") @db.Uuid
+  rating      FeedbackRating
+  reasons     String[]       @default([])
+  createdAt   DateTime       @default(now()) @map("created_at")
+  updatedAt   DateTime       @updatedAt @map("updated_at")
+
+  asset Asset @relation(fields: [assetId, workspaceId], references: [id, workspaceId], onDelete: Cascade)
+
+  @@unique([assetId, userId])
+  @@index([workspaceId, rating, updatedAt])
+  @@map("asset_feedback")
+}

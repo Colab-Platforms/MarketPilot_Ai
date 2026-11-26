@@ -168,6 +168,18 @@ The ongoing home for everything onboarding collects: `/brand` in the dashboard (
 - **Not built:** structured services, FAQ, competitor and persona records (these are text fields for now), per-product details beyond the main fields, bulk import, field-level history, rate limiting on re-reading a website (needs Redis), and AI suggestions for the fields marked as AI-sourced.
 - **Verified:** registry, read and write rules by unit tests; the API by 25 checks against the database (edit, clear, reject bad input, website re-read, review, product edit and delete); and the page by 25 real-browser checks including 360 px layouts and the mobile bottom navigation.
 
+### Setup redesign (2026-11-26)
+
+Screens follow the approved design in `docs/design/MarketPilot-onboarding-netlify/setup` (English only for now). The API steps are unchanged (`type`, `basics`, `review`, `about`, `goals`); the screens map onto them:
+
+- `type`: business or creator. Agency is shown as "Coming soon" (no agency account type yet).
+- `basics`: three screens in one step. Business: how customers buy (saved as profile `salesChannels`), then the link screen (name, city, website or social or Google Maps links), or a manual screen. Links are classified by `classifyLink` in contracts: a website is scanned; social links are saved as `social.<provider>` profile fields; Google Maps links stay in the onboarding answers until there is a field for them. `language` is now optional here so re-saving basics does not reset languages.
+- `about` is the Voice screen: post languages (up to 3, sent as `postLanguages`, written as `brand.language` plus `brand.secondaryLanguages`), tone, words to avoid. "What you sell" and the category are asked here only when the website scan did not answer them.
+- `goals`: main goal (adds `footfall`), customer reach (new question `customer_reach`, profile field 184 `customerReach`), channels, ad budget.
+- Profile values from setup go through `BrandProfileService.update`, the same validated path as the Brand profile page.
+
+Not built from the design: agency setup, reading Instagram or Google Maps pages, the logo and photo upload, the separate "Add products" screen, the Hindi switch, and Hinglish or Punjabi as post languages.
+
 ### AI suggestions and embeddings (2026-11-14)
 
 OpenRouter behind `LlmPort` (ADR 0004; `infra/llm-providers`, reached only through `modules/ai`). Without `OPENROUTER_API_KEY` the AI steps are skipped and everything above still works.

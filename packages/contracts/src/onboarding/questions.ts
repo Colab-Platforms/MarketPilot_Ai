@@ -60,10 +60,18 @@ export const CHANNELS: readonly QuestionOption[] = [
 export const OBJECTIVES: readonly QuestionOption[] = [
   { value: 'sales', label: 'Get more sales' },
   { value: 'leads', label: 'Get more enquiries' },
+  { value: 'footfall', label: 'Bring more people to our shop' },
   { value: 'awareness', label: 'Make more people aware of us' },
   { value: 'followers', label: 'Grow our followers' },
   { value: 'traffic', label: 'Bring more visitors to our website' },
   { value: 'engagement', label: 'Get more likes, comments and shares' },
+];
+
+export const CUSTOMER_REACH: readonly QuestionOption[] = [
+  { value: 'local', label: 'Near us, in our city' },
+  { value: 'state', label: 'Across our state' },
+  { value: 'india', label: 'All of India' },
+  { value: 'global', label: 'India and abroad' },
 ];
 
 export const QUESTIONS: readonly QuestionDef[] = [
@@ -189,6 +197,17 @@ export const QUESTIONS: readonly QuestionDef[] = [
     label: 'What is the main thing you want from marketing?',
     required: true,
     options: OBJECTIVES,
+  },
+  {
+    id: 'customer_reach',
+    step: 'goals',
+    tracks: both,
+    store: 'attribute',
+    field: 'customerReach',
+    kind: 'select',
+    label: 'Where are your customers?',
+    required: false,
+    options: CUSTOMER_REACH,
   },
   {
     id: 'preferred_channels',

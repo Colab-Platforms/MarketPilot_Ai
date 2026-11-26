@@ -238,7 +238,7 @@ Dates assume focused full-time work and slip with platform approvals. Applicatio
 | 3. Learn and Earn | Insight sync, L4 consolidation, weekly digest, Razorpay billing and GST invoices, PWA, template reels | Closed beta with 10-30 workspaces |
 | Later | Ads (Meta then Google), inbox and WhatsApp, landing pages, email, agency and white-label, native app, public API | Gated by beta results and hiring |
 
-Deferred from MVP: M7 ads, M8 media buyer, analyst and community agents, M10 to M12, M14 beyond tenant tools and AI ops, M15 client links and WhatsApp approvals, M16 to M18, generative video, canvas editor, video editor lite.
+Deferred from MVP: M7 ads, M8 media buyer, analyst and community agents, M10 to M12, M14 beyond tenant tools and AI ops, M15 client links and WhatsApp approvals, M16 to M18, canvas editor, video editor lite. Generative product reels were pulled forward by the owner on 2026-11-20 (`docs/REEL_STUDIO.md`, ADR 0011).
 
 ## 13. Open decisions
 

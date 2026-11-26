@@ -4,7 +4,7 @@ import { Moon, Sun } from 'lucide-react';
 import { Button } from '@marketpilot/ui';
 import { toggleTheme } from '@/lib/theme';
 
-export function ThemeToggle() {
+export function ThemeToggle({ className }: { className?: string }) {
   return (
     <Button
       variant="ghost"
@@ -12,6 +12,7 @@ export function ThemeToggle() {
       aria-label="Switch between light and dark theme"
       title="Switch theme"
       onClick={toggleTheme}
+      className={className}
     >
       <Sun
         className="hidden size-4 [html[data-theme=dark]_&]:block"

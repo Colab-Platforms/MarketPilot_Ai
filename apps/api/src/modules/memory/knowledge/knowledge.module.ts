@@ -8,6 +8,8 @@ import { HttpFetcher } from './crawler/http-fetcher';
 import { EmbeddingService } from './embedding.service';
 import { EntityIndexer } from './entities/entity-indexer';
 import { ContextBuilder } from './context/context-builder';
+import { ReelContextReader } from './context/reel-context';
+import { VisualContextReader } from './context/visual-context';
 import { Retriever } from './retrieval/retriever';
 import { ProfileSuggester } from './profile-suggester';
 import { ScanReviewService } from './scan-review.service';
@@ -24,6 +26,8 @@ import { WebsiteScanner } from './website-scanner';
     EntityIndexer,
     Retriever,
     ContextBuilder,
+    VisualContextReader,
+    ReelContextReader,
     ScanService,
     ScanReviewService,
     CompetitorService,
@@ -38,6 +42,8 @@ import { WebsiteScanner } from './website-scanner';
     EntityIndexer,
     Retriever,
     ContextBuilder,
+    VisualContextReader,
+    ReelContextReader,
   ],
 })
 export class KnowledgeModule {}

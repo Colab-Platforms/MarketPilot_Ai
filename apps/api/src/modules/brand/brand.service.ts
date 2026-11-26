@@ -58,7 +58,11 @@ export class BrandService {
   ): Promise<BrandSnapshot> {
     await tx.brand.update({
       where: { id: brandId },
-      data: { name: input.name, websiteUrl: input.websiteUrl ?? null, languages: [input.language] },
+      data: {
+        name: input.name,
+        websiteUrl: input.websiteUrl ?? null,
+        ...(input.language && { languages: [input.language] }),
+      },
     });
     await tx.brandProfile.upsert({
       where: { brandId },

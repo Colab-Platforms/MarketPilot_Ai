@@ -11,5 +11,13 @@ export const STRUCTURED_TASKS = {
   'copilot.summarize': 'writing',
 } as const satisfies Record<string, ModelTier>;
 
+// Ideas and storyboards are the creative core of a reel and cost cents, so they get the
+// strongest tier; a one-scene rewrite is small and frequent.
+export const REEL_TASKS = {
+  'reel.ideas': 'reasoning',
+  'reel.storyboard': 'reasoning',
+  'reel.scene.rewrite': 'writing',
+} as const satisfies Record<string, ModelTier>;
+
 export type ConverseTask = keyof typeof CONVERSE_TASKS;
 export type StructuredTask = keyof typeof STRUCTURED_TASKS;

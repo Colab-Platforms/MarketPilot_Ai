@@ -1,0 +1,1261 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Set up your business · MarketPilot</title>
+<meta name="description" content="Tell MarketPilot about your business so it can plan and make your posts.">
+<meta name="theme-color" content="#F2F4F5">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Set up your business · MarketPilot">
+<meta property="og:description" content="Tell MarketPilot about your business so it can plan and make your posts.">
+<meta property="og:image" content="/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Anek+Latin:wght@400..800&amp;family=Anek+Devanagari:wght@400..800&amp;family=Noto+Sans:wght@300..700&amp;family=Noto+Sans+Devanagari:wght@300..700&amp;family=Noto+Sans+Gujarati:wght@400..700&amp;display=swap" rel="stylesheet">
+<style>
+
+body{margin:0}
+html,body{scrollbar-width:none;-ms-overflow-style:none}html::-webkit-scrollbar,body::-webkit-scrollbar{display:none}
+button{font:inherit;cursor:pointer;padding:0;color:inherit}
+input,textarea,select{font:inherit;padding:0;margin:0}
+button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible{outline:3px solid #F5C432;outline-offset:2px}
+input::placeholder,textarea::placeholder{color:inherit;opacity:.55}
+@keyframes mpspin{to{transform:rotate(360deg)}}
+@keyframes mpfade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.mp-spin{animation:mpspin 900ms linear infinite}.mp-fade{animation:mpfade 400ms ease both}
+@keyframes mpshim{50%{opacity:.45}}@keyframes mpop{from{opacity:0}to{opacity:1}}.mp-fadein{animation:mpop 400ms ease both}.mp-shimmer{animation:mpshim 1.4s ease-in-out infinite}
+.mp-dark{font-weight:370}
+.mp-dark [style*="Anek"][style*="font-weight: 700"]{font-weight:600 !important}
+.mp-dark [style*="font-size: 14px"],.mp-dark [style*="font-size: 12px"]{letter-spacing:.01em}
+.mp-hi-text{letter-spacing:0 !important;line-height:1.7 !important}
+@media (prefers-reduced-motion: reduce){.mp-spin,.mp-fade,.mp-fadein,.mp-shimmer{animation:none}}
+@media (max-width: 960px){.mp-aside{display:none !important}.mp-only-sm{display:flex !important}span.mp-only-sm{display:inline !important}.mp-hide-sm{display:none !important}.mp-h1{font-size:24px !important;line-height:30px !important}.mp-wrap{padding:24px 16px 0 !important}.mp-head{padding:0 16px !important}.mp-actions{position:sticky;bottom:0;z-index:5;margin:32px -16px 0 !important;padding:12px 16px !important;border-top-color:var(--mp-bd) !important}.mp-actions > span:last-child{flex:1 1 auto}.mp-primary{flex:1 1 auto}.mp-icon-sm{display:none !important}.mp-step{flex-wrap:wrap}.mp-step > span:nth-child(2){flex:1 1 0 !important;min-width:0}.mp-step > button{flex:1 1 100% !important;margin-left:48px !important}.mp-grid4{grid-template-columns:repeat(2,minmax(0,1fr)) !important}.mp-bento > button{grid-column:auto !important}.mp-cols2{grid-template-columns:minmax(0,1fr) !important}}
+
+</style>
+</head>
+<body style="margin:0;background:#F2F4F5">
+<template id="mp-tpl"><div class="{{rootCls}}" style="--mp-bd: {{t.border}}; font-family: 'Noto Sans', 'Noto Sans Devanagari', sans-serif; min-height: 100vh; background: {{t.bg}}; color: {{t.text}}; display: flex; flex-direction: column">
+
+  <!-- Top bar -->
+  <header class="mp-head" style="height: 64px; flex: 0 0 64px; display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 0 32px; border-bottom: 1px solid {{t.border}}; background: {{t.bg}}">
+    <a href="{{homeHref}}" aria-label="MarketPilot home" style="display: flex; align-items: center; gap: 12px; min-height: 44px; color: inherit; text-decoration: none">
+      <span style="width: 32px; height: 32px; border-radius: 8px; background: #F5C432; display: flex; align-items: center; justify-content: center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#121413" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 2 11 13"></path><path d="M22 2 15 22 11 13 2 9z"></path></svg></span>
+      <span style="font-family: 'Anek Latin', 'Anek Devanagari', sans-serif; font-weight: 700; font-size: 20px; line-height: 28px; letter-spacing: -0.005em">MarketPilot</span>
+    </a>
+    <div style="display: flex; align-items: center; gap: 8px">
+      <button type="button" onClick="{{toggleTheme}}" aria-label="{{themeLabel}}" title="{{themeLabel}}" style="flex: 0 0 44px; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; padding: 0; border-radius: 12px; border: 1px solid {{t.border}}; background: transparent; color: {{t.text}}"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><sc-if value="{{isLight}}" hint-placeholder-val="{{ true }}"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"></path></sc-if><sc-if value="{{isDark}}" hint-placeholder-val="{{ false }}"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></sc-if></svg></button>
+    <button type="button" onClick="{{saveExit}}" style="min-height: 44px; padding: 0 16px; border-radius: 12px; border: 1px solid {{t.border}}; background: transparent; font-size: 14px; line-height: 20px; font-weight: 600; color: {{t.text}}">Save and exit</button>
+    </div>
+  </header>
+
+  <div class="mp-wrap" style="flex: 1 1 auto; width: 100%; max-width: 1200px; margin: 0 auto; box-sizing: border-box; padding: 40px 32px 64px; display: flex; gap: 48px; align-items: flex-start; justify-content: {{wrapJustify}}">
+
+    <!-- MAIN COLUMN -->
+    <main style="flex: 1 1 640px; min-width: 0; max-width: 720px; display: flex; flex-direction: column">
+
+      <sc-if value="{{showStepper}}" hint-placeholder-val="{{ true }}">
+        <div style="display: flex; flex-direction: column; gap: 8px; margin-bottom: 32px">
+          <span style="font-size: 14px; line-height: 20px; font-weight: 500; color: {{t.muted}}">Step {{stepNo}} of {{stepTotal}}<span class="mp-only-sm" style="display: none"> · {{stepName}}</span></span>
+          <div aria-hidden="true" style="display: grid; grid-template-columns: {{stepCols}}; gap: 4px">
+            <sc-for list="{{steps}}" as="st" hint-placeholder-count="5"><span style="height: 4px; border-radius: 4px; {{st.bar}}"></span></sc-for>
+          </div>
+          <div class="mp-hide-sm" aria-hidden="true" style="display: grid; grid-template-columns: {{stepCols}}; gap: 4px">
+            <sc-for list="{{steps}}" as="st" hint-placeholder-count="5"><span style="font-size: 12px; line-height: 18px; font-weight: 500; {{st.label}}">{{st.name}}</span></sc-for>
+          </div>
+          <sc-if value="{{clientTag}}" hint-placeholder-val="{{ false }}"><span style="align-self: flex-start; margin-top: 8px; display: inline-flex; align-items: center; gap: 8px; padding: 4px 12px; border-radius: 999px; background: {{t.surface2}}; font-size: 14px; line-height: 20px; font-weight: 600"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="7" width="18" height="13" rx="2"></rect><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>{{clientTag}}</span></sc-if>
+        </div>
+      </sc-if>
+
+      <!-- ===== 1. ACCOUNT TYPE ===== -->
+      <sc-if value="{{scr.type}}" hint-placeholder-val="{{ true }}">
+        <h1 class="mp-h1" style="margin: 0; font-family: 'Anek Latin', 'Anek Devanagari', sans-serif; font-size: 30px; line-height: 38px; font-weight: 700; letter-spacing: -0.005em">How will you use MarketPilot?</h1>
+        <p style="margin: 8px 0 32px; font-size: 16px; line-height: 26px; color: {{t.body}}">This sets up the right questions for you. You can change it later in Settings.</p>
+        <div role="radiogroup" aria-label="I am setting this up for" style="display: flex; flex-direction: column; gap: 12px">
+          <sc-for list="{{types}}" as="o" hint-placeholder-count="3">
+            <button type="button" role="radio" aria-checked="{{o.on}}" onClick="{{o.pick}}" style="display: flex; align-items: flex-start; gap: 16px; padding: 20px; border-radius: 16px; text-align: left; {{o.card}}">
+              <span style="width: 48px; height: 48px; flex: 0 0 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; background: {{t.surface2}}; color: {{t.text}}">
+                <sc-if value="{{o.isShop}}" hint-placeholder-val="{{ true }}"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 9l1.5-5h15L21 9"></path><path d="M3 9h18v2a3 3 0 0 1-6 0 3 3 0 0 1-6 0 3 3 0 0 1-6 0z"></path><path d="M5 13v7h14v-7"></path><path d="M10 20v-4h4v4"></path></svg></sc-if>
+                <sc-if value="{{o.isCreator}}" hint-placeholder-val="{{ false }}"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"></circle><path d="M4 21a8 8 0 0 1 16 0"></path></svg></sc-if>
+                <sc-if value="{{o.isAgency}}" hint-placeholder-val="{{ false }}"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="7" width="18" height="13" rx="2"></rect><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><path d="M3 13h18"></path></svg></sc-if>
+              </span>
+              <span style="flex: 1 1 auto; display: flex; flex-direction: column; gap: 4px">
+                <span style="font-size: 16px; line-height: 24px; font-weight: 600">{{o.title}}</span>
+                <span style="font-size: 14px; line-height: 20px; color: {{t.body}}">{{o.desc}}</span>
+              </span>
+              <span aria-hidden="true" style="width: 24px; height: 24px; flex: 0 0 24px; border-radius: 999px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; {{o.dot}}"><sc-if value="{{o.on}}" hint-placeholder-val="{{ false }}"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg></sc-if></span>
+            </button>
+          </sc-for>
+        </div>
+      </sc-if>
+
+      <!-- ===== 1b. YOUR AGENCY ===== -->
+      <sc-if value="{{scr.agency}}" hint-placeholder-val="{{ false }}">
+        <h1 class="mp-h1" style="margin: 0; font-family: 'Anek Latin', 'Anek Devanagari', sans-serif; font-size: 30px; line-height: 38px; font-weight: 700; letter-spacing: -0.005em">Tell us about your agency</h1>
+        <p style="margin: 8px 0 32px; font-size: 16px; line-height: 26px; color: {{t.body}}">Next, you set up your first client. You can add more clients any time.</p>
+        <div style="display: flex; flex-direction: column; gap: 24px">
+          <div style="display: flex; flex-direction: column; gap: 8px"><label for="mp-agency" style="font-size: 14px; line-height: 20px; font-weight: 500">Agency name</label><input id="mp-agency" type="text" autocomplete="organization" value="{{f.agency}}" onChange="{{fset.agency}}" style="min-height: 52px; box-sizing: border-box; padding: 0 16px; border-radius: 12px; border: 1px solid {{t.inputBorder}}; background: {{t.surface}}; color: {{t.text}}; font-size: 16px"></div>
+          <div style="display: flex; flex-direction: column; gap: 8px">
+            <span style="font-size: 14px; line-height: 20px; font-weight: 500">Agency logo <span style="font-weight: 400; color: {{t.muted}}">(optional)</span></span>
+            <div style="display: flex; align-items: center; gap: 16px; padding: 16px; border-radius: 12px; border: 1px dashed {{t.inputBorder}}; background: {{t.surface}}">
+              <span style="width: 56px; height: 56px; flex: 0 0 56px; border-radius: 12px; background: #2F3E46; color: #F5C432; display: flex; align-items: center; justify-content: center; font-family: 'Anek Latin', sans-serif; font-size: 24px; line-height: 32px; font-weight: 700">KD</span>
+              <span style="flex: 1 1 auto; display: flex; flex-direction: column; gap: 4px"><span style="font-size: 14px; line-height: 20px; font-weight: 600">kesar-digital-logo.png</span><span style="font-size: 14px; line-height: 20px; color: {{t.muted}}">Shown on reports you share with clients</span></span>
+              <button type="button" style="min-height: 44px; padding: 0 16px; border-radius: 12px; border: 1px solid {{t.inputBorder}}; background: transparent; font-size: 14px; line-height: 20px; font-weight: 600; color: {{t.text}}">Change</button>
+            </div>
+          </div>
+          <fieldset style="margin: 0; padding: 0; border: 0; display: flex; flex-direction: column; gap: 12px">
+            <legend style="padding: 0; margin-bottom: 4px; font-size: 16px; line-height: 24px; font-weight: 600">Team size</legend>
+            <div role="radiogroup" aria-label="Team size" style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 4px; padding: 4px; border-radius: 12px; background: {{t.surface2}}">
+              <sc-for list="{{teams}}" as="a" hint-placeholder-count="4"><button type="button" role="radio" aria-checked="{{a.on}}" onClick="{{a.pick}}" style="min-height: 44px; padding: 0 8px; border: 0; border-radius: 8px; font-size: 14px; line-height: 20px; font-weight: 600; {{a.style}}">{{a.name}}</button></sc-for>
+            </div>
+          </fieldset>
+          <fieldset style="margin: 0; padding: 0; border: 0; display: flex; flex-direction: column; gap: 12px">
+            <legend style="padding: 0; margin-bottom: 4px; font-size: 16px; line-height: 24px; font-weight: 600">How many clients do you manage?</legend>
+            <div style="display: flex; flex-wrap: wrap; gap: 8px">
+              <sc-for list="{{clientCounts}}" as="b" hint-placeholder-count="4"><button type="button" aria-pressed="{{b.on}}" onClick="{{b.pick}}" style="min-height: 44px; padding: 0 16px; border-radius: 999px; font-size: 14px; line-height: 20px; font-weight: 600; font-variant-numeric: tabular-nums; {{b.style}}">{{b.name}}</button></sc-for>
+            </div>
+            <span style="font-size: 14px; line-height: 20px; color: {{t.muted}}">This helps us suggest the right plan. It does not limit anything.</span>
+          </fieldset>
+        </div>
+      </sc-if>
+
+      <!-- ===== 1c. HOW CUSTOMERS BUY ===== -->
+      <sc-if value="{{scr.buy}}" hint-placeholder-val="{{ false }}">
+        <h1 class="mp-h1" style="margin: 0; font-family: 'Anek Latin', 'Anek Devanagari', sans-serif; font-size: 30px; line-height: 38px; font-weight: 700; letter-spacing: -0.005em">How do customers buy from you?</h1>
+        <p style="margin: 8px 0 32px; font-size: 16px; line-height: 26px; color: {{t.body}}">Pick all that apply. This decides what your posts ask people to do.</p>
+        <div role="group" aria-label="How customers buy from you" class="mp-cols2 mp-bento" style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px">
+          <sc-for list="{{buys}}" as="o" hint-placeholder-count="3">
+            <button type="button" role="checkbox" aria-checked="{{o.on}}" onClick="{{o.toggle}}" style="position: relative; display: flex; flex-direction: column; align-items: flex-start; gap: 16px; padding: 20px; border-radius: 16px; text-align: left; color: {{t.text}}; {{o.span}} {{o.card}}">
+              <span style="display: flex; align-items: center; justify-content: center; width: {{o.ic}}px; height: {{o.ic}}px; flex: 0 0 auto; border-radius: 12px; {{o.icon}}">
+                <sc-if value="{{o.isGlobe}}" hint-placeholder-val="{{ true }}"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M3 12h18"></path><path d="M12 3a14 14 0 0 1 0 18 14 14 0 0 1 0-18z"></path></svg></sc-if>
+                <sc-if value="{{o.isShop}}" hint-placeholder-val="{{ false }}"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 9l1.5-5h15L21 9"></path><path d="M3 9h18v2a3 3 0 0 1-6 0 3 3 0 0 1-6 0 3 3 0 0 1-6 0z"></path><path d="M5 13v7h14v-7"></path><path d="M10 20v-4h4v4"></path></svg></sc-if>
+                <sc-if value="{{o.isChat}}" hint-placeholder-val="{{ false }}"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.4 8.4 0 0 1-12.3 7.5L3 21l2-5.7A8.5 8.5 0 1 1 21 11.5z"></path></svg></sc-if>
+              </span>
+              <span aria-hidden="true" style="position: absolute; top: 20px; right: 20px; width: 24px; height: 24px; box-sizing: border-box; border-radius: 8px; display: flex; align-items: center; justify-content: center; {{o.box}}"><sc-if value="{{o.on}}" hint-placeholder-val="{{ false }}"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg></sc-if></span>
+              <span style="display: flex; flex-direction: column; gap: 4px; padding-right: 32px"><span style="font-size: {{o.tSize}}; font-weight: 600">{{o.title}}</span><span style="font-size: 14px; line-height: 20px; color: {{t.body}}">{{o.desc}}</span></span>
+              <span style="margin-top: auto; align-self: stretch; display: flex; flex-direction: column; gap: 4px; padding-top: 12px; border-top: 1px solid {{o.rule}}">
+                <span style="font-size: 12px; line-height: 16px; font-weight: 600; letter-spacing: 0.01em; color: {{t.muted}}">{{o.ctaLabel}}</span>
+                <span style="font-size: 14px; line-height: 20px; font-weight: 600; {{o.ctaStyle}}">{{o.cta}}</span>
+              </span>
+            </button>
+          </sc-for>
+        </div>
+        <p aria-live="polite" style="margin: 16px 0 0; font-size: 14px; line-height: 20px; color: {{t.muted}}">{{buyNote}}</p>
+      </sc-if>
+
+      <!-- ===== 2. YOUR LINK ===== -->
+      <sc-if value="{{scr.link}}" hint-placeholder-val="{{ false }}">
+        <h1 class="mp-h1" style="margin: 0; font-family: 'Anek Latin', 'Anek Devanagari', sans-serif; font-size: 30px; line-height: 38px; font-weight: 700; letter-spacing: -0.005em">{{c.linkTitle}}</h1>
+        <p style="margin: 8px 0 32px; font-size: 16px; line-height: 26px; color: {{t.body}}">{{c.linkSub}}</p>
+        <div style="display: flex; flex-direction: column; gap: 16px">
+          <sc-for list="{{links}}" as="l" hint-placeholder-count="1">
+            <div style="display: flex; flex-direction: column; gap: 8px">
+              <label for="{{l.id}}" style="font-size: 14px; line-height: 20px; font-weight: 500">{{l.label}}</label>
+              <div style="display: flex; align-items: center; gap: 12px; min-height: 52px; padding: 0 16px; border-radius: 12px; border: 1px solid {{t.inputBorder}}; background: {{t.surface}}">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="{{t.muted}}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.5.5l3-3a5 5 0 0 0-7-7l-1.7 1.7"></path><path d="M14 11a5 5 0 0 0-7.5-.5l-3 3a5 5 0 0 0 7 7l1.7-1.7"></path></svg>
+                <input id="{{l.id}}" type="url" inputmode="url" autocomplete="url" value="{{l.value}}" onChange="{{l.change}}" placeholder="{{l.ph}}" style="flex: 1 1 auto; min-width: 0; height: 50px; border: 0; outline: none; background: transparent; font-size: 16px; color: {{t.text}}">
+                <sc-if value="{{l.extra}}" hint-placeholder-val="{{ false }}"><button type="button" onClick="{{l.remove}}" aria-label="{{l.removeLabel}}" title="Remove" style="flex: 0 0 44px; width: 44px; height: 44px; margin-right: -12px; display: flex; align-items: center; justify-content: center; padding: 0; border: 0; border-radius: 8px; background: transparent; color: {{t.muted}}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"></path></svg></button></sc-if>
+              </div>
+              <sc-if value="{{l.found}}" hint-placeholder-val="{{ true }}">
+                <span style="display: flex; align-items: center; gap: 8px; font-size: 14px; line-height: 20px; font-weight: 500; color: {{t.okFg}}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg>{{l.kind}} found</span>
+              </sc-if>
+            </div>
+          </sc-for>
+          <sc-if value="{{canAddLink}}" hint-placeholder-val="{{ true }}">
+            <button type="button" onClick="{{addLink}}" style="align-self: flex-start; min-height: 44px; display: flex; align-items: center; gap: 8px; border: 0; background: transparent; font-size: 14px; line-height: 20px; font-weight: 600; color: {{t.link}}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg>{{addLinkText}}</button>
+          </sc-if>
+          <sc-if value="{{c.mapsTip}}" hint-placeholder-val="{{ false }}">
+            <button type="button" aria-expanded="{{tipOpen}}" onClick="{{toggleTip}}" style="align-self: flex-start; min-height: 44px; border: 0; background: transparent; display: flex; align-items: center; gap: 8px; font-size: 14px; line-height: 20px; font-weight: 600; color: {{t.link}}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21z"></path><circle cx="12" cy="9.5" r="2.5"></circle></svg>Where do I find my Google Maps link?</button>
+            <sc-if value="{{tipOpen}}" hint-placeholder-val="{{ false }}">
+              <ol style="margin: 0; padding: 16px 16px 16px 40px; border-radius: 12px; border: 1px solid {{t.border}}; background: {{t.surface}}; display: flex; flex-direction: column; gap: 8px; font-size: 14px; line-height: 20px; color: {{t.body}}"><li>Open Google Maps and search for your shop’s name.</li><li>Tap your shop, then tap <b style="color: {{t.text}}">Share</b>.</li><li>Tap <b style="color: {{t.text}}">Copy link</b> and paste it above.</li></ol>
+            </sc-if>
+          </sc-if>
+          <div style="display: flex; align-items: flex-start; gap: 12px; padding: 16px; border-radius: 12px; background: {{t.surface2}}; font-size: 14px; line-height: 20px; color: {{t.body}}">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex: 0 0 20px"><rect x="5" y="11" width="14" height="10" rx="2"></rect><path d="M8 11V7a4 4 0 0 1 8 0v4"></path></svg>
+            <span>We only read public pages. Nothing is posted until you approve it.</span>
+          </div>
+          <div style="display: flex; align-items: center; gap: 12px; margin-top: 8px; font-size: 14px; color: {{t.muted}}"><span style="flex: 1 1 auto; height: 1px; background: {{t.border}}"></span>or<span style="flex: 1 1 auto; height: 1px; background: {{t.border}}"></span></div>
+          <button type="button" onClick="{{goManual}}" style="min-height: 52px; border-radius: 12px; border: 1px solid {{t.inputBorder}}; background: transparent; font-size: 16px; line-height: 24px; font-weight: 600; color: {{t.text}}">{{c.noLink}}</button>
+          <sc-if value="{{c.skipClient}}" hint-placeholder-val="{{ false }}"><button type="button" onClick="{{skipClient}}" style="align-self: center; min-height: 44px; border: 0; background: transparent; font-size: 14px; line-height: 20px; font-weight: 600; color: {{t.link}}; text-decoration: underline">{{c.skipClient}}</button></sc-if>
+        </div>
+      </sc-if>
+
+      <!-- ===== 2b. MANUAL ===== -->
+      <sc-if value="{{scr.manual}}" hint-placeholder-val="{{ false }}">
+        <h1 class="mp-h1" style="margin: 0; font-family: 'Anek Latin', 'Anek Devanagari', sans-serif; font-size: 30px; line-height: 38px; font-weight: 700; letter-spacing: -0.005em">{{c.manTitle}}</h1>
+        <p style="margin: 8px 0 32px; font-size: 16px; line-height: 26px; color: {{t.body}}">{{c.manSub}}</p>
+        <div style="display: flex; flex-direction: column; gap: 24px">
+          <div style="display: flex; flex-direction: column; gap: 8px"><label for="mp-name" style="font-size: 14px; line-height: 20px; font-weight: 500">{{c.manName}}</label><input id="mp-name" type="text" autocomplete="organization" value="{{f.name}}" onChange="{{fset.name}}" style="min-height: 52px; box-sizing: border-box; padding: 0 16px; border-radius: 12px; border: 1px solid {{t.inputBorder}}; background: {{t.surface}}; color: {{t.text}}; font-size: 16px"></div>
+          <div style="display: flex; flex-direction: column; gap: 8px"><label for="mp-kind" style="font-size: 14px; line-height: 20px; font-weight: 500">{{c.manKind}}</label><div style="position: relative; display: flex"><select id="mp-kind" value="{{f.kind}}" onChange="{{fset.kind}}" style="width: 100%; min-height: 52px; box-sizing: border-box; padding: 0 48px 0 16px; appearance: none; -webkit-appearance: none; -moz-appearance: none; cursor: pointer; border-radius: 12px; border: 1px solid {{t.inputBorder}}; background: {{t.surface}}; color: {{t.text}}; font-size: 16px"><sc-for list="{{c.kinds}}" as="k" hint-placeholder-count="5"><option>{{k}}</option></sc-for></select><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="{{t.muted}}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="position: absolute; right: 16px; top: 50%; margin-top: -10px; pointer-events: none"><path d="m6 9 6 6 6-6"></path></svg></div></div>
+          <div style="display: flex; flex-direction: column; gap: 8px"><label for="mp-sell" style="font-size: 14px; line-height: 20px; font-weight: 500">{{c.manSell}}</label><textarea id="mp-sell" rows="3" aria-describedby="mp-sell-help" style="box-sizing: border-box; padding: 12px 16px; border-radius: 12px; border: 1px solid {{t.inputBorder}}; background: {{t.surface}}; color: {{t.text}}; font-size: 16px; line-height: 26px; resize: vertical" value="{{f.sell}}" onChange="{{fset.sell}}"></textarea><span id="mp-sell-help" style="font-size: 14px; line-height: 20px; color: {{t.muted}}">One or two sentences is enough.</span></div>
+          <div class="mp-cols2" style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px">
+            <div style="display: flex; flex-direction: column; gap: 8px"><label for="mp-city" style="font-size: 14px; line-height: 20px; font-weight: 500">City</label><input id="mp-city" type="text" autocomplete="address-level2" value="{{f.city}}" onChange="{{fset.city}}" style="min-height: 52px; box-sizing: border-box; padding: 0 16px; border-radius: 12px; border: 1px solid {{t.inputBorder}}; background: {{t.surface}}; color: {{t.text}}; font-size: 16px"></div>
+            <div style="display: flex; flex-direction: column; gap: 8px"><label for="mp-wa" style="font-size: 14px; line-height: 20px; font-weight: 500">{{c.manExtra}} <span style="font-weight: 400; color: {{t.muted}}">(optional)</span></label><input id="mp-wa" type="text" value="{{f.extra}}" onChange="{{fset.extra}}" placeholder="{{c.manExtraPh}}" style="min-height: 52px; box-sizing: border-box; padding: 0 16px; border-radius: 12px; border: 1px solid {{t.inputBorder}}; background: {{t.surface}}; color: {{t.text}}; font-size: 16px; font-variant-numeric: tabular-nums"></div>
+          </div>
+          <fieldset style="margin: 8px 0 0; padding: 24px 0 0; border: 0; border-top: 1px solid {{t.border}}; display: flex; flex-direction: column; gap: 16px">
+            <legend style="padding: 0; float: left; width: 100%; font-size: 16px; line-height: 24px; font-weight: 600">{{c.lookTitle}} <span style="font-weight: 400; color: {{t.muted}}">(optional)</span></legend>
+            <span style="font-size: 14px; line-height: 20px; color: {{t.body}}">{{c.lookSub}}</span>
+            <div style="display: flex; align-items: center; gap: 16px; flex-wrap: wrap; padding: 16px; border-radius: 16px; border: 1px dashed {{t.inputBorder}}; background: {{t.surface}}">
+              <span style="width: 48px; height: 48px; flex: 0 0 48px; border-radius: 12px; background: {{t.surface2}}; display: flex; align-items: center; justify-content: center"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h3l2-3h6l2 3h3v11H4z"></path><circle cx="12" cy="13" r="3.5"></circle></svg></span>
+              <span style="flex: 1 1 220px; display: flex; flex-direction: column; gap: 4px"><span style="font-size: 16px; line-height: 24px; font-weight: 600">{{c.uploadTitle}}</span><span style="font-size: 14px; line-height: 20px; color: {{t.body}}">{{uploadNote}}</span></span>
+              <button type="button" onClick="{{uploadLook}}" style="min-height: 44px; padding: 0 16px; border-radius: 12px; border: 1px solid {{t.inputBorder}}; background: transparent; font-size: 14px; line-height: 20px; font-weight: 600; color: {{t.text}}">{{uploadBtn}}</button>
+            </div>
+          </fieldset>
+        </div>
+      </sc-if>
+
+      <!-- ===== 3a. READING ===== -->
+      <sc-if value="{{scr.reading}}" hint-placeholder-val="{{ false }}">
+        <div style="display: flex; flex-direction: column; align-items: center; text-align: center; gap: 8px">
+          <span style="font-size: 14px; line-height: 20px; font-weight: 500; color: {{t.muted}}">Step {{stepNo}} of {{stepTotal}} · {{stepName}}</span>
+          <h1 class="mp-h1" style="margin: 0; font-family: 'Anek Latin', 'Anek Devanagari', sans-serif; font-size: 30px; line-height: 38px; font-weight: 700; letter-spacing: -0.005em; overflow-wrap: anywhere">{{readTitleNow}}</h1>
+          <p role="status" aria-live="polite" style="margin: 8px 0 0; height: 24px; max-width: 100%; display: flex; align-items: center; justify-content: center; gap: 12px; font-size: 16px; line-height: 24px; font-weight: 600; white-space: nowrap; overflow: hidden"><svg class="mp-spin" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="{{t.link}}" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M12 3a9 9 0 1 1-9 9"></path></svg>{{readNow}}</p>
+        </div>
+        <div style="width: 100%; max-width: 480px; margin: 20px auto 0; display: flex; flex-direction: column; gap: 8px">
+          <div role="progressbar" aria-label="Reading progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="{{readPct}}" style="height: 8px; border-radius: 4px; background: {{t.border}}; overflow: hidden"><span style="display: block; height: 8px; border-radius: 4px; background: {{t.prog}}; transition: width 600ms ease; width: {{readPct}}%"></span></div>
+          <span style="display: flex; justify-content: space-between; font-size: 14px; line-height: 20px; color: {{t.muted}}; font-variant-numeric: tabular-nums"><span>{{readPct}}% done</span><span>{{readLeft}}</span></span>
+        </div>
+        <div aria-hidden="true" style="width: 100%; max-width: 480px; margin: 20px auto 0; border-radius: 16px; border: 1px solid {{t.border}}; background: {{t.surface}}; overflow: hidden; box-shadow: 0 24px 48px -28px rgba(22,34,43,0.35)">
+          <div style="height: 56px; background: {{rc.band}}; transition: background 600ms ease"></div>
+          <div style="padding: 0 20px 20px; display: flex; flex-direction: column; gap: 12px; text-align: left">
+            <span style="width: 56px; height: 56px; margin-top: -28px; box-sizing: border-box; border: 4px solid {{t.surface}}; display: flex; align-items: center; justify-content: center; font-family: 'Anek Latin', sans-serif; font-size: 24px; line-height: 32px; font-weight: 700; {{rc.logo}}">{{rc.initials}}</span>
+            <div style="height: 52px"><sc-if value="{{rc.got1}}" hint-placeholder-val="{{ true }}"><span class="mp-fadein" style="display: flex; flex-direction: column; gap: 4px"><span style="font-size: 20px; line-height: 28px; font-weight: 600">{{c.name}}</span><span style="font-size: 14px; line-height: 20px; color: {{t.muted}}">{{c.siteShort}}</span></span></sc-if>
+            <sc-if value="{{rc.no1}}" hint-placeholder-val="{{ false }}"><span style="display: flex; flex-direction: column; gap: 8px; padding-top: 4px"><span class="mp-shimmer" style="width: 60%; height: 20px; border-radius: 4px; background: {{t.surface2}}"></span><span class="mp-shimmer" style="width: 40%; height: 14px; border-radius: 4px; background: {{t.surface2}}"></span></span></sc-if></div>
+            <sc-for list="{{rc.rows}}" as="rr" hint-placeholder-count="4">
+              <div style="display: flex; flex-direction: column; gap: 4px; padding-top: 12px; border-top: 1px solid {{t.border}}">
+                <span style="font-size: 14px; line-height: 20px; color: {{t.muted}}">{{rr.label}}</span>
+                <div style="height: 28px; overflow: hidden">
+                <sc-if value="{{rr.got}}" hint-placeholder-val="{{ true }}">
+                  <span class="mp-fadein" style="display: flex; flex-wrap: nowrap; align-items: center; gap: 8px; white-space: nowrap">
+                    <sc-if value="{{rr.isColours}}" hint-placeholder-val="{{ false }}"><span style="display: flex; gap: 8px"><sc-for list="{{c.colours}}" as="sw" hint-placeholder-count="3"><span style="width: 28px; height: 28px; border-radius: 8px; background: {{sw}}; box-shadow: inset 0 0 0 1px rgba(0,0,0,0.12)"></span></sc-for></span></sc-if>
+                    <sc-for list="{{rr.chips}}" as="c" hint-placeholder-count="3"><span style="padding: 4px 12px; border-radius: 999px; background: {{t.surface2}}; font-size: 14px; line-height: 20px">{{c}}</span></sc-for>
+                  </span>
+                </sc-if>
+                <sc-if value="{{rr.wait}}" hint-placeholder-val="{{ false }}"><span class="mp-shimmer" style="display: block; width: {{rr.w}}; height: 28px; border-radius: 8px; background: {{t.surface2}}"></span></sc-if>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+        <div style="display: flex; justify-content: center; flex-wrap: wrap; gap: 0 24px; margin-top: 12px">
+          <button type="button" onClick="{{goManual}}" style="min-height: 44px; border: 0; background: transparent; font-size: 14px; line-height: 20px; font-weight: 600; color: {{t.link}}; text-decoration: underline">{{c.tooLong}}</button>
+          <button type="button" onClick="{{back}}" style="min-height: 44px; border: 0; background: transparent; font-size: 14px; line-height: 20px; font-weight: 600; color: {{t.link}}; text-decoration: underline">Change my link</button>
+        </div>
+      </sc-if>
+
+      <!-- ===== 3b. REVIEW ===== -->
+      <sc-if value="{{scr.review}}" hint-placeholder-val="{{ false }}">
+        <h1 class="mp-h1" style="margin: 0; font-family: 'Anek Latin', 'Anek Devanagari', sans-serif; font-size: 30px; line-height: 38px; font-weight: 700; letter-spacing: -0.005em">{{c.revTitle}}</h1>
+        <p style="margin: 8px 0 24px; font-size: 16px; line-height: 26px; color: {{t.body}}">{{c.revSub}}</p>
+        <sc-if value="{{hasChecks}}" hint-placeholder-val="{{ true }}">
+          <div role="status" style="display: flex; align-items: center; gap: 12px; padding: 12px 16px; margin-bottom: 24px; border-radius: 12px; background: {{t.warnBg}}; color: {{t.warnFg}}; font-size: 14px; line-height: 20px; font-weight: 600"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 8v5M12 16h.01"></path></svg>{{checksLine}}</div>
+        </sc-if>
+        <div style="display: flex; flex-direction: column; gap: 24px">
+          <!-- Brand identity -->
+          <section aria-labelledby="sec-brand" style="padding: 24px; border-radius: 16px; border: 1px solid {{t.border}}; background: {{t.surface}}; display: flex; flex-direction: column; gap: 20px">
+            <h2 id="sec-brand" style="margin: 0; font-size: 20px; line-height: 28px; font-weight: 600">{{c.brandSec}}</h2>
+            <div style="display: flex; align-items: center; gap: 16px; flex-wrap: wrap">
+              <span style="width: 64px; height: 64px; flex: 0 0 64px; border-radius: {{c.logoRadius}}; background: {{c.c1}}; color: {{c.ink}}; display: flex; align-items: center; justify-content: center; font-family: 'Anek Latin', sans-serif; font-size: 24px; line-height: 32px; font-weight: 700">{{c.initials}}</span>
+              <span style="flex: 1 1 200px; display: flex; flex-direction: column; gap: 4px"><span style="font-size: 18px; line-height: 26px; font-weight: 600">{{c.name}}</span><span style="font-size: 14px; line-height: 20px; color: {{t.muted}}">{{c.logoNote}}</span></span>
+              <button type="button" style="min-height: 44px; padding: 0 16px; border-radius: 12px; border: 1px solid {{t.inputBorder}}; background: transparent; font-size: 14px; line-height: 20px; font-weight: 600; color: {{t.text}}">{{c.changeLogo}}</button>
+            </div>
+            <div class="mp-cols2" style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px">
+              <div style="display: flex; flex-direction: column; gap: 8px"><span style="font-size: 14px; line-height: 20px; font-weight: 500; color: {{t.muted}}">{{c.colourLabel}}</span><span style="display: flex; gap: 8px; align-items: center"><sc-for list="{{c.colours}}" as="sw" hint-placeholder-count="3"><span style="width: 32px; height: 32px; border-radius: 8px; background: {{sw}}; box-shadow: inset 0 0 0 1px rgba(0,0,0,0.12)"></span></sc-for><span style="font-size: 14px; line-height: 20px; color: {{t.body}}">{{c.colourNames}}</span></span></div>
+              <div style="display: flex; flex-direction: column; gap: 8px"><span style="font-size: 14px; line-height: 20px; font-weight: 500; color: {{t.muted}}">{{c.fontLabel}}</span><span style="font-size: 16px; line-height: 26px">{{c.fontVal}}</span></div>
+            </div>
+          </section>
+
+          <!-- Business + customers -->
+          <sc-for list="{{sections}}" as="sec" hint-placeholder-count="2">
+            <section style="padding: 8px 24px; border-radius: 16px; border: 1px solid {{t.border}}; background: {{t.surface}}; display: flex; flex-direction: column">
+              <h2 style="margin: 16px 0 8px; font-size: 20px; line-height: 28px; font-weight: 600">{{sec.title}}</h2>
+              <sc-for list="{{sec.rows}}" as="row" hint-placeholder-count="4">
+                <div style="display: flex; gap: 16px; padding: 16px 0; border-top: 1px solid {{t.border}}">
+                  <div style="flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; gap: 8px">
+                    <span style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap"><span style="font-size: 14px; line-height: 20px; font-weight: 500; color: {{t.muted}}">{{row.label}}</span><span style="display: inline-flex; align-items: center; gap: 4px; padding: 0 8px; border-radius: 999px; font-size: 12px; line-height: 20px; font-weight: 500; {{row.tagStyle}}">{{row.tag}}</span></span>
+                    <sc-if value="{{row.view}}" hint-placeholder-val="{{ true }}">
+                      <sc-if value="{{row.isText}}" hint-placeholder-val="{{ true }}"><span style="font-size: 16px; line-height: 26px">{{row.value}}</span></sc-if>
+                      <sc-if value="{{row.isChips}}" hint-placeholder-val="{{ false }}"><span style="display: flex; flex-wrap: wrap; gap: 8px"><sc-for list="{{row.chips}}" as="c" hint-placeholder-count="3"><span style="padding: 4px 12px; border-radius: 999px; background: {{t.surface2}}; font-size: 14px; line-height: 20px">{{c}}</span></sc-for></span></sc-if>
+                    </sc-if>
+                    <sc-if value="{{row.editing}}" hint-placeholder-val="{{ false }}">
+                      <div style="display: flex; flex-direction: column; gap: 12px; margin-top: 4px">
+                        <sc-if value="{{row.eText}}" hint-placeholder-val="{{ false }}"><textarea id="{{row.id}}" aria-label="{{row.label}}" rows="3" value="{{row.draft}}" onChange="{{row.onDraft}}" style="box-sizing: border-box; width: 100%; padding: 12px 16px; border-radius: 12px; border: 1px solid {{t.inputBorder}}; background: {{t.surface}}; color: {{t.text}}; font-size: 16px; line-height: 26px; resize: vertical"></textarea></sc-if>
+                        <sc-if value="{{row.eTel}}" hint-placeholder-val="{{ false }}"><input id="{{row.id}}" aria-label="{{row.label}}" type="tel" inputmode="tel" value="{{row.draft}}" onChange="{{row.onDraft}}" style="width: 100%; min-height: 52px; box-sizing: border-box; padding: 0 16px; border-radius: 12px; border: 1px solid {{t.inputBorder}}; background: {{t.surface}}; color: {{t.text}}; font-size: 16px"></sc-if>
+                        <sc-if value="{{row.eSelect}}" hint-placeholder-val="{{ false }}"><div style="position: relative; display: flex"><select id="{{row.id}}" aria-label="{{row.label}}" value="{{row.draft}}" onChange="{{row.onDraft}}" style="width: 100%; padding-right: 48px; appearance: none; -webkit-appearance: none; cursor: pointer; min-height: 52px; box-sizing: border-box; padding: 0 16px; border-radius: 12px; border: 1px solid {{t.inputBorder}}; background: {{t.surface}}; color: {{t.text}}; font-size: 16px"><sc-for list="{{row.options}}" as="opt" hint-placeholder-count="4"><option value="{{opt}}">{{opt}}</option></sc-for></select><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="{{t.muted}}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="position: absolute; right: 16px; top: 50%; margin-top: -10px; pointer-events: none"><path d="m6 9 6 6 6-6"></path></svg></div></sc-if>
+                        <sc-if value="{{row.eContact}}" hint-placeholder-val="{{ false }}">
+                          <div class="mp-cols2" style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px">
+                            <label style="display: flex; flex-direction: column; gap: 8px"><span style="font-size: 14px; line-height: 20px; font-weight: 500">Email</span><input type="email" inputmode="email" autocomplete="email" value="{{row.email}}" onChange="{{row.onEmail}}" style="min-height: 52px; box-sizing: border-box; padding: 0 16px; border-radius: 12px; border: 1px solid {{t.inputBorder}}; background: {{t.surface}}; color: {{t.text}}; font-size: 16px"></label>
+                            <label style="display: flex; flex-direction: column; gap: 8px"><span style="font-size: 14px; line-height: 20px; font-weight: 500">WhatsApp number</span><input type="tel" inputmode="tel" value="{{row.wa}}" onChange="{{row.onWa}}" style="min-height: 52px; box-sizing: border-box; padding: 0 16px; border-radius: 12px; border: 1px solid {{t.inputBorder}}; background: {{t.surface}}; color: {{t.text}}; font-size: 16px; font-variant-numeric: tabular-nums"></label>
+                          </div>
+                        </sc-if>
+                        <sc-if value="{{row.eChips}}" hint-placeholder-val="{{ false }}">
+                          <div style="display: flex; flex-direction: column; gap: 12px">
+                            <div role="list" aria-label="{{row.label}}" style="display: flex; flex-wrap: wrap; gap: 8px"><sc-for list="{{row.dchips}}" as="dc" hint-placeholder-count="3"><span role="listitem" style="display: inline-flex; align-items: center; min-height: 44px; padding: 0 0 0 16px; border-radius: 999px; background: {{t.surface2}}; font-size: 14px; line-height: 20px; font-weight: 500">{{dc.name}}<button type="button" onClick="{{dc.remove}}" aria-label="{{dc.aria}}" style="width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; padding: 0; border: 0; border-radius: 999px; background: transparent; color: {{t.muted}}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"></path></svg></button></span></sc-for></div>
+                            <div style="display: flex; gap: 8px"><input id="{{row.id}}-add" aria-label="Add to {{row.label}}" value="{{row.addVal}}" onChange="{{row.onAdd}}" placeholder="{{row.addPh}}" style="flex: 1 1 auto; min-width: 0; min-height: 52px; box-sizing: border-box; padding: 0 16px; border-radius: 12px; border: 1px solid {{t.inputBorder}}; background: {{t.surface}}; color: {{t.text}}; font-size: 16px"><button type="button" onClick="{{row.addChip}}" style="flex: 0 0 auto; min-height: 52px; padding: 0 20px; border-radius: 12px; border: 1px solid {{t.inputBorder}}; background: {{t.surface}}; color: {{t.text}}; font-size: 16px; line-height: 24px; font-weight: 600">Add</button></div>
+                          </div>
+                        </sc-if>
+                        <div style="display: flex; align-items: center; gap: 8px">
+                          <button type="button" onClick="{{row.done}}" style="min-height: 44px; padding: 0 20px; border: 0; border-radius: 12px; background: {{t.cta}}; color: {{t.onCta}}; font-size: 14px; line-height: 20px; font-weight: 600">Save</button>
+                          <button type="button" onClick="{{row.cancel}}" style="min-height: 44px; padding: 0 16px; border: 0; border-radius: 12px; background: transparent; color: {{t.link}}; font-size: 14px; line-height: 20px; font-weight: 600">Cancel</button>
+                        </div>
+                      </div>
+                    </sc-if>
+                  </div>
+                  <sc-if value="{{row.view}}" hint-placeholder-val="{{ true }}">
+                    <button type="button" onClick="{{row.edit}}" aria-label="{{row.editLabel}}" style="flex: 0 0 auto; align-self: flex-start; min-width: 44px; min-height: 44px; padding: 0 12px; border-radius: 12px; border: 0; background: transparent; display: flex; align-items: center; justify-content: center; gap: 8px; color: {{t.link}}; font-size: 14px; line-height: 20px; font-weight: 600"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9"></path><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"></path></svg><span class="mp-icon-sm">Edit</span></button>
+                  </sc-if>
+                </div>
+              </sc-for>
+              <sc-if value="{{sec.hasMore}}" hint-placeholder-val="{{ false }}">
+                <button type="button" onClick="{{sec.toggleMore}}" style="align-self: flex-start; min-height: 44px; margin-bottom: 8px; border: 0; background: transparent; display: flex; align-items: center; gap: 8px; font-size: 14px; line-height: 20px; font-weight: 600; color: {{t.link}}">{{sec.moreLabel}}</button>
+              </sc-if>
+              <span style="height: 8px"></span>
+            </section>
+          </sc-for>
+
+          <!-- Social -->
+          <section aria-labelledby="sec-social" style="padding: 24px; border-radius: 16px; border: 1px solid {{t.border}}; background: {{t.surface}}; display: flex; flex-direction: column; gap: 4px">
+            <h2 id="sec-social" style="margin: 0; font-size: 20px; line-height: 28px; font-weight: 600">{{c.socialTitle}}</h2>
+            <p style="margin: 0 0 8px; font-size: 14px; line-height: 20px; color: {{t.muted}}">{{c.socialSub}}</p>
+            <sc-for list="{{socials}}" as="so" hint-placeholder-count="3">
+              <div style="display: flex; align-items: center; gap: 16px; padding: 12px 0; border-top: 1px solid {{t.border}}">
+                <span style="width: 40px; height: 40px; flex: 0 0 40px; border-radius: 999px; background: {{t.surface2}}; display: flex; align-items: center; justify-content: center"><sc-if value="{{so.isIG}}" hint-placeholder-val="{{ true }}"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"></rect><circle cx="12" cy="12" r="4"></circle><path d="M17.5 6.5h.01"></path></svg></sc-if><sc-if value="{{so.isFB}}" hint-placeholder-val="{{ false }}"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h-2a4 4 0 0 0-4 4v3H7v4h2v7h4v-7h3l1-4h-4V7a1 1 0 0 1 1-1h2z"></path></svg></sc-if><sc-if value="{{so.isYT}}" hint-placeholder-val="{{ false }}"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="5" width="20" height="14" rx="4"></rect><path d="m10 9 5 3-5 3z"></path></svg></sc-if><sc-if value="{{so.isWA}}" hint-placeholder-val="{{ false }}"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.4 8.4 0 0 1-12.3 7.5L3 21l2-5.7A8.5 8.5 0 1 1 21 11.5z"></path></svg></sc-if></span>
+                <span style="flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column"><span style="font-size: 16px; line-height: 24px; font-weight: 600">{{so.name}}</span><span style="font-size: 14px; line-height: 20px; color: {{t.muted}}; overflow-wrap: anywhere">{{so.handle}}</span></span>
+                <button type="button" role="switch" aria-checked="{{so.on}}" aria-label="{{so.aria}}" onClick="{{so.toggle}}" style="flex: 0 0 auto; min-width: 52px; min-height: 44px; border: 0; background: transparent; display: flex; align-items: center; justify-content: center"><span style="width: 44px; height: 24px; border-radius: 999px; position: relative; display: block; {{so.track}}"><span style="position: absolute; top: 2px; width: 20px; height: 20px; border-radius: 999px; {{so.knob}}"></span></span></button>
+              </div>
+            </sc-for>
+          </section>
+
+          <!-- Products -->
+          <section aria-labelledby="sec-products" style="padding: 24px; border-radius: 16px; border: 1px solid {{t.border}}; background: {{t.surface}}; display: flex; flex-direction: column; gap: 16px">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; flex-wrap: wrap">
+              <span style="display: flex; flex-direction: column"><h2 id="sec-products" style="margin: 0; font-size: 20px; line-height: 28px; font-weight: 600">{{c.prodTitle}} ({{prodCount}})</h2><span style="font-size: 14px; line-height: 20px; color: {{t.muted}}">{{prodPicked}} {{c.prodSub}}</span></span>
+              <button type="button" onClick="{{toggleAll}}" style="min-height: 44px; padding: 0 16px; border-radius: 12px; border: 1px solid {{t.inputBorder}}; background: transparent; font-size: 14px; line-height: 20px; font-weight: 600; color: {{t.text}}">{{allLabel}}</button>
+            </div>
+            <div class="mp-grid4" style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px">
+              <sc-for list="{{products}}" as="pr" hint-placeholder-count="8">
+                <button type="button" role="checkbox" aria-checked="{{pr.on}}" onClick="{{pr.toggle}}" style="display: flex; flex-direction: column; gap: 8px; padding: 8px 8px 12px; border-radius: 12px; text-align: left; {{pr.card}}">
+                  <span style="position: relative; display: block; aspect-ratio: 1 / 1; border-radius: 8px; background: {{pr.bg}}">
+                    <sc-if value="{{pr.hanger}}" hint-placeholder-val="{{ true }}"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="{{pr.ink}}" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="position: absolute; left: 50%; top: 50%; margin: -16px 0 0 -16px; opacity: 0.8"><path d="M12 6a2 2 0 1 1 2-2"></path><path d="M12 6v2L3 15h18l-9-7"></path></svg></sc-if><sc-if value="{{pr.gift}}" hint-placeholder-val="{{ false }}"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="{{pr.ink}}" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="position: absolute; left: 50%; top: 50%; margin: -16px 0 0 -16px; opacity: 0.8"><rect x="3" y="8" width="18" height="13" rx="2"></rect><path d="M3 12h18M12 8v13"></path><path d="M12 8c-2-4-6-4-6-1.5S9 8 12 8c3 0 6-1 6-1.5S14 4 12 8z"></path></svg></sc-if><sc-if value="{{pr.pan}}" hint-placeholder-val="{{ false }}"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="{{pr.ink}}" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="position: absolute; left: 50%; top: 50%; margin: -16px 0 0 -16px; opacity: 0.8"><path d="M3 11h14a0 0 0 0 1 0 0 7 7 0 0 1-7 7 7 7 0 0 1-7-7z"></path><path d="M17 12h4"></path><path d="M8 4v3M11 3v4M14 4v3"></path></svg></sc-if>
+                    <span aria-hidden="true" style="position: absolute; top: 8px; right: 8px; width: 24px; height: 24px; box-sizing: border-box; border-radius: 8px; display: flex; align-items: center; justify-content: center; {{pr.box}}"><sc-if value="{{pr.on}}" hint-placeholder-val="{{ true }}"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg></sc-if></span>
+                  </span>
+                  <span style="padding: 0 4px; font-size: 14px; line-height: 20px; font-weight: 600">{{pr.name}}</span>
+                  <span style="padding: 0 4px; font-size: 14px; line-height: 20px; font-variant-numeric: tabular-nums; {{pr.priceStyle}}">{{pr.price}}</span>
+                </button>
+              </sc-for>
+            </div>
+            <sc-if value="{{c.prodActions}}" hint-placeholder-val="{{ false }}">
+              <div class="mp-cols2" style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px">
+                <button type="button" onClick="{{goProducts}}" style="min-height: 52px; padding: 0 16px; border-radius: 12px; border: 1px solid {{t.inputBorder}}; background: transparent; display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 14px; line-height: 20px; font-weight: 600; color: {{t.text}}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h3l2-3h6l2 3h3v11H4z"></path><circle cx="12" cy="13" r="3.5"></circle></svg>Add products with photos</button>
+                <button type="button" onClick="{{goProducts}}" style="min-height: 52px; padding: 0 16px; border-radius: 12px; border: 1px solid {{t.inputBorder}}; background: transparent; display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 14px; line-height: 20px; font-weight: 600; color: {{t.text}}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h9l4 4v14H6z"></path><path d="M9 11h7M9 15h7"></path></svg>Upload a rate card</button>
+              </div>
+            </sc-if>
+            <sc-if value="{{moreProducts}}" hint-placeholder-val="{{ true }}">
+              <button type="button" onClick="{{showAllProducts}}" style="min-height: 44px; border-radius: 12px; border: 1px solid {{t.border}}; background: transparent; font-size: 14px; line-height: 20px; font-weight: 600; color: {{t.link}}">Show all {{prodCount}} {{c.prodWord}}</button>
+            </sc-if>
+          </section>
+          <button type="button" style="align-self: flex-start; min-height: 44px; border: 0; background: transparent; display: flex; align-items: center; gap: 8px; font-size: 14px; line-height: 20px; font-weight: 600; color: {{t.link}}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a9 9 0 1 1-3-6.7L21 8"></path><path d="M21 3v5h-5"></path></svg>{{c.readAgain}}</button>
+        </div>
+      </sc-if>
+
+      <!-- ===== 3c. ADD PRODUCTS ===== -->
+      <sc-if value="{{scr.products}}" hint-placeholder-val="{{ false }}">
+        <h1 class="mp-h1" style="margin: 0; font-family: 'Anek Latin', 'Anek Devanagari', sans-serif; font-size: 30px; line-height: 38px; font-weight: 700; letter-spacing: -0.005em">Add your products</h1>
+        <p style="margin: 8px 0 32px; font-size: 16px; line-height: 26px; color: {{t.body}}">A photo and a price is enough. Posts that show real products and prices are easier for customers to act on.</p>
+        <div style="display: flex; flex-direction: column; gap: 12px">
+          <sc-for list="{{prodRows}}" as="r" hint-placeholder-count="4">
+            <div style="display: flex; align-items: center; gap: 16px; padding: 12px; border-radius: 16px; border: 1px solid {{t.border}}; background: {{t.surface}}">
+              <sc-if value="{{r.hasPhoto}}" hint-placeholder-val="{{ false }}"><span role="img" aria-label="{{r.photoAlt}}" style="width: 72px; height: 72px; flex: 0 0 72px; border-radius: 12px; background: {{r.bg}}; display: flex; align-items: flex-end; justify-content: flex-end; padding: 4px; box-sizing: border-box"><span style="padding: 0 8px; border-radius: 999px; background: #16222B; color: #FFFFFF; font-size: 12px; line-height: 18px; font-weight: 500">Change</span></span></sc-if>
+              <sc-if value="{{r.noPhoto}}" hint-placeholder-val="{{ true }}"><button type="button" onClick="{{r.addPhoto}}" aria-label="{{r.photoAria}}" style="width: 72px; height: 72px; flex: 0 0 72px; border-radius: 12px; border: 1px dashed {{t.inputBorder}}; background: {{t.surface2}}; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; color: {{t.link}}; font-size: 12px; line-height: 18px; font-weight: 600"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h3l2-3h6l2 3h3v11H4z"></path><circle cx="12" cy="13" r="3.5"></circle></svg>Add photo</button></sc-if>
+              <div class="mp-cols2" style="flex: 1 1 auto; min-width: 0; display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); gap: 8px 12px">
+                <input id="{{r.nameId}}" aria-label="{{r.nameAria}}" value="{{r.name}}" onChange="{{r.onName}}" placeholder="Product name" style="min-width: 0; min-height: 48px; box-sizing: border-box; padding: 0 12px; border-radius: 12px; border: 1px solid {{t.inputBorder}}; background: {{t.surface}}; color: {{t.text}}; font-size: 16px">
+                <div style="display: flex; align-items: center; min-height: 48px; border-radius: 12px; border: 1px solid {{t.inputBorder}}; background: {{t.surface}}; overflow: hidden"><span style="align-self: stretch; display: flex; align-items: center; padding: 0 8px 0 12px; font-size: 16px; color: {{t.muted}}">₹</span><input id="{{r.priceId}}" aria-label="{{r.priceAria}}" inputmode="numeric" value="{{r.price}}" onChange="{{r.onPrice}}" placeholder="Price" style="flex: 1 1 auto; min-width: 0; height: 46px; padding: 0 12px 0 0; border: 0; outline: none; background: transparent; color: {{t.text}}; font-size: 16px; font-variant-numeric: tabular-nums"></div>
+              </div>
+              <button type="button" onClick="{{r.remove}}" aria-label="{{r.removeAria}}" style="width: 44px; height: 44px; flex: 0 0 44px; border: 0; border-radius: 12px; background: transparent; display: flex; align-items: center; justify-content: center; color: {{t.muted}}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13"></path></svg></button>
+            </div>
+          </sc-for>
+          <button type="button" onClick="{{addProdRow}}" style="align-self: flex-start; min-height: 44px; border: 0; background: transparent; display: flex; align-items: center; gap: 8px; font-size: 14px; line-height: 20px; font-weight: 600; color: {{t.link}}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg>Add another product</button>
+          <div style="display: flex; align-items: center; gap: 12px; font-size: 14px; color: {{t.muted}}"><span style="flex: 1 1 auto; height: 1px; background: {{t.border}}"></span>or<span style="flex: 1 1 auto; height: 1px; background: {{t.border}}"></span></div>
+          <div style="display: flex; align-items: center; gap: 16px; flex-wrap: wrap; padding: 20px; border-radius: 16px; border: 1px dashed {{t.inputBorder}}; background: {{t.surface}}">
+            <span style="width: 48px; height: 48px; flex: 0 0 48px; border-radius: 12px; background: {{t.surface2}}; display: flex; align-items: center; justify-content: center"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h9l4 4v14H6z"></path><path d="M9 11h7M9 15h7M9 19h4"></path></svg></span>
+            <span style="flex: 1 1 220px; display: flex; flex-direction: column; gap: 4px"><span style="font-size: 16px; line-height: 24px; font-weight: 600">Upload a rate card or menu photo</span><span style="font-size: 14px; line-height: 20px; color: {{t.body}}">We read the names and prices for you. A clear phone photo works.</span></span>
+            <button type="button" onClick="{{uploadCard}}" style="min-height: 44px; padding: 0 16px; border-radius: 12px; border: 1px solid {{t.inputBorder}}; background: transparent; font-size: 14px; line-height: 20px; font-weight: 600; color: {{t.text}}">Choose photo</button>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- ===== 4. VOICE ===== -->
+      <sc-if value="{{scr.voice}}" hint-placeholder-val="{{ false }}">
+        <h1 class="mp-h1" style="margin: 0; font-family: 'Anek Latin', 'Anek Devanagari', sans-serif; font-size: 30px; line-height: 38px; font-weight: 700; letter-spacing: -0.005em">{{c.voiceTitle}}</h1>
+        <p style="margin: 8px 0 32px; font-size: 16px; line-height: 26px; color: {{t.body}}">Pick a language and a tone. The preview shows a real example.</p>
+        <div style="display: flex; flex-direction: column; gap: 32px">
+          <fieldset style="margin: 0; padding: 0; border: 0; display: flex; flex-direction: column; gap: 12px">
+            <legend style="padding: 0; margin-bottom: 4px; font-size: 16px; line-height: 24px; font-weight: 600">Post language</legend>
+            <span style="font-size: 14px; line-height: 20px; color: {{t.muted}}">Pick up to 3. The first one you pick is your main language.</span>
+            <div style="display: flex; flex-wrap: wrap; gap: 8px">
+              <sc-for list="{{langs}}" as="lg" hint-placeholder-count="6">
+                <button type="button" aria-pressed="{{lg.on}}" onClick="{{lg.toggle}}" style="min-height: 44px; padding: 0 16px; border-radius: 999px; display: flex; align-items: center; gap: 8px; font-size: 14px; line-height: 20px; font-weight: 600; {{lg.style}}">
+                  <sc-if value="{{lg.on}}" hint-placeholder-val="{{ false }}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg></sc-if>
+                  <span>{{lg.name}}</span><span style="font-weight: 400; {{lg.subStyle}}">{{lg.native}}</span><sc-if value="{{lg.main}}" hint-placeholder-val="{{ false }}"><span style="padding: 0 8px; border-radius: 999px; font-size: 12px; line-height: 20px; font-weight: 500; {{lg.mainStyle}}">Main</span></sc-if>
+                </button>
+              </sc-for>
+            </div>
+          </fieldset>
+          <fieldset style="margin: 0; padding: 0; border: 0; display: flex; flex-direction: column; gap: 12px">
+            <legend style="padding: 0; margin-bottom: 4px; font-size: 16px; line-height: 24px; font-weight: 600">Tone</legend>
+            <div role="radiogroup" aria-label="Tone" class="mp-cols2" style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px">
+              <sc-for list="{{tones}}" as="tn" hint-placeholder-count="4">
+                <button type="button" role="radio" aria-checked="{{tn.on}}" onClick="{{tn.pick}}" style="display: flex; flex-direction: column; gap: 8px; padding: 16px; border-radius: 16px; text-align: left; {{tn.card}}">
+                  <span style="display: flex; justify-content: space-between; align-items: center; gap: 8px"><span style="font-size: 16px; line-height: 24px; font-weight: 600">{{tn.name}}</span><span aria-hidden="true" style="width: 24px; height: 24px; flex: 0 0 24px; border-radius: 999px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; {{tn.dot}}"><sc-if value="{{tn.on}}" hint-placeholder-val="{{ false }}"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg></sc-if></span></span>
+                  <span style="font-size: 14px; line-height: 20px; color: {{t.body}}">{{tn.sample}}</span>
+                </button>
+              </sc-for>
+            </div>
+          </fieldset>
+          <div class="mp-only-sm" style="display: none; flex-direction: column; gap: 12px">
+            <span style="font-size: 16px; line-height: 24px; font-weight: 600">Preview</span>
+            <div style="border-radius: 16px; border: 1px solid {{t.border}}; background: {{t.surface}}; overflow: hidden">
+              <div style="display: flex; align-items: center; gap: 12px; padding: 12px 16px"><span style="width: 32px; height: 32px; border-radius: 999px; background: {{c.c1}}; color: {{c.ink}}; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700">{{c.initials}}</span><span style="font-size: 14px; line-height: 20px; font-weight: 600">{{c.handle}}</span></div>
+              <div style="aspect-ratio: 4 / 3; background: {{c.c1}}; color: {{c.ink}}; display: flex; align-items: flex-end; padding: 20px; box-sizing: border-box; font-family: 'Anek Latin', 'Anek Devanagari', sans-serif; font-size: 28px; line-height: 34px; font-weight: 700">{{preview.headline}}</div>
+              <p class="{{preview.cls}}" style="margin: 0; padding: 16px; font-size: 14px; line-height: 22px; color: {{t.body}}">{{preview.caption}}</p>
+            </div>
+          </div>
+          <fieldset style="margin: 0; padding: 0; border: 0; display: flex; flex-direction: column; gap: 12px">
+            <legend style="padding: 0; margin-bottom: 4px; font-size: 16px; line-height: 24px; font-weight: 600">Never post about <span style="font-weight: 400; color: {{t.muted}}">(optional)</span></legend>
+            <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 8px; min-height: 52px; padding: 4px 8px; box-sizing: border-box; border-radius: 12px; border: 1px solid {{t.inputBorder}}; background: {{t.surface}}">
+              <sc-for list="{{avoid}}" as="av" hint-placeholder-count="2">
+                <span style="display: inline-flex; align-items: center; gap: 4px; padding-left: 12px; border-radius: 999px; background: {{t.surface2}}; font-size: 14px; line-height: 20px">{{av.word}}<button type="button" onClick="{{av.remove}}" aria-label="{{av.aria}}" style="width: 44px; height: 44px; border: 0; border-radius: 999px; background: transparent; display: flex; align-items: center; justify-content: center"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"></path></svg></button></span>
+              </sc-for>
+              <input id="mp-avoid" aria-label="Add a word or topic to avoid" value="{{avoidDraft}}" onChange="{{onAvoid}}" onKeyDown="{{avoidKey}}" placeholder="Type a word and press Enter" style="flex: 1 1 160px; min-width: 120px; height: 44px; padding: 0 8px; border: 0; outline: none; background: transparent; font-size: 16px; color: {{t.text}}">
+            </div>
+            <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 8px"><span style="font-size: 14px; line-height: 20px; color: {{t.muted}}">Common picks:</span>
+              <sc-for list="{{avoidSugs}}" as="sg" hint-placeholder-count="3"><button type="button" onClick="{{sg.add}}" style="min-height: 44px; padding: 0 12px; border-radius: 999px; border: 1px dashed {{t.inputBorder}}; background: transparent; font-size: 14px; line-height: 20px; font-weight: 500; color: {{t.text}}">+ {{sg.word}}</button></sc-for>
+            </div>
+          </fieldset>
+        </div>
+      </sc-if>
+
+      <!-- ===== 5. GOALS ===== -->
+      <sc-if value="{{scr.goals}}" hint-placeholder-val="{{ false }}">
+        <h1 class="mp-h1" style="margin: 0; font-family: 'Anek Latin', 'Anek Devanagari', sans-serif; font-size: 30px; line-height: 38px; font-weight: 700; letter-spacing: -0.005em">{{c.goalTitle}}</h1>
+        <p style="margin: 8px 0 32px; font-size: 16px; line-height: 26px; color: {{t.body}}">{{c.goalSub}}</p>
+        <div style="display: flex; flex-direction: column; gap: 32px">
+          <fieldset style="margin: 0; padding: 0; border: 0; display: flex; flex-direction: column; gap: 12px">
+            <legend style="padding: 0; margin-bottom: 4px; font-size: 16px; line-height: 24px; font-weight: 600">Main goal</legend>
+            <div role="radiogroup" aria-label="Main goal" class="mp-cols2" style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px">
+              <sc-for list="{{goals}}" as="g" hint-placeholder-count="4">
+                <button type="button" role="radio" aria-checked="{{g.on}}" onClick="{{g.pick}}" style="display: flex; align-items: flex-start; gap: 12px; padding: 16px; border-radius: 16px; text-align: left; {{g.card}}">
+                  <span style="flex: 1 1 auto; display: flex; flex-direction: column; gap: 4px"><span style="font-size: 16px; line-height: 24px; font-weight: 600">{{g.title}}</span><span style="font-size: 14px; line-height: 20px; color: {{t.body}}">{{g.desc}}</span></span>
+                  <span aria-hidden="true" style="width: 24px; height: 24px; flex: 0 0 24px; border-radius: 999px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; {{g.dot}}"><sc-if value="{{g.on}}" hint-placeholder-val="{{ false }}"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg></sc-if></span>
+                </button>
+              </sc-for>
+            </div>
+          </fieldset>
+          <fieldset style="margin: 0; padding: 0; border: 0; display: flex; flex-direction: column; gap: 12px">
+            <legend style="padding: 0; margin-bottom: 4px; font-size: 16px; line-height: 24px; font-weight: 600">{{c.areaTitle}}</legend>
+            <div role="radiogroup" aria-label="{{c.areaTitle}}" class="{{areaCls}}" style="display: grid; grid-template-columns: {{areaCols}}; gap: 4px; padding: 4px; border-radius: 12px; background: {{t.surface2}}">
+              <sc-for list="{{areas}}" as="a" hint-placeholder-count="3"><button type="button" role="radio" aria-checked="{{a.on}}" onClick="{{a.pick}}" style="min-height: 44px; padding: 0 8px; border: 0; border-radius: 8px; font-size: 14px; line-height: 20px; font-weight: 600; {{a.style}}">{{a.name}}</button></sc-for>
+            </div>
+            <sc-if value="{{isDeliver}}" hint-placeholder-val="{{ false }}">
+              <div style="display: flex; flex-direction: column; gap: 8px; margin-top: 4px">
+                <span id="mp-radius" style="font-size: 14px; line-height: 20px; font-weight: 500">How far do you deliver?</span>
+                <div role="radiogroup" aria-labelledby="mp-radius" class="mp-grid4" style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 4px; padding: 4px; border-radius: 12px; background: {{t.surface2}}">
+                  <sc-for list="{{radii}}" as="r" hint-placeholder-count="4"><button type="button" role="radio" aria-checked="{{r.on}}" onClick="{{r.pick}}" style="min-height: 44px; padding: 0 8px; border: 0; border-radius: 8px; font-size: 14px; line-height: 20px; font-weight: 600; {{r.style}}">{{r.name}}</button></sc-for>
+                </div>
+              </div>
+            </sc-if>
+            <span style="font-size: 14px; line-height: 20px; color: {{t.muted}}">{{areaHelp}}<sc-if value="{{isDeliver}}" hint-placeholder-val="{{ false }}"> Your posts will also say “Delivered to your door”.</sc-if></span>
+          </fieldset>
+          <fieldset style="margin: 0; padding: 0; border: 0; display: flex; flex-direction: column; gap: 12px">
+            <legend style="padding: 0; margin-bottom: 4px; font-size: 16px; line-height: 24px; font-weight: 600">Where should we post?</legend>
+            <div class="mp-cols2" style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px">
+              <sc-for list="{{channels}}" as="ch" hint-placeholder-count="3">
+                <button type="button" role="checkbox" aria-checked="{{ch.on}}" aria-disabled="{{ch.soon}}" onClick="{{ch.toggle}}" style="display: flex; align-items: center; gap: 12px; min-height: 56px; padding: 8px 16px; border-radius: 12px; text-align: left; {{ch.card}}">
+                  <span style="width: 32px; height: 32px; flex: 0 0 32px; border-radius: 999px; background: {{t.surface2}}; display: flex; align-items: center; justify-content: center"><sc-if value="{{ch.isIG}}" hint-placeholder-val="{{ true }}"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"></rect><circle cx="12" cy="12" r="4"></circle><path d="M17.5 6.5h.01"></path></svg></sc-if><sc-if value="{{ch.isFB}}" hint-placeholder-val="{{ false }}"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h-2a4 4 0 0 0-4 4v3H7v4h2v7h4v-7h3l1-4h-4V7a1 1 0 0 1 1-1h2z"></path></svg></sc-if><sc-if value="{{ch.isYT}}" hint-placeholder-val="{{ false }}"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="5" width="20" height="14" rx="4"></rect><path d="m10 9 5 3-5 3z"></path></svg></sc-if><sc-if value="{{ch.isWA}}" hint-placeholder-val="{{ false }}"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.4 8.4 0 0 1-12.3 7.5L3 21l2-5.7A8.5 8.5 0 1 1 21 11.5z"></path></svg></sc-if></span>
+                  <span style="flex: 1 1 auto; display: flex; flex-direction: column"><span style="font-size: 16px; line-height: 24px; font-weight: 600">{{ch.name}}</span><sc-if value="{{ch.sub}}" hint-placeholder-val="{{ false }}"><span style="font-size: 12px; line-height: 18px; font-weight: 500; color: {{t.muted}}">{{ch.sub}}</span></sc-if></span>
+                  <span aria-hidden="true" style="width: 24px; height: 24px; flex: 0 0 24px; box-sizing: border-box; border-radius: 8px; display: flex; align-items: center; justify-content: center; {{ch.box}}"><sc-if value="{{ch.on}}" hint-placeholder-val="{{ false }}"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg></sc-if></span>
+                </button>
+              </sc-for>
+            </div>
+            <span style="font-size: 14px; line-height: 20px; color: {{t.muted}}">{{c.chanNote}}</span>
+          </fieldset>
+          <fieldset style="margin: 0; padding: 0; border: 0; display: flex; flex-direction: column; gap: 12px">
+            <legend style="padding: 0; margin-bottom: 4px; font-size: 16px; line-height: 24px; font-weight: 600">{{c.budgetTitle}} <span style="font-weight: 400; color: {{t.muted}}">(optional)</span></legend>
+            <div style="display: flex; flex-wrap: wrap; gap: 8px">
+              <sc-for list="{{budgets}}" as="b" hint-placeholder-count="5"><button type="button" aria-pressed="{{b.on}}" onClick="{{b.pick}}" style="min-height: 44px; padding: 0 16px; border-radius: 999px; font-size: 14px; line-height: 20px; font-weight: 600; font-variant-numeric: tabular-nums; {{b.style}}">{{b.name}}</button></sc-for>
+            </div>
+            <sc-if value="{{customBudget}}" hint-placeholder-val="{{ false }}">
+              <div style="display: flex; align-items: center; max-width: 280px; min-height: 52px; border-radius: 12px; border: 1px solid {{t.inputBorder}}; background: {{t.surface}}; overflow: hidden"><span style="align-self: stretch; display: flex; align-items: center; padding: 0 16px; border-right: 1px solid {{t.border}}; font-size: 16px; font-weight: 600">₹</span><input aria-label="Monthly ad budget in rupees" inputmode="numeric" value="{{budgetAmt}}" onChange="{{onBudget}}" placeholder="10,000" style="flex: 1 1 auto; min-width: 0; height: 50px; padding: 0 16px; border: 0; outline: none; background: transparent; font-size: 16px; color: {{t.text}}; font-variant-numeric: tabular-nums"></div>
+            </sc-if>
+            <div style="display: flex; align-items: flex-start; gap: 12px; padding: 16px; border-radius: 12px; background: {{t.surface2}}; font-size: 14px; line-height: 20px; color: {{t.body}}"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex: 0 0 20px"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"></path></svg><span>{{c.budgetNote}}</span></div>
+          </fieldset>
+          <sc-if value="{{c.approver}}" hint-placeholder-val="{{ false }}">
+            <fieldset style="margin: 0; padding: 0; border: 0; display: flex; flex-direction: column; gap: 12px">
+              <legend style="padding: 0; margin-bottom: 4px; font-size: 16px; line-height: 24px; font-weight: 600">Who approves this client's posts?</legend>
+              <div role="radiogroup" aria-label="Who approves this client's posts" class="mp-cols2" style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px">
+                <sc-for list="{{approvers}}" as="g" hint-placeholder-count="2">
+                  <button type="button" role="radio" aria-checked="{{g.on}}" onClick="{{g.pick}}" style="display: flex; align-items: flex-start; gap: 12px; padding: 16px; border-radius: 16px; text-align: left; {{g.card}}">
+                    <span style="flex: 1 1 auto; display: flex; flex-direction: column; gap: 4px"><span style="font-size: 16px; line-height: 24px; font-weight: 600">{{g.title}}</span><span style="font-size: 14px; line-height: 20px; color: {{t.body}}">{{g.desc}}</span></span>
+                    <span aria-hidden="true" style="width: 24px; height: 24px; flex: 0 0 24px; border-radius: 999px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; {{g.dot}}"><sc-if value="{{g.on}}" hint-placeholder-val="{{ false }}"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg></sc-if></span>
+                  </button>
+                </sc-for>
+              </div>
+              <sc-if value="{{approverClient}}" hint-placeholder-val="{{ false }}">
+                <div style="display: flex; flex-direction: column; gap: 8px"><label for="mp-approver" style="font-size: 14px; line-height: 20px; font-weight: 500">Their WhatsApp number</label><input id="mp-approver" type="tel" inputmode="numeric" value="{{f.approver}}" onChange="{{fset.approver}}" style="max-width: 280px; min-height: 52px; box-sizing: border-box; padding: 0 16px; border-radius: 12px; border: 1px solid {{t.inputBorder}}; background: {{t.surface}}; color: {{t.text}}; font-size: 16px; font-variant-numeric: tabular-nums"><span style="font-size: 14px; line-height: 20px; color: {{t.muted}}">They get each post on WhatsApp and reply to approve. No account needed.</span></div>
+              </sc-if>
+            </fieldset>
+          </sc-if>
+        </div>
+      </sc-if>
+
+      <!-- ===== DONE ===== -->
+      <sc-if value="{{scr.done}}" hint-placeholder-val="{{ false }}">
+        <span style="width: 56px; height: 56px; border-radius: 999px; background: {{t.okBg}}; color: {{t.okFg}}; display: flex; align-items: center; justify-content: center; margin-bottom: 24px"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg></span>
+        <h1 class="mp-h1" style="margin: 0; font-family: 'Anek Latin', 'Anek Devanagari', sans-serif; font-size: 40px; line-height: 48px; font-weight: 700; letter-spacing: -0.005em">{{doneTitle}}</h1>
+        <p style="margin: 8px 0 32px; font-size: 16px; line-height: 26px; color: {{t.body}}">{{doneSub}}</p>
+        <h2 style="margin: 0 0 12px; display: flex; align-items: baseline; justify-content: space-between; gap: 12px; flex-wrap: wrap; font-size: 20px; line-height: 28px; font-weight: 600">{{doneList}}<sc-if value="{{doneCount}}" hint-placeholder-val="{{ false }}"><span style="font-size: 14px; line-height: 20px; font-weight: 500; color: {{t.muted}}">{{doneCount}}</span></sc-if></h2>
+        <ol role="list" style="list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 12px">
+          <sc-for list="{{nextSteps}}" as="n" hint-placeholder-count="3">
+            <li class="mp-step" style="display: flex; align-items: flex-start; gap: 16px; padding: 20px; border-radius: 16px; border: 1px solid {{t.border}}; background: {{t.surface}}">
+              <span style="width: 32px; height: 32px; flex: 0 0 32px; border-radius: 999px; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 700; {{n.badge}}"><sc-if value="{{n.done}}" hint-placeholder-val="{{ false }}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg></sc-if><sc-if value="{{n.notDone}}" hint-placeholder-val="{{ true }}">{{n.no}}</sc-if></span>
+              <span style="flex: 1 1 auto; display: flex; flex-direction: column; gap: 4px"><span style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap"><span style="font-size: 16px; line-height: 24px; font-weight: 600">{{n.title}}</span><span style="padding: 0 8px; border-radius: 999px; font-size: 12px; line-height: 20px; font-weight: 500; {{n.tagStyle}}">{{n.tag}}</span></span><span style="font-size: 14px; line-height: 20px; color: {{t.body}}">{{n.desc}}</span><sc-if value="{{n.chips.length}}" hint-placeholder-val="{{ false }}"><span style="display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px"><sc-for list="{{n.chips}}" as="ac" hint-placeholder-count="2"><span style="display: inline-flex; align-items: center; gap: 8px; padding: 4px 12px 4px 4px; border-radius: 999px; background: {{t.surface2}}; font-size: 14px; line-height: 20px; font-weight: 500"><span aria-hidden="true" style="width: 24px; height: 24px; border-radius: 999px; display: flex; align-items: center; justify-content: center; font-size: 12px; line-height: 16px; font-weight: 700; background: {{t.surface}}; color: {{t.text}}">{{ac.k}}</span>{{ac.name}}</span></sc-for></span></sc-if></span>
+              <sc-if value="{{n.action}}" hint-placeholder-val="{{ false }}"><button type="button" onClick="{{n.act}}" style="flex: 0 0 auto; align-self: center; min-height: 44px; padding: 0 16px; border-radius: 12px; border: 1px solid {{t.inputBorder}}; background: transparent; font-size: 14px; line-height: 20px; font-weight: 600; color: {{t.text}}">{{n.action}}</button></sc-if>
+            </li>
+          </sc-for>
+        </ol>
+        <sc-if value="{{hasOther}}" hint-placeholder-val="{{ false }}"><p style="margin: 16px 0 0; display: flex; align-items: flex-start; gap: 8px; font-size: 14px; line-height: 20px; color: {{t.muted}}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex: 0 0 16px; margin-top: 2px"><circle cx="12" cy="12" r="9"></circle><path d="M12 11v5M12 8h.01"></path></svg>{{otherLine}}</p></sc-if>
+      </sc-if>
+
+      <sc-if value="{{note}}" hint-placeholder-val="{{ false }}">
+        <div role="status" class="mp-fade" style="margin-top: 24px; padding: 12px 16px; border-radius: 12px; background: {{t.surface2}}; color: {{t.body}}; font-size: 14px; line-height: 20px">{{note}}</div>
+      </sc-if>
+
+      <!-- Actions -->
+      <sc-if value="{{showActions}}" hint-placeholder-val="{{ true }}">
+        <div class="mp-actions" style="display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 40px; background: {{t.bg}}; border-top: 1px solid transparent">
+          <sc-if value="{{canBack}}" hint-placeholder-val="{{ true }}">
+            <button type="button" onClick="{{back}}" style="min-height: 52px; padding: 0 16px; border-radius: 12px; border: 0; background: transparent; display: flex; align-items: center; gap: 8px; font-size: 16px; line-height: 24px; font-weight: 600; color: {{t.text}}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"></path></svg>{{backLabel}}</button>
+          </sc-if>
+          <sc-if value="{{noBack}}" hint-placeholder-val="{{ false }}"><span></span></sc-if>
+          <span style="display: flex; gap: 12px; align-items: center">
+            <sc-if value="{{secondary}}" hint-placeholder-val="{{ false }}"><button type="button" class="mp-hide-sm" onClick="{{secondaryGo}}" style="min-height: 52px; padding: 0 20px; border-radius: 12px; border: 1px solid {{t.inputBorder}}; background: transparent; font-size: 16px; line-height: 24px; font-weight: 600; color: {{t.text}}">{{secondary}}</button></sc-if>
+            <sc-if value="{{primary}}" hint-placeholder-val="{{ true }}"><button type="button" class="mp-primary" onClick="{{next}}" style="min-height: 52px; padding: 0 24px; border: 0; border-radius: 12px; font-size: 16px; line-height: 24px; font-weight: 600; background: {{t.cta}}; color: {{t.onCta}}">{{primary}}</button></sc-if>
+          </span>
+        </div>
+        <sc-if value="{{secondary}}" hint-placeholder-val="{{ false }}"><button type="button" class="mp-only-sm" onClick="{{secondaryGo}}" style="display: none; justify-content: center; min-height: 44px; margin-top: 8px; border: 0; background: transparent; font-size: 14px; line-height: 20px; font-weight: 600; color: {{t.link}}">{{secondary}}</button></sc-if>
+        <sc-if value="{{demoRestart}}" hint-placeholder-val="{{ false }}"><button type="button" onClick="{{restart}}" style="align-self: center; display: flex; align-items: center; gap: 8px; min-height: 44px; margin: 24px auto 0; padding: 0 16px; border: 0; border-radius: 12px; background: transparent; font-size: 14px; line-height: 20px; font-weight: 600; color: {{t.link}}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"></path><path d="M3 3v5h5"></path></svg>Demo: try another business type</button></sc-if>
+      </sc-if>
+    </main>
+
+    <!-- BRAND CARD (desktop) -->
+    <sc-if value="{{showAside}}" hint-placeholder-val="{{ true }}">
+    <aside class="mp-aside" aria-label="{{c.cardEmpty}}" style="flex: 0 0 360px; position: sticky; top: 24px; display: flex; flex-direction: column; gap: 16px">
+      <div style="border-radius: 16px; border: 1px solid {{t.border}}; background: {{t.surface}}; overflow: hidden">
+        <div style="height: 72px; background: {{card.band}}"></div>
+        <div style="padding: 0 24px 24px; display: flex; flex-direction: column; gap: 16px">
+          <span style="width: 64px; height: 64px; margin-top: -32px; box-sizing: border-box; border: 4px solid {{t.surface}}; display: flex; align-items: center; justify-content: center; font-family: 'Anek Latin', sans-serif; font-size: 24px; line-height: 32px; font-weight: 700; {{card.logo}}">{{card.initials}}</span>
+          <sc-if value="{{card.hasName}}" hint-placeholder-val="{{ true }}"><span style="display: flex; flex-direction: column; gap: 4px"><sc-if value="{{card.eyebrow}}" hint-placeholder-val="{{ false }}"><span style="font-size: 12px; line-height: 18px; font-weight: 500; color: {{t.muted}}">{{card.eyebrow}}</span></sc-if><span style="font-size: 20px; line-height: 28px; font-weight: 600">{{card.name}}</span><span style="font-size: 14px; line-height: 20px; color: {{t.muted}}">{{card.sub}}</span></span></sc-if>
+          <sc-if value="{{card.noName}}" hint-placeholder-val="{{ false }}"><span style="display: flex; flex-direction: column; gap: 4px"><span style="font-size: 20px; line-height: 28px; font-weight: 600">{{cardTitle}}</span><span style="font-size: 14px; line-height: 20px; color: {{t.muted}}">{{cardSub}}</span></span></sc-if>
+          <dl style="margin: 0; display: flex; flex-direction: column">
+            <sc-for list="{{card.rows}}" as="cr" hint-placeholder-count="5">
+              <div style="display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 12px 0; border-top: 1px solid {{t.border}}">
+                <dt style="font-size: 14px; line-height: 20px; color: {{t.muted}}">{{cr.label}}</dt>
+                <sc-if value="{{cr.filled}}" hint-placeholder-val="{{ true }}"><dd style="margin: 0; text-align: right; font-size: 14px; line-height: 20px; font-weight: 600">{{cr.value}}</dd></sc-if>
+                <sc-if value="{{cr.empty}}" hint-placeholder-val="{{ false }}"><dd style="margin: 0; width: 96px; height: 12px; border-radius: 4px; background: {{t.surface2}}"></dd></sc-if>
+              </div>
+            </sc-for>
+          </dl>
+          <sc-if value="{{card.hasName}}" hint-placeholder-val="{{ true }}"><div style="display: flex; flex-direction: column; gap: 8px">
+            <span style="display: flex; justify-content: space-between; font-size: 14px; line-height: 20px"><span style="color: {{t.muted}}">Profile</span><span style="font-weight: 600; font-variant-numeric: tabular-nums">{{card.pct}}% done</span></span>
+            <span style="height: 8px; border-radius: 4px; background: {{t.surface2}}; display: block; overflow: hidden"><span style="display: block; height: 8px; border-radius: 4px; background: {{t.prog}}; width: {{card.pct}}%"></span></span>
+          </div></sc-if>
+        </div>
+      </div>
+      <sc-if value="{{scr.voice}}" hint-placeholder-val="{{ false }}">
+        <div style="border-radius: 16px; border: 1px solid {{t.border}}; background: {{t.surface}}; overflow: hidden">
+          <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 16px"><span style="display: flex; align-items: center; gap: 12px"><span style="width: 32px; height: 32px; border-radius: 999px; background: {{c.c1}}; color: {{c.ink}}; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700">{{c.initials}}</span><span style="font-size: 14px; line-height: 20px; font-weight: 600">{{c.handle}}</span></span><span style="padding: 0 8px; border-radius: 999px; background: {{t.surface2}}; font-size: 12px; line-height: 20px; font-weight: 500; color: {{t.muted}}">Preview</span></div>
+          <div style="aspect-ratio: 4 / 3; background: {{c.c1}}; color: {{c.ink}}; display: flex; align-items: flex-end; padding: 20px; box-sizing: border-box; font-family: 'Anek Latin', 'Anek Devanagari', sans-serif; font-size: 28px; line-height: 34px; font-weight: 700">{{preview.headline}}</div>
+          <p class="{{preview.cls}}" style="margin: 0; padding: 16px; font-size: 14px; line-height: 22px; color: {{t.body}}">{{preview.caption}}</p>
+        </div>
+      </sc-if>
+      <sc-if value="{{scr.review}}" hint-placeholder-val="{{ false }}">
+        <div style="padding: 16px; border-radius: 16px; background: {{t.surface2}}; display: flex; gap: 12px; font-size: 14px; line-height: 20px; color: {{t.body}}"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex: 0 0 20px"><circle cx="12" cy="12" r="9"></circle><path d="M12 11v5M12 8h.01"></path></svg><span><b style="font-weight: 600; color: {{t.text}}">{{c.fromTag}}</b> means we copied it. <b style="font-weight: 600; color: {{t.text}}">Please check</b> means we guessed, so a quick look helps.</span></div>
+      </sc-if>
+    </aside>
+    </sc-if>
+  </div>
+</div></template>
+<div id="mp-root"><div class="" style="--mp-bd: #D9DFE2; font-family: 'Noto Sans', 'Noto Sans Devanagari', sans-serif; min-height: 100vh; background: #F2F4F5; color: #16222B; display: flex; flex-direction: column">
+
+  
+  <header class="mp-head" style="height: 64px; flex: 0 0 64px; display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 0 32px; border-bottom: 1px solid #D9DFE2; background: #F2F4F5">
+    <a href="/" aria-label="MarketPilot home" style="display: flex; align-items: center; gap: 12px; min-height: 44px; color: inherit; text-decoration: none">
+      <span style="width: 32px; height: 32px; border-radius: 8px; background: #F5C432; display: flex; align-items: center; justify-content: center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#121413" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 2 11 13"></path><path d="M22 2 15 22 11 13 2 9z"></path></svg></span>
+      <span style="font-family: 'Anek Latin', 'Anek Devanagari', sans-serif; font-weight: 700; font-size: 20px; line-height: 28px; letter-spacing: -0.005em">MarketPilot</span>
+    </a>
+    <div style="display: flex; align-items: center; gap: 8px">
+      <button type="button" aria-label="Switch to dark mode" title="Switch to dark mode" style="flex: 0 0 44px; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; padding: 0; border-radius: 12px; border: 1px solid #D9DFE2; background: transparent; color: #16222B"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"></path></svg></button>
+    <button type="button" style="min-height: 44px; padding: 0 16px; border-radius: 12px; border: 1px solid #D9DFE2; background: transparent; font-size: 14px; line-height: 20px; font-weight: 600; color: #16222B">Save and exit</button>
+    </div>
+  </header>
+
+  <div class="mp-wrap" style="flex: 1 1 auto; width: 100%; max-width: 1200px; margin: 0 auto; box-sizing: border-box; padding: 40px 32px 64px; display: flex; gap: 48px; align-items: flex-start; justify-content: flex-start">
+
+    
+    <main style="flex: 1 1 640px; min-width: 0; max-width: 720px; display: flex; flex-direction: column">
+
+      
+        <div style="display: flex; flex-direction: column; gap: 8px; margin-bottom: 32px">
+          <span style="font-size: 14px; line-height: 20px; font-weight: 500; color: #59666F">Step 1 of 5<span class="mp-only-sm" style="display: none"> · Account</span></span>
+          <div aria-hidden="true" style="display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 4px">
+            <span style="height: 4px; border-radius: 4px; background: #2F5873"></span><span style="height: 4px; border-radius: 4px; background: #D9DFE2"></span><span style="height: 4px; border-radius: 4px; background: #D9DFE2"></span><span style="height: 4px; border-radius: 4px; background: #D9DFE2"></span><span style="height: 4px; border-radius: 4px; background: #D9DFE2"></span>
+          </div>
+          <div class="mp-hide-sm" aria-hidden="true" style="display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 4px">
+            <span style="font-size: 12px; line-height: 18px; font-weight: 500; color: #16222B; font-weight: 600">Account</span><span style="font-size: 12px; line-height: 18px; font-weight: 500; color: #59666F">Basics</span><span style="font-size: 12px; line-height: 18px; font-weight: 500; color: #59666F">Your brand</span><span style="font-size: 12px; line-height: 18px; font-weight: 500; color: #59666F">Your voice</span><span style="font-size: 12px; line-height: 18px; font-weight: 500; color: #59666F">Goals</span>
+          </div>
+          
+        </div>
+      
+
+      
+      
+        <h1 class="mp-h1" style="margin: 0; font-family: 'Anek Latin', 'Anek Devanagari', sans-serif; font-size: 30px; line-height: 38px; font-weight: 700; letter-spacing: -0.005em">How will you use MarketPilot?</h1>
+        <p style="margin: 8px 0 32px; font-size: 16px; line-height: 26px; color: #36444E">This sets up the right questions for you. You can change it later in Settings.</p>
+        <div role="radiogroup" aria-label="I am setting this up for" style="display: flex; flex-direction: column; gap: 12px">
+          
+            <button type="button" role="radio" aria-checked="true" style="display: flex; align-items: flex-start; gap: 16px; padding: 20px; border-radius: 16px; text-align: left; border: 2px solid #2F5873; background: #EAF1F5; color: #16222B">
+              <span style="width: 48px; height: 48px; flex: 0 0 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; background: #E8ECEE; color: #16222B">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 9l1.5-5h15L21 9"></path><path d="M3 9h18v2a3 3 0 0 1-6 0 3 3 0 0 1-6 0 3 3 0 0 1-6 0z"></path><path d="M5 13v7h14v-7"></path><path d="M10 20v-4h4v4"></path></svg>
+                
+                
+              </span>
+              <span style="flex: 1 1 auto; display: flex; flex-direction: column; gap: 4px">
+                <span style="font-size: 16px; line-height: 24px; font-weight: 600">A business</span>
+                <span style="font-size: 14px; line-height: 20px; color: #36444E">A shop, restaurant, salon, clinic or any business that sells to customers.</span>
+              </span>
+              <span aria-hidden="true" style="width: 24px; height: 24px; flex: 0 0 24px; border-radius: 999px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; background: #2F5873; color: #FFFFFF"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg></span>
+            </button>
+          
+            <button type="button" role="radio" aria-checked="false" style="display: flex; align-items: flex-start; gap: 16px; padding: 20px; border-radius: 16px; text-align: left; border: 1px solid #8A949B; background: #FFFFFF; color: #16222B; margin: 1px">
+              <span style="width: 48px; height: 48px; flex: 0 0 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; background: #E8ECEE; color: #16222B">
+                
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"></circle><path d="M4 21a8 8 0 0 1 16 0"></path></svg>
+                
+              </span>
+              <span style="flex: 1 1 auto; display: flex; flex-direction: column; gap: 4px">
+                <span style="font-size: 16px; line-height: 24px; font-weight: 600">Myself, as a creator</span>
+                <span style="font-size: 14px; line-height: 20px; color: #36444E">An influencer, coach, artist or expert growing an audience.</span>
+              </span>
+              <span aria-hidden="true" style="width: 24px; height: 24px; flex: 0 0 24px; border-radius: 999px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid #8A949B"></span>
+            </button>
+          
+            <button type="button" role="radio" aria-checked="false" style="display: flex; align-items: flex-start; gap: 16px; padding: 20px; border-radius: 16px; text-align: left; border: 1px solid #8A949B; background: #FFFFFF; color: #16222B; margin: 1px">
+              <span style="width: 48px; height: 48px; flex: 0 0 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; background: #E8ECEE; color: #16222B">
+                
+                
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="7" width="18" height="13" rx="2"></rect><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><path d="M3 13h18"></path></svg>
+              </span>
+              <span style="flex: 1 1 auto; display: flex; flex-direction: column; gap: 4px">
+                <span style="font-size: 16px; line-height: 24px; font-weight: 600">An agency, for my clients</span>
+                <span style="font-size: 14px; line-height: 20px; color: #36444E">You manage marketing for other businesses. You can add more brands later.</span>
+              </span>
+              <span aria-hidden="true" style="width: 24px; height: 24px; flex: 0 0 24px; border-radius: 999px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid #8A949B"></span>
+            </button>
+          
+        </div>
+      
+
+      
+      
+
+      
+      
+
+      
+      
+
+      
+      
+
+      
+      
+
+      
+      
+
+      
+      
+
+      
+      
+
+      
+      
+
+      
+      
+
+      
+
+      
+      
+        <div class="mp-actions" style="display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 40px; background: #F2F4F5; border-top: 1px solid transparent">
+          
+          <span></span>
+          <span style="display: flex; gap: 12px; align-items: center">
+            
+            <button type="button" class="mp-primary" style="min-height: 52px; padding: 0 24px; border: 0; border-radius: 12px; font-size: 16px; line-height: 24px; font-weight: 600; background: #2F5873; color: #FFFFFF">Continue</button>
+          </span>
+        </div>
+        
+        
+      
+    </main>
+
+    
+    
+    <aside class="mp-aside" aria-label="Your brand card" style="flex: 0 0 360px; position: sticky; top: 24px; display: flex; flex-direction: column; gap: 16px">
+      <div style="border-radius: 16px; border: 1px solid #D9DFE2; background: #FFFFFF; overflow: hidden">
+        <div style="height: 72px; background: #E8ECEE"></div>
+        <div style="padding: 0 24px 24px; display: flex; flex-direction: column; gap: 16px">
+          <span style="width: 64px; height: 64px; margin-top: -32px; box-sizing: border-box; border: 4px solid #FFFFFF; display: flex; align-items: center; justify-content: center; font-family: 'Anek Latin', sans-serif; font-size: 24px; line-height: 32px; font-weight: 700; background: #E8ECEE; color: #16222B; border-radius: 16px"></span>
+          
+          <span style="display: flex; flex-direction: column; gap: 4px"><span style="font-size: 20px; line-height: 28px; font-weight: 600">Your brand card</span><span style="font-size: 14px; line-height: 20px; color: #59666F">It fills in as we learn about your business, so you can see what we know.</span></span>
+          <dl style="margin: 0; display: flex; flex-direction: column">
+            
+              <div style="display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 12px 0; border-top: 1px solid #D9DFE2">
+                <dt style="font-size: 14px; line-height: 20px; color: #59666F">Colours</dt>
+                
+                <dd style="margin: 0; width: 96px; height: 12px; border-radius: 4px; background: #E8ECEE"></dd>
+              </div>
+            
+              <div style="display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 12px 0; border-top: 1px solid #D9DFE2">
+                <dt style="font-size: 14px; line-height: 20px; color: #59666F">Products</dt>
+                
+                <dd style="margin: 0; width: 96px; height: 12px; border-radius: 4px; background: #E8ECEE"></dd>
+              </div>
+            
+              <div style="display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 12px 0; border-top: 1px solid #D9DFE2">
+                <dt style="font-size: 14px; line-height: 20px; color: #59666F">Voice</dt>
+                
+                <dd style="margin: 0; width: 96px; height: 12px; border-radius: 4px; background: #E8ECEE"></dd>
+              </div>
+            
+              <div style="display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 12px 0; border-top: 1px solid #D9DFE2">
+                <dt style="font-size: 14px; line-height: 20px; color: #59666F">Languages</dt>
+                
+                <dd style="margin: 0; width: 96px; height: 12px; border-radius: 4px; background: #E8ECEE"></dd>
+              </div>
+            
+              <div style="display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 12px 0; border-top: 1px solid #D9DFE2">
+                <dt style="font-size: 14px; line-height: 20px; color: #59666F">Goal</dt>
+                
+                <dd style="margin: 0; width: 96px; height: 12px; border-radius: 4px; background: #E8ECEE"></dd>
+              </div>
+            
+          </dl>
+          
+        </div>
+      </div>
+      
+      
+    </aside>
+    
+  </div>
+</div></div>
+<script>
+/* Tiny template runtime for the MarketPilot landing page.
+   Reads the page template, fills {{holes}}, repeats <sc-for>, branches <sc-if>,
+   wires events, and patches the live DOM in place on every state change. */
+(function () {
+  function look(scope, path) {
+    path = path.trim();
+    if (path === 'true') return true;
+    if (path === 'false') return false;
+    if (/^-?\d+(\.\d+)?$/.test(path)) return +path;
+    var parts = path.split('.'), v = scope[parts[0]];
+    for (var i = 1; i < parts.length; i++) { if (v == null) return undefined; v = v[parts[i]]; }
+    return v;
+  }
+  function interp(str, scope) {
+    return str.replace(/\{\{([^}]+)\}\}/g, function (m, p) {
+      var v = look(scope, p);
+      return v == null || typeof v === 'function' ? '' : String(v);
+    });
+  }
+  function hole(str) { var m = str.match(/^\s*\{\{([^}]+)\}\}\s*$/); return m ? m[1] : null; }
+
+  // Build a light virtual tree from the template node and the current values.
+  function build(node, scope, out) {
+    var kids = node.childNodes;
+    for (var i = 0; i < kids.length; i++) {
+      var ch = kids[i];
+      if (ch.nodeType === 3) { out.push({ text: interp(ch.nodeValue, scope) }); continue; }
+      if (ch.nodeType !== 1) continue;
+      var tag = ch.localName;
+      if (tag === 'sc-for') {
+        var list = look(scope, hole(ch.getAttribute('list')) || '') || [];
+        var as = ch.getAttribute('as');
+        for (var j = 0; j < list.length; j++) {
+          var sub = Object.create(scope); sub[as] = list[j]; sub.$index = j;
+          build(ch, sub, out);
+        }
+        continue;
+      }
+      if (tag === 'sc-if') {
+        if (look(scope, hole(ch.getAttribute('value')) || '')) build(ch, scope, out);
+        continue;
+      }
+      var v = { tag: tag, ns: ch.namespaceURI, attrs: {}, events: {}, ref: null, children: [] };
+      for (var a = 0; a < ch.attributes.length; a++) {
+        var at = ch.attributes[a], name = at.name;
+        if (name.indexOf('hint-') === 0) continue;
+        var h = hole(at.value);
+        var val = h ? look(scope, h) : interp(at.value, scope);
+        if (/^on[a-z]/i.test(name)) { if (typeof val === 'function') { var evn = name.slice(2).toLowerCase(); if (evn === 'change' && (tag === 'input' || tag === 'textarea')) evn = 'input'; v.events[evn] = val; } continue; }
+        if (name === 'ref') { if (typeof val === 'function') v.ref = val; continue; }
+        if (typeof val === 'function') continue;
+        if (val === false || val == null) { if (name.indexOf('aria-') === 0) v.attrs[name] = 'false'; continue; }
+        v.attrs[name] = String(val);
+      }
+      build(ch, scope, v.children);
+      out.push(v);
+    }
+    return out;
+  }
+
+  function create(v) {
+    if (v.text != null) return document.createTextNode(v.text);
+    var el = v.ns && v.ns !== 'http://www.w3.org/1999/xhtml' ? document.createElementNS(v.ns, v.tag) : document.createElement(v.tag);
+    update(el, v);
+    return el;
+  }
+  function update(el, v) {
+    var old = el.__attrs || {};
+    for (var k in v.attrs) if (old[k] !== v.attrs[k]) el.setAttribute(k, v.attrs[k]);
+    for (var k2 in old) if (!(k2 in v.attrs)) el.removeAttribute(k2);
+    el.__attrs = v.attrs;
+    if ((v.tag === 'input' || v.tag === 'textarea') && 'value' in v.attrs && el.value !== v.attrs.value) el.value = v.attrs.value;
+    el.__h = el.__h || {};
+    for (var e in v.events) {
+      if (!el.__h[e]) (function (name) { el.addEventListener(name, function (ev) { if (el.__h[name]) el.__h[name](ev); }); })(e);
+      el.__h[e] = v.events[e];
+    }
+    for (var e2 in el.__h) if (!v.events[e2]) el.__h[e2] = null;
+    patch(el, v.children);
+    if (v.tag === 'select' && 'value' in v.attrs && el.value !== v.attrs.value) el.value = v.attrs.value;
+    if (v.ref) v.ref(el);
+  }
+  function same(dom, v) {
+    if (v.text != null) return dom.nodeType === 3;
+    return dom.nodeType === 1 && dom.localName === v.tag && dom.namespaceURI === (v.ns || dom.namespaceURI);
+  }
+  function patch(parent, vnodes) {
+    var doms = parent.childNodes;
+    for (var i = 0; i < vnodes.length; i++) {
+      var v = vnodes[i], d = doms[i];
+      if (d && same(d, v)) {
+        if (v.text != null) { if (d.nodeValue !== v.text) d.nodeValue = v.text; }
+        else update(d, v);
+      } else {
+        var n = create(v);
+        if (d) parent.replaceChild(n, d); else parent.appendChild(n);
+      }
+    }
+    while (doms.length > vnodes.length) parent.removeChild(parent.lastChild);
+  }
+
+  window.DCLogic = function (props) { this.props = props || {}; this.state = {}; };
+  window.DCLogic.prototype.setState = function (partial) {
+    var p = typeof partial === 'function' ? partial(this.state) : partial;
+    for (var k in p) this.state[k] = p[k];
+    this.__schedule && this.__schedule();
+  };
+  window.DCLogic.prototype.forceUpdate = function () { this.__schedule && this.__schedule(); };
+
+  window.mountPage = function (Component, props, tpl, root, onRender) {
+    var c = new Component(props), queued = false;
+    function render() {
+      queued = false;
+      var vals = c.renderVals();
+      patch(root, build(tpl.content, vals, []));
+      if (onRender) onRender(vals, c);
+    }
+    c.__schedule = function () { if (!queued) { queued = true; requestAnimationFrame(render); } };
+    render();
+    if (c.componentDidMount) c.componentDidMount();
+    return c;
+  };
+})();
+
+</script>
+<script>
+
+const THEMES = {
+  light: { bg: '#F2F4F5', surface: '#FFFFFF', surface2: '#E8ECEE', border: '#D9DFE2', inputBorder: '#8A949B', text: '#16222B', body: '#36444E', muted: '#59666F', link: '#2F5873', cta: '#2F5873', onCta: '#FFFFFF', prog: '#2F5873', sel: '#2F5873', selBg: '#EAF1F5', onSel: '#FFFFFF', okBg: '#DCFAE6', okFg: '#05603A', warnBg: '#FFF4CC', warnFg: '#6A4D00', chipOn: 'background: #16222B; color: #FFFFFF; border: 1px solid #16222B', segOn: 'background: #FFFFFF; color: #16222B; box-shadow: 0 1px 3px rgba(0,0,0,0.16)', sky: '#2B5068', band: '#22445A', hill1: '#33607A', hill2: '#234559' },
+  dark: { bg: '#121413', surface: '#1A1D1C', surface2: '#232726', border: '#313635', inputBorder: '#747C7A', text: '#EFF1EF', body: '#D3D8D6', muted: '#A2AAA7', link: '#A8C3CE', cta: '#EFF1EF', onCta: '#121413', prog: '#A8C3CE', sel: '#A8C3CE', selBg: '#1E2A31', onSel: '#121413', okBg: '#0F2E1E', okFg: '#7EDBA6', warnBg: '#2E2608', warnFg: '#F5D77A', chipOn: 'background: #EFF1EF; color: #121413; border: 1px solid #EFF1EF', segOn: 'background: #EFF1EF; color: #121413', sky: '#21405A', band: '#1B3646', hill1: '#28495E', hill2: '#1A3445' }
+};
+const TYPES = [['shop', 'A business', 'A shop, restaurant, salon, clinic or any business that sells to customers.'], ['creator', 'Myself, as a creator', 'An influencer, coach, artist or expert growing an audience.'], ['agency', 'An agency, for my clients', 'You manage marketing for other businesses. You can add more brands later.']];
+const LANGS = [['English', ''], ['Hindi', 'हिंदी'], ['Hinglish', ''], ['Marathi', 'मराठी'], ['Gujarati', 'ગુજરાતી'], ['Punjabi', 'ਪੰਜਾਬੀ']];
+const AREA_SETS = {
+  local: [['near', 'Near my shop', 'We focus on people within about 10 km of Johari Bazaar, Jaipur.'], ['state', 'My state', 'We focus on people across Rajasthan.'], ['india', 'All India', 'We focus on people across India, since you deliver everywhere.']],
+  client: [['near', 'Near shop', 'We focus on people within about 10 km of their shop in Jaipur.'], ['state', 'Their state', 'We focus on people across Rajasthan.'], ['india', 'All India', 'We focus on people across India, since they deliver everywhere.']],
+  offline: [['near', 'Near my shop', 'We focus on walk-ins within about 5 km of Malviya Nagar, Jaipur.'], ['deliver', 'Where I deliver', ''], ['state', 'My state', 'We focus on people across Rajasthan.'], ['india', 'All India', 'We focus on people across India, for gift boxes you courier.']],
+  creator: [['near', 'My city', 'We focus on people in and around Pune.'], ['state', 'All India', 'We focus on people across India.'], ['india', 'Worldwide', 'We also reach Indians living abroad, who follow a lot of home cooking.']]
+};
+const BUDGETS = [['none', 'No ads for now'], ['5k', 'Up to ₹5,000'], ['15k', '₹5,000 to ₹15,000'], ['more', '₹15,000 or more'], ['custom', 'Custom amount']];
+const SHOP = {
+  steps: ['Account', 'Basics', 'Your brand', 'Your voice', 'Goals'],
+  at: { type: 1, buy: 2, link: 2, manual: 3, reading: 3, review: 3, products: 3, voice: 4, goals: 5 },
+  readTitle: 'Reading chumeshwarclothes.in', siteShort: 'chumeshwarclothes.in · Jaipur', mapsTip: true, prodActions: false, ctaArea: 'Johari Bazaar', linkCta: 'Read my links',
+  name: 'Chumeshwar Clothes', initials: 'CC', site: 'chumeshwarclothes.in', city: 'Jaipur', handle: 'chumeshwarclothes', c1: '#7A1F2B', ink: '#F4EDE4', colours: ['#7A1F2B', '#E9B44C', '#F4EDE4'], colourNames: 'Maroon, saffron, ivory', colourLabel: 'Brand colours', logoRadius: '16px',
+  sub: 'Fashion and clothing · Jaipur', cardEmpty: 'Your brand card', cardEmptySub: 'It fills in as we learn about your business, so you can see what we know.', eyebrow: '',
+  linkTitle: 'Where can we learn about your business?', linkSub: 'Paste your website, Instagram, Facebook or Google Maps link. We read it and fill in your profile, so you type less.', linkVal: 'chumeshwarclothes.in', linkLabel: 'Website, social page or Google Maps link', linkPh: 'yourshop.com or a Google Maps link', addLink: 'Add your social links', link2: 'instagram.com/chumeshwarclothes', noLink: 'I don’t have a website or page', skipClient: '',
+  manTitle: 'Tell us about your business', manSub: 'Just the essentials. You can add a website or page any time later.', manName: 'Business name', manKind: 'What kind of business is it?', kinds: ['Fashion and clothing', 'Food and sweets', 'Beauty and salon', 'Restaurant or cafe', 'Something else'], manSell: 'What do you sell?', manSellVal: 'Handloom kurtas, sarees and festive wear, block-printed in our Jaipur workshop.', manExtra: 'WhatsApp number', manExtraPh: '98765 43210',
+  tooLong: 'Taking too long? Fill it in yourself',
+  read: ['Read 14 public pages', 'Found your logo and colours', 'Found 12 products and prices', 'Found your Instagram and Facebook', 'Writing your brand profile', 'Marking what you should check'],
+  readNow: ['Reading your website…', 'Finding your logo and colours…', 'Finding your products and prices…', 'Looking for your social pages…', 'Writing your brand profile…', 'Marking what you should check…'],
+  readDone: ['14 pages read', 'Logo and colours', '12 products', 'Instagram and Facebook', 'Brand profile', 'Ready to check'],
+  readRows: [['Brand colours', 2, [], true, '45%'], ['Products', 3, ['Kurtas', 'Sarees', '+10 more'], false, '60%'], ['Social pages', 4, ['@chumeshwarclothes', 'Facebook'], false, '60%'], ['Who you sell to', 5, ['Women 25 to 45', 'Festive shoppers'], false, '70%']],
+  revTitle: 'Is this you?', revSub: 'We filled this in from your website. Fix anything that is off. Nothing is saved until you continue.', brandSec: 'Your brand', logoNote: 'chumeshwarclothes.in · Logo from your website', changeLogo: 'Change logo', fontLabel: 'Brand font', fontVal: 'Playfair Display', fromTag: 'From your website',
+  sec1: 'About your business', sec2: 'Your customers',
+  rows1: [['What you sell', 'Handloom kurtas, sarees and festive wear for women and men, block-printed in our own Jaipur workshop.', 'web'], ['Kind of business', 'Fashion and clothing', 'guess'], ['Location', 'Johari Bazaar, Jaipur, Rajasthan', 'web'], ['Contact', 'hello@chumeshwarclothes.in · WhatsApp +91 98XXX X2741', 'web']],
+  rows2: [['Who buys most', 'Women aged 25 to 45 shopping for festivals and weddings', 'guess'], ['Where they are', ['Jaipur', 'Delhi NCR', 'All India delivery'], 'web'], ['What they care about', ['Handmade quality', 'Festive looks', 'Fair prices'], 'web'], ['What makes you different', 'Every print is hand-blocked in our own workshop, so no two pieces are exactly alike.', 'web'], ['Price range', 'Mid-range, ₹500 to ₹5,000', 'web'], ['Second audience', 'Men buying Nehru jackets and kurtas for weddings', 'guess'], ['Shopping habits', 'Orders on WhatsApp, visits the shop before big festivals', 'guess']],
+  socialTitle: 'Social pages we found', socialSub: 'You connect them for posting at the end. Turn off any that are not yours.',
+  socials: [['IG', 'Instagram', 'instagram.com/chumeshwarclothes', true], ['FB', 'Facebook', 'facebook.com/chumeshwarclothes', true], ['YT', 'YouTube', 'youtube.com/@chumeshwar', false]],
+  prodTitle: 'Products', prodSub: 'picked to promote. Untick any you do not sell any more.', prodWord: 'products', icon: 'hanger',
+  products: [['Block-print cotton kurta', '₹1,299', '#F4EDE4', '#7A1F2B'], ['Bandhani silk saree', '₹4,850', '#7A1F2B', '#F4EDE4'], ['Leheriya dupatta', '₹690', '#E9B44C', '#5A1620'], ['Men’s Nehru jacket', '₹2,450', '#2F3E46', '#F4EDE4'], ['Festive anarkali set', '₹3,990', '#F4EDE4', '#7A1F2B'], ['Kids’ kurta pyjama', '₹899', '#E9B44C', '#5A1620'], ['Mirror-work potli bag', '₹540', '#7A1F2B', '#F4EDE4'], ['Chanderi suit set', '₹2,750', '#DCE3E0', '#2F3E46'], ['Ajrakh print shirt', '₹1,450', '#2F3E46', '#F4EDE4'], ['Gota patti lehenga', '₹4,990', '#E9B44C', '#5A1620'], ['Cotton palazzo pants', '₹790', '#F4EDE4', '#7A1F2B'], ['Jaipuri razai, single', '₹1,850', '#DCE3E0', '#2F3E46']],
+  readAgain: 'Read my website again',
+  voiceTitle: 'How should your posts sound?',
+  tones: [['warm', 'Warm and friendly', '“New block-print kurtas just came in. Come say hello at the shop!”'], ['expert', 'Expert and helpful', '“How to spot real hand block-printing, and why it lasts longer.”'], ['festive', 'Bold and festive', '“Wedding season is here! 12 new Bandhani colours, shop early.”'], ['calm', 'Calm and premium', '“Made slowly by hand. Worn for years.”']],
+  preview: { warm: ['New block-print kurtas are here', 'Our new block-print kurtas just came in from the workshop. Soft cotton, made for long sunny days. Come say hello at our Johari Bazaar shop!', 'हमारे नए ब्लॉक-प्रिंट कुर्ते वर्कशॉप से अभी-अभी आए हैं। मुलायम कॉटन, धूप वाले लंबे दिनों के लिए। जौहरी बाज़ार की दुकान पर ज़रूर आइए!'], expert: ['How to spot real block-print', 'Look for tiny colour changes and a softer back side. That is how you know it was printed by hand. Every kurta in our new range is hand-blocked in Jaipur.', 'रंगों में हल्का फ़र्क और पीछे की नरम छपाई देखिए, यही असली हाथ की छपाई की पहचान है। हमारी नई रेंज का हर कुर्ता जयपुर में हाथ से छापा गया है।'], festive: ['Wedding season is here!', 'New Bandhani sarees in 12 colours, just in time for the shaadi season. The best colours go first, so come early!', 'शादी के सीज़न के लिए 12 रंगों में नई बांधनी साड़ियां आ गई हैं। सबसे अच्छे रंग जल्दी खत्म होते हैं, जल्दी आइए!'], calm: ['Made slowly, worn for years', 'Our Chanderi suit sets are woven slowly and finished by hand. Quiet colours, made to last.', 'हमारे चंदेरी सूट धीरे-धीरे बुने और हाथ से तैयार किए जाते हैं। हल्के रंग, सालों चलने वाले।'] },
+  goalTitle: 'What should marketing do for you?', goalSub: 'We shape your plan around this. You can change it any time.',
+  goals: [['leads', 'Get more enquiries', 'Calls, WhatsApp messages and form fills'], ['sales', 'Sell more online', 'Orders on your website or WhatsApp'], ['footfall', 'Bring people to my shop', 'More walk-ins at your store'], ['awareness', 'Get known in my area', 'More people who know your name']], goal: 'footfall',
+  areaTitle: 'Where are your customers?', areas: 'local', channels: [['IG', 'Instagram', false, ''], ['FB', 'Facebook', false, ''], ['WA', 'WhatsApp', false, '']], chanNote: 'YouTube, LinkedIn and Google Business Profile are coming soon.',
+  budgetTitle: 'Monthly budget for ads', budgetNote: 'This is only for paid ads. Your posts do not need it, and we never spend anything without your approval.', approver: false,
+  doneTitle: 'You are all set, Chumeshwar Clothes', doneSub: 'Your brand profile is saved. You can change anything later in Settings.', doneList: 'Three steps to your first posts',
+  next: [['Connect Instagram and Facebook', 'So we can post for you. It takes about a minute.'], ['Get your first month’s plan', 'We plan 30 days around the wedding season, festivals and your busy days.'], ['Approve your first posts', 'Nothing goes live until you say yes.']],
+  donePrimary: 'Connect Instagram and Facebook', doneSecondary: 'Go to my workspace',
+  cardRows: [['Colours', 'Maroon, saffron, ivory', 2], ['Products', 'P', 3], ['Voice', 'V', 4], ['Languages', 'L', 4], ['Goal', 'G', 6]]
+};
+const CREATOR = Object.assign({}, SHOP, {
+  readTitle: 'Reading @ritikacooks', siteShort: 'instagram.com/ritikacooks · Pune', mapsTip: false, linkCta: 'Read my profile',
+  at: { type: 1, link: 2, manual: 3, reading: 3, review: 3, voice: 4, goals: 5 },
+  name: 'Ritika Cooks', initials: 'RC', site: 'instagram.com/ritikacooks', city: 'Pune', handle: 'ritikacooks', c1: '#B44A26', ink: '#FFF3E2', colours: ['#B44A26', '#FFF3E2', '#3E6B48'], colourNames: 'Terracotta, cream, leaf green', colourLabel: 'Your colours', logoRadius: '999px',
+  steps: ['Account', 'Your link', 'Your profile', 'Your voice', 'Goals'],
+  sub: 'Home cooking creator · Pune', cardEmpty: 'Your creator card', cardEmptySub: 'It fills in as we learn about you and what you post.',
+  linkTitle: 'Where do people follow you?', linkSub: 'Paste your Instagram or YouTube profile. We read your bio and recent posts to learn your style.', linkVal: 'instagram.com/ritikacooks', linkLabel: 'Instagram or YouTube profile link', linkPh: 'instagram.com/yourname', addLink: 'Add your other links', link2: 'youtube.com/@ritikacooks', link2Ph: 'youtube.com/@yourname or your website', noLink: 'I am just starting out',
+  manTitle: 'Tell us about yourself', manSub: 'Just the essentials. You can add your profiles any time later.', manName: 'Your name or creator name', manKind: 'What do you post about?', kinds: ['Food and cooking', 'Fashion and beauty', 'Fitness and health', 'Travel', 'Education and tips', 'Something else'], manSell: 'Describe yourself in a line', manSellVal: 'Home cook from Pune sharing quick Maharashtrian dinners and festive sweets.', manExtra: 'Instagram handle', manExtraPh: '@yourname',
+  tooLong: 'Taking too long? Fill it in yourself',
+  read: ['Read your bio and 30 recent posts', 'Found your photo and colours', 'Found 4 things you post about', 'Found your YouTube channel', 'Writing your creator profile', 'Marking what you should check'],
+  readNow: ['Reading your profile…', 'Finding your photo and colours…', 'Working out what you post about…', 'Looking for your other channels…', 'Writing your creator profile…', 'Marking what you should check…'],
+  readDone: ['30 posts read', 'Photo and colours', '4 content themes', 'Instagram and YouTube', 'Creator profile', 'Ready to check'],
+  readRows: [['Your colours', 2, [], true, '45%'], ['What you post about', 3, ['Quick dinners', 'Festive sweets', '+2 more'], false, '60%'], ['Your channels', 4, ['@ritikacooks', 'YouTube'], false, '60%'], ['Who follows you', 5, ['Home cooks 22 to 40', 'Pune, Mumbai'], false, '70%']],
+  revTitle: 'Is this you?', revSub: 'We filled this in from your profile. Fix anything that is off. Nothing is saved until you continue.', brandSec: 'Your look', logoNote: '@ritikacooks · Photo from your profile', changeLogo: 'Change photo', fontLabel: 'Photo style', fontVal: 'Bright, close-up food shots', fromTag: 'From your profile',
+  sec1: 'About you', sec2: 'Your audience',
+  rows1: [['What you do', 'Home cook sharing quick Maharashtrian dinners, tiffin ideas and festive sweets.', 'web'], ['Niche', 'Food and cooking', 'guess'], ['Based in', 'Pune, Maharashtra', 'web'], ['Followers', '48,200 on Instagram · 12,600 on YouTube', 'web']],
+  rows2: [['Who follows you', 'Home cooks aged 22 to 40, mostly working women', 'guess'], ['Where they are', ['Pune', 'Mumbai', 'Indians abroad'], 'web'], ['What they love', ['15-minute recipes', 'Tiffin ideas', 'Festive sweets'], 'web'], ['What makes you different', 'Real home kitchen, no fancy tools, and every recipe tested by my mother first.', 'web'], ['What you offer', 'Festive sweets e-book, ₹299', 'web'], ['Best time to post', 'Weekday evenings, 7 to 9 pm', 'guess'], ['Brand work so far', 'Two paid posts with kitchenware brands', 'guess']],
+  socialTitle: 'Your channels', socialSub: 'You connect them for posting at the end. Turn off any that are not yours.',
+  socials: [['IG', 'Instagram', 'instagram.com/ritikacooks', true], ['YT', 'YouTube', 'youtube.com/@ritikacooks', true], ['FB', 'Facebook', 'facebook.com/ritikacooks', false]],
+  prodTitle: 'What you post about', prodSub: 'picked for your plan. Untick any you want to post less about.', prodWord: 'themes', icon: 'pan',
+  products: [['Quick weeknight dinners', '12 recent posts', '#FFF3E2', '#B44A26'], ['Festive sweets', '8 recent posts', '#B44A26', '#FFF3E2'], ['Tiffin box ideas', '5 recent posts', '#3E6B48', '#FFF3E2'], ['Kitchen tips', '3 recent posts', '#F2D7A6', '#7A3A1C']],
+  readAgain: 'Read my profile again',
+  tones: [['warm', 'Warm and chatty', '“Made this dal for my family tonight, and it was gone in 10 minutes!”'], ['expert', 'Tips and how-to', '“3 mistakes that make your poha soggy, and how I fix them.”'], ['festive', 'Fun and bold', '“Modak season! Who is making them with me this year?”'], ['calm', 'Calm and simple', '“One pot, five ingredients, a quiet Sunday lunch.”']],
+  preview: { warm: ['Tonight’s 15-minute dal', 'Made this dal for my family tonight and it was gone in 10 minutes! Recipe is in my stories. Tell me if you try it.', 'आज रात परिवार के लिए यह दाल बनाई और 10 मिनट में खत्म हो गई! रेसिपी मेरी स्टोरी में है। बनाएं तो ज़रूर बताइए।'], expert: ['Why your poha turns soggy', 'Three mistakes that make poha soggy: washing too long, too much water, and adding salt late. Here is how I fix each one.', 'पोहा गीला होने की तीन गलतियां: ज़्यादा देर धोना, ज़्यादा पानी, और नमक देर से डालना। मैं हर एक को ऐसे ठीक करती हूं।'], festive: ['Modak season is here!', 'Who is making modaks with me this year? Steamed, fried or chocolate, I am trying all three. Save this for Ganpati!', 'इस साल मेरे साथ मोदक कौन बना रहा है? उबले, तले या चॉकलेट वाले, मैं तीनों बना रही हूं। गणपति के लिए सेव कर लीजिए!'], calm: ['One pot, five ingredients', 'A quiet Sunday lunch. One pot, five ingredients, and nothing to wash after.', 'एक शांत रविवार का खाना। एक बर्तन, पांच चीज़ें, और बाद में धोने को कुछ नहीं।'] },
+  goalTitle: 'What do you want from posting?', goalSub: 'We shape your plan around this. You can change it any time.',
+  goals: [['growth', 'Grow my followers', 'Reach new people who like what you post'], ['engage', 'More likes and comments', 'Build a closer community'], ['collabs', 'Get brand collaborations', 'Look ready for paid partnerships'], ['sell', 'Sell my own product', 'Courses, e-books, classes or merch']], goal: 'growth',
+  areaTitle: 'Where is your audience?', areas: 'creator', channels: [['IG', 'Instagram', false, ''], ['FB', 'Facebook', false, ''], ['YT', 'YouTube', true, 'Coming soon']], chanNote: 'YouTube posting is coming soon. We still use your channel to learn your style.',
+  budgetTitle: 'Monthly budget to boost posts', budgetNote: 'Only for boosting posts. Regular posting does not need it, and we never spend anything without your approval.',
+  doneTitle: 'You are all set, Ritika', doneSub: 'Your creator profile is saved. You can change anything later in Settings.', doneList: 'Three steps to your first posts',
+  next: [['Connect Instagram and Facebook', 'So we can post for you. It takes about a minute.'], ['Get your first month’s plan', 'We plan 30 days around trends, festivals and the times your followers are online.'], ['Approve your first posts', 'Nothing goes live until you say yes.']],
+  cardRows: [['Colours', 'Terracotta, cream, green', 2], ['Themes', 'P', 3], ['Voice', 'V', 4], ['Languages', 'L', 4], ['Goal', 'G', 6]]
+});
+const AGENCY = Object.assign({}, SHOP, {
+  steps: ['Account', 'Your agency', 'Client link', 'Client brand', 'Voice', 'Goals'],
+  at: { type: 1, agency: 2, link: 3, manual: 4, reading: 4, review: 4, products: 4, voice: 5, goals: 6 },
+  linkCta: 'Read their links', linkSub: 'Paste your client’s website, social page or Google Maps link. We read it and fill in their profile.',
+  eyebrow: 'First client', cardEmpty: 'Client brand card', cardEmptySub: 'It fills in as we learn about your client’s business.',
+  linkTitle: 'Which client are we setting up first?', linkLabel: 'Client’s website or social page', addLink: 'Add their social links', link2Ph: 'instagram.com/theirbusiness', noLink: 'My client doesn’t have a website or page', skipClient: 'Skip, I will add clients later',
+  manTitle: 'Tell us about your client', manSub: 'Just the essentials. You can add their website or page any time later.', manName: 'Client’s business name', manKind: 'What kind of business is it?', manSell: 'What do they sell?', manExtra: 'Client’s WhatsApp number',
+  tooLong: 'Taking too long? Fill it in yourself',
+  readRows: [['Brand colours', 2, [], true, '45%'], ['Products', 3, ['Kurtas', 'Sarees', '+10 more'], false, '60%'], ['Social pages', 4, ['@chumeshwarclothes', 'Facebook'], false, '60%'], ['Who they sell to', 5, ['Women 25 to 45', 'Festive shoppers'], false, '70%']],
+  revTitle: 'Is this your client?', revSub: 'We filled this in from their website. Fix anything that is off. Nothing is saved until you continue.', brandSec: 'Their brand', logoNote: 'chumeshwarclothes.in · Logo from their website', fromTag: 'From their website',
+  sec1: 'About their business', sec2: 'Their customers',
+  rows2: SHOP.rows2.map((r) => [r[0].replace('What makes you different', 'What makes them different'), r[1], r[2]]),
+  socialTitle: 'Their social pages', socialSub: 'Your client connects these at the end with a link you send them.',
+  prodSub: 'picked to promote. Untick any they do not sell any more.', readAgain: 'Read their website again',
+  voiceTitle: 'How should their posts sound?',
+  goalTitle: 'What should marketing do for this client?', goalSub: 'We shape their plan around this. You can change it any time.',
+  goals: [['leads', 'Get more enquiries', 'Calls, WhatsApp messages and form fills'], ['sales', 'Sell more online', 'Orders on their website or WhatsApp'], ['footfall', 'Bring people to their shop', 'More walk-ins at their store'], ['awareness', 'Get known in their area', 'More people who know their name']],
+  areaTitle: 'Where are their customers?', areas: 'client', budgetTitle: 'Client’s monthly budget for ads', budgetNote: 'Only for paid ads. Nothing is spent without approval from the person you choose below.', approver: true,
+  doneTitle: 'Chumeshwar Clothes is set up', doneSub: 'It is the first client in Kesar Digital’s workspace. You can change anything later.', doneList: 'What to do next',
+  next: [['Send your client a link to connect', 'They connect their own Instagram and Facebook, so you never need their passwords.'], ['Add another client', 'Each client takes about 10 minutes to set up.'], ['Invite your team', 'Give your team access to some clients or all of them.']],
+  donePrimary: 'Send connect link on WhatsApp', doneSecondary: 'Go to agency workspace'
+});
+const OFFLINE = Object.assign({}, SHOP, {
+  name: 'Sharma Sweets', initials: 'SS', site: 'Google Maps', city: 'Jaipur', handle: 'sharmasweetsjaipur', c1: '#9E1B32', ink: '#FFF8EC', colours: ['#9E1B32', '#F2B33D', '#FFF8EC'], colourNames: 'Red, marigold, cream', colourLabel: 'Shop colours',
+  readTitle: 'Reading your Google Maps listing', siteShort: 'Malviya Nagar, Jaipur · On Google Maps', ctaArea: 'Malviya Nagar', prodActions: true, linkCta: 'Read my listing',
+  sub: 'Sweet shop · Malviya Nagar, Jaipur', cardEmptySub: 'It fills in as we learn about your shop, so you can see what we know.',
+  linkTitle: 'Where can we find your shop online?', linkSub: 'Paste your Google Maps listing, Instagram or Facebook page. Most shops are on Google Maps even without a website.', linkVal: 'maps.app.goo.gl/sharmasweetsjpr', linkLabel: 'Google Maps, Instagram or Facebook link', linkPh: 'A Google Maps link or instagram.com/yourshop', addLink: 'Add your social links', link2: 'instagram.com/sharmasweetsjpr', noLink: 'My shop is not online anywhere',
+  manTitle: 'Tell us about your shop', manSub: 'Just the essentials. You can add a Google Maps link any time later.', manName: 'Shop name', kinds: ['Sweets and snacks', 'Grocery and kirana', 'Clothing', 'Salon and beauty', 'Restaurant or cafe', 'Something else'], manSell: 'What do you sell?', manSellVal: 'Fresh sweets, namkeen and festive gift boxes, made in our own kitchen.', manExtra: 'Shop area or market', manExtraPh: 'Malviya Nagar Main Market',
+  read: ['Read your Google Maps listing', 'Found your address and opening hours', 'Found 46 photos of your shop', 'Read 1,240 customer reviews', 'Writing your shop profile', 'Marking what you should check'],
+  readNow: ['Reading your Google Maps listing…', 'Finding your address and hours…', 'Looking at your shop photos…', 'Reading customer reviews…', 'Writing your shop profile…', 'Marking what you should check…'],
+  readDone: ['Listing read', 'Address and hours', '46 photos', '1,240 reviews', 'Shop profile', 'Ready to check'],
+  readRows: [['Shop colours', 2, [], true, '45%'], ['Opening hours', 3, ['9 am to 10 pm', 'Open daily'], false, '60%'], ['Google rating', 4, ['4.5 stars', '1,240 reviews'], false, '60%'], ['Customers love', 5, ['Fresh ghewar', 'Kaju katli'], false, '70%']],
+  revTitle: 'Is this your shop?', revSub: 'We filled this in from your Google Maps listing. Fix anything that is off. Nothing is saved until you continue.', brandSec: 'Your shop', logoNote: 'Colours taken from your shop sign in Google Maps photos', changeLogo: 'Add a logo', fontLabel: 'Shop photos', fontVal: '46 photos from Google Maps', fromTag: 'From Google Maps',
+  sec1: 'Shop details', sec2: 'What customers say',
+  rows1: [['Address', 'Shop 12, Malviya Nagar Main Market, Jaipur', 'web'], ['Opening hours', 'Every day, 9 am to 10 pm', 'web'], ['Phone', '+91 98XXX X5512', 'web'], ['Kind of business', 'Sweets and snacks', 'guess']],
+  rows2: [['Rating', '4.5 stars from 1,240 Google reviews', 'web'], ['Customers love', ['Fresh ghewar', 'Kaju katli', 'Quick service'], 'web'], ['Who buys most', 'Families in Malviya Nagar buying for festivals and guests', 'guess'], ['What makes you different', 'Sweets made fresh every morning in our own kitchen since 1987.', 'web'], ['Busy times', 'Evenings, and the week before festivals', 'guess'], ['Common complaint', 'Parking is hard on weekend evenings', 'web'], ['Price range', '₹400 to ₹1,200 per kg', 'guess']],
+  socialTitle: 'Pages we found', socialSub: 'Turn off any that are not yours. You connect them for posting at the end.',
+  socials: [['FB', 'Facebook', 'facebook.com/sharmasweetsjaipur', true], ['IG', 'Instagram', 'No page found. We can help you start one.', false]],
+  prodTitle: 'Products we spotted', prodSub: 'found in your photos and reviews. Add prices so posts can show them.', prodWord: 'products', icon: 'gift',
+  products: [['Kaju katli', '₹880 per kg', '#F2E3C6', '#7A4A12'], ['Malai ghewar', 'Add price', '#F2B33D', '#5A1620'], ['Motichoor laddu', 'Add price', '#F7C873', '#7A3A1C'], ['Samosa', 'Add price', '#E8D2A6', '#5A3A12']],
+  readAgain: 'Read my listing again',
+  tones: [['warm', 'Warm and friendly', '“Fresh ghewar just came out of the kitchen. Come taste it!”'], ['expert', 'Expert and helpful', '“How to keep kaju katli fresh for a whole week.”'], ['festive', 'Bold and festive', '“Shaadi season boxes from ₹499. WhatsApp us to book.”'], ['calm', 'Calm and traditional', '“Same kitchen, same recipes, since 1987.”']],
+  preview: { warm: ['Fresh ghewar, made this morning', 'Our ghewar came out of the kitchen at 7 this morning, crisp and soaked in rabri. Come taste it at Malviya Nagar market, open till 10 pm!', 'हमारा घेवर आज सुबह 7 बजे बना, कुरकुरा और रबड़ी में डूबा हुआ। मालवीय नगर मार्केट आइए, रात 10 बजे तक खुला है!'], expert: ['Keep kaju katli fresh for a week', 'Keep it in an airtight box, away from the fridge, and eat it within 7 days. Need a box for guests? WhatsApp us to order.', 'काजू कतली को एयरटाइट डिब्बे में रखें, फ्रिज से दूर, और 7 दिन में खा लें। मेहमानों के लिए डिब्बा चाहिए? WhatsApp पर ऑर्डर करें।'], festive: ['Shaadi season boxes are ready!', 'Wedding season orders are open. Mithai boxes from ₹499, packed fresh the same morning. WhatsApp us to book.', 'शादी के सीज़न के ऑर्डर शुरू! ₹499 से मिठाई के डिब्बे, उसी सुबह ताज़ा पैक। बुक करने के लिए WhatsApp करें।'], calm: ['Made the same way since 1987', 'Same kitchen, same recipes, since 1987. Some things are worth keeping the same.', '1987 से वही रसोई, वही रेसिपी। कुछ चीज़ें वैसी ही अच्छी लगती हैं।'] },
+  goals: [['footfall', 'Bring people to my shop', 'More walk-ins at your counter'], ['orders', 'Get more orders', 'On WhatsApp, by phone and for home delivery'], ['bulk', 'Get bulk and party orders', 'Weddings, offices and festival gifting'], ['awareness', 'Get known in my area', 'More people nearby who know your name']], goal: 'footfall',
+  areas: 'offline', channels: [['WA', 'WhatsApp', false, 'Status updates and replies'], ['FB', 'Facebook', false, ''], ['IG', 'Instagram', false, 'No page yet. We help you start one.']],
+  doneTitle: 'You are all set, Sharma Sweets', doneSub: 'Your shop profile is saved. You can change anything later in Settings.', doneList: 'Three steps to your first posts',
+  next: [['Start your Instagram page', 'We guide you step by step. It takes about 5 minutes.'], ['Connect Facebook and WhatsApp Business', 'So we can post updates and reply to messages for you.'], ['Approve your first posts', 'Nothing goes live until you say yes.']],
+  donePrimary: 'Start Instagram with us', doneSecondary: 'Go to my workspace',
+  cardRows: [['Colours', 'Red, marigold, cream', 2], ['Products', 'P', 3], ['Voice', 'V', 4], ['Languages', 'L', 4], ['Goal', 'G', 6]]
+});
+SHOP.finish = [['Add your products', 'So posts can show your real products and prices.', 'Add products'], ['Add your logo and colours', 'Your posts use a plain starter style until then.', 'Add logo'], ['Connect Instagram and Facebook', 'Needed before we can post for you.', 'Connect']];
+OFFLINE.finish = [['Add your products', 'So posts can show your real sweets and prices.', 'Add products'], ['Add your shop photo and colours', 'Your posts use a plain starter style until then.', 'Add photo'], ['Start your Instagram page', 'We guide you step by step. It takes about 5 minutes.', 'Start']];
+CREATOR.finish = [['Add what you post about', 'So your plan covers your favourite topics.', 'Add topics'], ['Add your profile photo and colours', 'Your posts use a plain starter style until then.', 'Add photo'], ['Connect Instagram and Facebook', 'Needed before we can post for you.', 'Connect']];
+AGENCY.finish = [['Add your client’s products', 'So their posts can show real products and prices.', 'Add products'], ['Add their logo and colours', 'Their posts use a plain starter style until then.', 'Add logo'], ['Send your client the connect link', 'They connect their own Instagram and Facebook.', 'Send link']];
+SHOP.palettes = [['Maroon and gold', ['#7A1F2B', '#E9B44C', '#F4EDE4']], ['Indigo and white', ['#2B3A67', '#C9A227', '#F2F4F8']], ['Rose and sage', ['#A63D60', '#6E8B74', '#F7E8EC']]];
+SHOP.lookTitle = 'Logo or shop photo'; SHOP.lookSub = 'We take your colours and logo from it, so your posts look like you. You can also do this later from your dashboard.'; SHOP.uploadTitle = 'Upload your logo or a shop photo';
+OFFLINE.palettes = [['Red and marigold', ['#9E1B32', '#F2B33D', '#FFF8EC']], ['Green and cream', ['#2F5D3A', '#D9A441', '#FFF4DC']], ['Saffron and brown', ['#8A4A12', '#E8892B', '#FFF1DE']]];
+OFFLINE.lookTitle = 'Shop sign or box photo'; OFFLINE.lookSub = 'We take your colours from it, so your posts look like your shop. You can also do this later from your dashboard.'; OFFLINE.uploadTitle = 'Upload a photo of your shop sign or sweet box';
+CREATOR.palettes = [['Terracotta and cream', ['#B44A26', '#3E6B48', '#FFF3E2']], ['Teal and coral', ['#1F6F6B', '#E0684B', '#FFF5EE']], ['Plum and blush', ['#5E2B5C', '#D98BA6', '#FBEFF4']]];
+CREATOR.lookTitle = 'Profile photo'; CREATOR.lookSub = 'We take your colours from it, so your posts look like you. You can also do this later from your dashboard.'; CREATOR.uploadTitle = 'Upload your profile photo or a recent post';
+AGENCY.palettes = SHOP.palettes; AGENCY.lookTitle = 'Client’s logo or shop photo'; AGENCY.lookSub = 'We take their colours and logo from it. You can also do this later from the client’s dashboard.'; AGENCY.uploadTitle = 'Upload their logo or a shop photo';
+const COPY = { shop: SHOP, creator: CREATOR, agency: AGENCY, offline: OFFLINE };
+const copyFor = (type, buy) => type === 'shop' && !buy.includes('online') ? OFFLINE : (COPY[type] || SHOP);
+const BUYS = [['online', 'On my website or an online store', 'Your own website, or a store on Amazon, Flipkart or Meesho', 'isGlobe'], ['shop', 'At my shop', 'People walk in and buy at the counter', 'isShop'], ['whatsapp', 'On WhatsApp, phone or delivery apps', 'Customers message or call, or order on Swiggy or Zomato', 'isChat']];
+const TEAMS = ['Just me', '2 to 5', '6 to 20', '20+'];
+const CLIENTS = ['1 to 5', '6 to 20', '21 to 50', '50+'];
+
+class Component extends DCLogic {
+  constructor(p) {
+    super(p);
+    const rawScreen = (p && p.screen) || 'type';
+    const screen = rawScreen === 'doneLite' ? 'done' : rawScreen;
+    const pk = (p && p.kind) || 'shop';
+    const kind = pk === 'offline' ? 'shop' : pk;
+    const buy = pk === 'offline' ? ['shop', 'whatsapp'] : ['shop', 'online'];
+    const C = copyFor(kind, buy);
+    this.state = { screen, type: kind, buy, tipOpen: false, prodRows: [{ name: 'Kaju katli', price: '880', photo: true, bg: '#F2E3C6' }, { name: 'Malai ghewar', price: '', photo: false, bg: '#F2B33D' }, { name: 'Motichoor laddu', price: '', photo: false, bg: '#F7C873' }, { name: 'Wedding mithai box', price: '499', photo: false, bg: '#E8D2A6' }], links: ['type', 'agency', 'buy'].includes(screen) ? [''] : ['link', 'done'].includes(screen) && C.link2 ? [C.linkVal, C.link2] : [C.linkVal], readAt: screen === 'reading' ? 4 : 6,
+      editing: screen === 'review' ? 'c' + Math.max(0, C.rows2.findIndex((r) => Array.isArray(r[1]))) : null, draft: screen === 'review' ? (C.rows2.find((r) => Array.isArray(r[1])) || C.rows2[0])[1].slice() : null, addChip: '', vals: {}, edited: {}, moreCust: false, socials: C.socials.map((x) => x[3]), picked: C.products.map((x, i) => i !== C.products.length - 1 || C === OFFLINE), allProducts: false,
+      langs: [0, 1], tone: 'warm', avoid: kind === 'creator' ? ['Politics', 'Diet shaming'] : ['Politics', 'Other brands by name'], avoidDraft: '', goal: C.goal, area: C === OFFLINE ? 'near' : 'state', channels: C.channels.map((x) => !x[2]), budget: kind === 'creator' ? 'none' : '5k', budgetAmt: '', team: 1, clients: 1, approver: 'client', note: '', fields: {}, drafts: {}, manualPath: screen === 'manual' || rawScreen === 'doneLite', palette: null, uploaded: false, custom: null };
+  }
+  componentDidMount() { if (this.state.screen === 'reading' && (this.props.autoplay ?? false)) this.startReading(4, true); }
+  componentWillUnmount() { clearInterval(this.ti); clearTimeout(this.tn); }
+  startReading(from, loop) {
+    clearInterval(this.ti);
+    this.setState({ screen: 'reading', readAt: from, manualPath: false });
+    this.ti = setInterval(() => {
+      if (this.state.screen !== 'reading') { clearInterval(this.ti); return; }
+      const r = this.state.readAt + 1;
+      if (loop) this.setState({ readAt: r > 5 ? 0 : r });
+      else if (r > 6) { clearInterval(this.ti); this.setState({ screen: 'review', readAt: 6 }); } else this.setState({ readAt: r });
+    }, loop ? 1400 : 900);
+  }
+  go(screen) { clearInterval(this.ti); this.setState(Object.assign({ screen, editing: null, note: '' }, screen === 'manual' ? { manualPath: true } : {})); }
+  say(note) { clearTimeout(this.tn); this.setState({ note }); this.tn = setTimeout(() => this.setState({ note: '' }), 3500); }
+  resetFor(C, extra) {
+    this.setState(Object.assign({ links: [''], socials: C.socials.map((x) => x[3]), picked: C.products.map((x, i) => i !== C.products.length - 1 || C === OFFLINE), goal: C.goal, channels: C.channels.map((x) => !x[2]), area: C === OFFLINE ? 'near' : 'state', allProducts: false, editing: null, drafts: {}, fields: {}, palette: null, uploaded: false, custom: null }, extra));
+  }
+  pickType(k) {
+    const C = COPY[k];
+    this.resetFor(C, { type: k, buy: ['shop', 'online'], budget: k === 'creator' ? 'none' : '5k' });
+
+  }
+  renderVals() {
+    const s = this.state;
+    const mode = s.mode || this.props.theme || 'light';
+    const t = THEMES[mode] || THEMES.light;
+    const kind = s.type;
+    const C0 = copyFor(kind, s.buy);
+    const manPal = s.custom ? ['Your own colours', s.custom] : s.palette !== null && s.palette !== undefined ? C0.palettes[s.palette] : null;
+    const nameNow = (s.fields.name ?? C0.name).trim() || 'Your shop';
+    const FOUND = (() => {
+        const acc = {};
+        const add = (k, h) => { if (!acc[k]) acc[k] = h; };
+        const fromUrl = (u) => { const v = String(u || '').trim().replace(/^https?:\/\//, '').replace(/^www\./, ''); const seg = (v.split('/')[1] || '').split(/[?#]/)[0];
+          if (/instagram\.com/.test(v) && seg) add('ig', '@' + seg); else if (/facebook\.com/.test(v) && seg) add('fb', seg); else if (/youtube\.com/.test(v)) add('yt', 'YouTube channel'); else if (/linkedin\.com/.test(v)) add('li', 'LinkedIn page'); else if (/(x|twitter)\.com/.test(v)) add('x', 'X profile'); };
+        if (!s.manualPath) s.links.forEach(fromUrl);
+        if (!s.manualPath) C0.socials.forEach((x, i) => { if (s.socials[i] && /\./.test(x[2])) fromUrl(x[2]); });
+        const chips = [].concat(acc.ig ? [{ k: 'IG', name: acc.ig }] : [], acc.fb ? [{ k: 'FB', name: 'Facebook · ' + acc.fb }] : []);
+        const others = [acc.yt, acc.li, acc.x].filter(Boolean);
+        const otherLine = others.length ? 'We also read your ' + others.join(' and ') + ' for ideas. Posting there is coming later.' : '';
+        let step = null, prim = null;
+        if (kind === 'agency') { if (chips.length) step = ['Send ' + nameNow + ' a link to connect', 'They approve ' + (acc.ig || 'their Instagram') + (acc.fb ? ' and their Facebook page' : '') + ' themselves, so you never need their passwords.']; }
+        else if (acc.ig && acc.fb) { step = ['Connect your pages', 'We found these from your links. Connecting gives us permission to post. It takes about a minute.']; prim = 'Connect your pages'; }
+        else if (acc.ig) { step = ['Connect ' + acc.ig, 'Connecting gives us permission to post. No Facebook page yet? You can add one later.']; prim = 'Connect Instagram'; }
+        else if (acc.fb && C0 !== OFFLINE) { step = ['Connect your Facebook page', 'Connecting gives us permission to post. No Instagram yet? We help you start one next.']; prim = 'Connect Facebook'; }
+        return { hasFB: !!acc.fb, accChips: chips, foundStep: step, foundPrimary: prim, otherLine: s.manualPath ? '' : otherLine, hasOther: !s.manualPath && !!otherLine };
+      })();
+    const inits = nameNow.split(/\s+/).slice(0, 2).map((w) => w[0]).join('').toUpperCase();
+    const C = s.manualPath ? Object.assign({}, C0, manPal ? { c1: manPal[1][0], ink: '#FFFFFF', colours: manPal[1], colourNames: manPal[0] } : { c1: '#36444E', ink: '#FFFFFF', colours: ['#36444E', '#8A949B', '#E8ECEE'], colourNames: 'Starter style' }, { name: nameNow, initials: inits, cardRows: C0.cardRows.map((r) => r[0] === 'Colours' ? [r[0], manPal ? 'From your photo' : 'Starter style', 2] : ['Products', 'Themes'].includes(r[0]) ? [r[0], 'None yet', 2] : r) }) : C0;
+    const offline = C0 === OFFLINE;
+    const scrName = s.screen;
+    const stepNo = C.at[scrName] || C.steps.length;
+    const selCard = (on) => on ? `border: 2px solid ${t.sel}; background: ${t.selBg}; color: ${t.text}` : `border: 1px solid ${t.inputBorder}; background: ${t.surface}; color: ${t.text}; margin: 1px`;
+    const dot = (on) => on ? `background: ${t.sel}; color: ${t.onSel}` : `border: 2px solid ${t.inputBorder}`;
+    const box = (on) => on ? `background: ${t.sel}; color: ${t.onSel}` : `border: 2px solid ${t.inputBorder}; background: ${t.surface}`;
+    const tag = (k) => k === 'web' ? [C.fromTag, `background: ${t.surface2}; color: ${t.body}`] : ['Please check', `background: ${t.warnBg}; color: ${t.warnFg}`];
+    const parseContact = (v) => { const p = String(v).split(' · '); return { email: p[0] || '', wa: (p[1] || '').replace(/^WhatsApp\s*/, '') }; };
+    const showVal = (k, v) => k === 'contact' ? [v.email, v.wa ? 'WhatsApp ' + v.wa : ''].filter(Boolean).join(' · ') : v;
+    const mkRows = (rows, prefix) => rows.map((r, i) => { const id = prefix + i; const ed = s.editing === id;
+      const k = Array.isArray(r[1]) ? 'chips' : ['Kind of business', 'Niche'].includes(r[0]) ? 'select' : r[0] === 'Contact' ? 'contact' : r[0] === 'Phone' ? 'tel' : 'text';
+      const orig = k === 'contact' ? parseContact(r[1]) : r[1];
+      const cv = id in s.vals ? s.vals[id] : orig;
+      const dv = ed ? s.draft : cv;
+      const tg = s.edited[id] ? ['Edited by you', `background: ${t.okBg}; color: ${t.okFg}`] : tag(r[2]);
+      const setD = (v) => this.setState({ draft: v });
+      const opts = C.kinds.includes(cv) ? C.kinds : [cv].concat(C.kinds);
+      return { label: r[0], id: 'mp-row-' + id, value: k === 'chips' ? '' : showVal(k, cv), chips: k === 'chips' ? cv : [], isText: k !== 'chips', isChips: k === 'chips',
+        tag: tg[0], tagStyle: tg[1], view: !ed, editing: ed,
+        eText: ed && k === 'text', eTel: ed && k === 'tel', eSelect: ed && k === 'select', eContact: ed && k === 'contact', eChips: ed && k === 'chips',
+        draft: ed && typeof dv === 'string' ? dv : '', onDraft: (e) => setD(e.target.value),
+        options: opts, email: ed && k === 'contact' ? dv.email : '', wa: ed && k === 'contact' ? dv.wa : '',
+        onEmail: (e) => setD(Object.assign({}, this.state.draft, { email: e.target.value })), onWa: (e) => setD(Object.assign({}, this.state.draft, { wa: e.target.value })),
+        dchips: ed && k === 'chips' ? dv.map((c, ci) => ({ name: c, aria: 'Remove ' + c, remove: () => setD(this.state.draft.filter((_, x) => x !== ci)) })) : [],
+        addVal: s.addChip, onAdd: (e) => this.setState({ addChip: e.target.value }), addPh: 'Add another', addChip: () => { const v = (this.state.addChip || '').trim(); if (v) this.setState({ draft: this.state.draft.concat([v]), addChip: '' }); },
+        editLabel: 'Edit ' + r[0].toLowerCase(),
+        edit: () => this.setState({ editing: id, draft: k === 'chips' ? cv.slice() : k === 'contact' ? Object.assign({}, cv) : cv, addChip: '' }),
+        done: () => this.setState({ vals: Object.assign({}, this.state.vals, { [id]: this.state.draft }), edited: Object.assign({}, this.state.edited, { [id]: true }), editing: null }),
+        cancel: () => this.setState({ editing: null }) }; });
+    const custRows = s.moreCust ? C.rows2 : C.rows2.slice(0, 5);
+    const guesses = C.rows1.concat(custRows).filter((r) => r[2] === 'guess').length;
+    const nextMap = { type: kind === 'agency' ? 'agency' : kind === 'shop' ? 'buy' : 'link', agency: 'link', buy: 'link', link: 'reading', manual: 'voice', review: 'voice', products: 'voice', voice: 'goals', goals: 'done' };
+    const backMap = { agency: 'type', buy: 'type', link: kind === 'agency' ? 'agency' : kind === 'shop' ? 'buy' : 'type', manual: 'link', reading: 'link', review: 'link', products: 'review', voice: s.manualPath ? 'manual' : C0 === OFFLINE ? 'products' : 'review', goals: 'voice' };
+    const primaryMap = { type: 'Continue', agency: 'Continue', buy: 'Continue', products: 'Save products', link: C.linkCta, manual: 'Continue', review: 'Looks right, continue', voice: 'Continue', goals: 'Finish setup', done: FOUND.foundPrimary || C.donePrimary };
+    const pctMap = { type: 0, agency: 0, buy: 3, products: 75, link: 5, manual: 30, reading: 15 + s.readAt * 8, review: 70, voice: 80, goals: 90, done: 100 };
+    const fillAt = { type: 9, agency: 9, buy: 9, products: 3, link: 9, manual: 2, reading: s.readAt >= 2 ? 2 : 9, review: 3, voice: 4, goals: 4, done: 6 };
+    const lvl = fillAt[scrName] || 9;
+    const tones = C.tones;
+    const voiceName = tones.find((x) => x[0] === s.tone)[1];
+    const langNames = s.langs.map((i) => LANGS[i][0]).join(', ') || 'Not set';
+    const goalName = C.goals.find((x) => x[0] === s.goal)[1];
+    const manual = scrName === 'manual';
+    const named = manual || (scrName === 'reading' ? s.readAt >= 2 : !['type', 'link', 'agency', 'buy'].includes(scrName));
+    const mainLang = s.langs.length ? s.langs[0] : 0;
+    const pv = C.preview[s.tone];
+    const nextScr = nextMap[scrName];
+    const hasShop = s.buy.includes('shop');
+    const RADII = [['3', '3 km'], ['5', '5 km'], ['10', '10 km'], ['city', 'Whole city']];
+    const radius = s.radius || '5';
+    const areas = AREA_SETS[C.areas].filter((x) => C0 !== OFFLINE || hasShop || x[0] !== 'near').map((x) => x[0] === 'deliver' ? [x[0], x[1], radius === 'city' ? 'We focus on people across Jaipur, where you deliver.' : 'We focus on people within about ' + radius + ' km of ' + C.ctaArea + ', where you deliver.'] : x);
+    const areaNow = areas.find((x) => x[0] === s.area) || areas[0];
+    const linkKind = (v) => /maps|goo\.gl/.test(v) ? 'Google Maps listing' : /instagram/.test(v) ? 'Instagram profile' : /youtube/.test(v) ? 'YouTube channel' : /facebook/.test(v) ? 'Facebook page' : 'Website';
+    const rowVal = (r) => r[1] === 'P' ? s.picked.filter(Boolean).length + (kind === 'creator' ? ' to post about' : ' to promote') : r[1] === 'V' ? voiceName : r[1] === 'L' ? langNames : r[1] === 'G' ? goalName : r[1];
+    const agencyCard = kind === 'agency' && scrName === 'agency';
+    const fv = Object.assign({ name: C0.name, sell: C.manSellVal, city: C.city, extra: '', agency: 'Kesar Digital', approver: '98290 41127', kind: C.kinds[0] }, s.fields);
+    const fset = {}; Object.keys(fv).forEach((k) => { fset[k] = (e) => this.setState({ fields: Object.assign({}, this.state.fields, { [k]: e.target.value }) }); });
+    const clientTag = kind === 'agency' && C.at[scrName] >= 3 ? (named ? 'Client: Chumeshwar Clothes' : 'Setting up a new client') : '';
+    return {
+      isLight: mode !== 'dark', isDark: mode === 'dark', themeLabel: mode === 'dark' ? 'Switch to light mode' : 'Switch to dark mode', toggleTheme: () => this.setState({ mode: mode === 'dark' ? 'light' : 'dark' }), f: fv, fset, t, c: C, rootCls: mode === 'dark' ? 'mp-dark' : '', homeHref: this.props.homeHref ?? '#',
+      scr: { buy: scrName === 'buy', products: scrName === 'products', type: scrName === 'type', agency: scrName === 'agency', link: scrName === 'link', manual, reading: scrName === 'reading', review: scrName === 'review', voice: scrName === 'voice', goals: scrName === 'goals', done: scrName === 'done' },
+      showStepper: !['done', 'reading'].includes(scrName), showAside: scrName !== 'reading', wrapJustify: scrName === 'reading' ? 'center' : 'flex-start',
+      stepNo, stepTotal: C.steps.length, stepName: C.steps[stepNo - 1], stepCols: `repeat(${C.steps.length}, minmax(0, 1fr))`, clientTag,
+      steps: C.steps.map((n, i) => ({ name: n, bar: `background: ${i < stepNo ? t.prog : t.border}`, label: i === stepNo - 1 ? `color: ${t.text}; font-weight: 600` : `color: ${t.muted}` })),
+      types: TYPES.map((o) => ({ title: o[1], desc: o[2], on: kind === o[0], isShop: o[0] === 'shop', isCreator: o[0] === 'creator', isAgency: o[0] === 'agency', card: selCard(kind === o[0]), dot: dot(kind === o[0]), pick: () => this.pickType(o[0]) })),
+      buyNote: s.buy.length ? 'Picked ' + s.buy.length + ' of 3. You can change this later in Settings.' : 'Pick at least one to continue.',
+      buys: BUYS.map((x, bi) => { const on = s.buy.includes(x[0]); return { title: x[1], desc: x[2], on, isShop: x[3] === 'isShop', isChat: x[3] === 'isChat', isGlobe: x[3] === 'isGlobe', card: on ? `border: 2px solid ${t.sel}; background: ${t.selBg}` : `border: 1px solid ${t.border}; background: ${t.surface}; margin: 1px`, box: box(on), span: bi === 0 ? 'grid-column: span 2;' : '', ic: bi === 0 ? 52 : 44, tSize: bi === 0 ? '20px; line-height: 28px' : '16px; line-height: 24px', icon: on ? `background: ${t.sel}; color: ${t.onSel}` : `background: ${t.surface2}; color: ${t.text}`, rule: on ? t.sel + '33' : t.border, cta: ({ shop: '“Visit our shop”', whatsapp: '“WhatsApp us to order”', online: '“Order online”' })[x[0]], ctaLabel: on ? 'Your posts end with' : 'Tick to add this to your posts', ctaStyle: on ? `color: ${t.text}` : `color: ${t.muted}`,
+        toggle: () => { const v = on ? s.buy.filter((k) => k !== x[0]) : s.buy.concat([x[0]]); const C2 = copyFor(kind, v); const noShop = C2 === OFFLINE && !v.includes('shop'); const fix = noShop ? { goal: s.goal === 'footfall' ? 'orders' : s.goal, area: s.area === 'near' ? 'deliver' : s.area } : {}; if (C2 !== C0) this.resetFor(C2, Object.assign({ buy: v }, noShop ? { goal: 'orders', area: 'deliver' } : {})); else this.setState(Object.assign({ buy: v }, fix)); } }; }),
+      ctas: s.buy.length ? s.buy.map((k) => ({ shop: '“Visit our shop”', whatsapp: '“WhatsApp us to order”', online: '“Order online”' })[k]) : ['Pick at least one option above'],
+      palettes: C0.palettes.map((pl, i) => { const on = !s.custom && s.palette === i; return { name: pl[0], cols: pl[1], on, card: selCard(on), dot: dot(on), pick: () => this.setState({ palette: i, custom: null }) }; }).concat([{ name: 'Choose my own', cols: s.custom || ['#FFFFFF', '#E8ECEE', '#D9DFE2'], on: !!s.custom, card: selCard(!!s.custom), dot: dot(!!s.custom), pick: () => this.setState({ custom: s.custom || (manPal ? manPal[1].slice() : C0.palettes[0][1].slice()) }) }]),
+      customOpen: !!s.custom,
+      customCols: (s.custom || []).map((v, i) => ({ value: v, label: ['Main colour', 'Accent', 'Background'][i], change: (e) => { const c2 = this.state.custom.slice(); c2[i] = e.target.value; this.setState({ custom: c2 }); } })),
+      uploadNote: s.uploaded ? 'Done. We took your colours and logo from the photo.' : 'A phone photo is fine. We pick the colours for you.',
+      uploadBtn: s.uploaded ? 'Change photo' : 'Choose photo',
+      uploadLook: () => this.setState({ uploaded: true, palette: 0, custom: null }),
+      tipOpen: s.tipOpen, toggleTip: () => this.setState({ tipOpen: !s.tipOpen }),
+      goProducts: () => this.go('products'),
+      prodRows: s.prodRows.map((r, i) => { const upd = (patch) => { const v = this.state.prodRows.slice(); v[i] = Object.assign({}, v[i], patch); this.setState({ prodRows: v }); }; return { nameId: 'mp-pname-' + i, priceId: 'mp-pprice-' + i, name: r.name, price: r.price, hasPhoto: r.photo, noPhoto: !r.photo, bg: r.bg, photoAlt: 'Photo of ' + (r.name || 'product'), photoAria: 'Add a photo of ' + (r.name || 'this product'), nameAria: 'Product ' + (i + 1) + ' name', priceAria: 'Price of ' + (r.name || 'product ' + (i + 1)) + ' in rupees', removeAria: 'Remove ' + (r.name || 'product ' + (i + 1)),
+        onName: (e) => upd({ name: e.target.value }), onPrice: (e) => upd({ price: e.target.value.replace(/[^\d]/g, '').slice(0, 6) }), addPhoto: () => upd({ photo: true }), remove: () => this.setState({ prodRows: this.state.prodRows.filter((_, k) => k !== i) }) }; }),
+      addProdRow: () => this.setState({ prodRows: s.prodRows.concat([{ name: '', price: '', photo: false, bg: '#E8ECEE' }]) }),
+      uploadCard: () => this.say('We read the photo and add the products above. You check them before saving.'),
+      teams: TEAMS.map((x, i) => ({ name: x, on: s.team === i, style: s.team === i ? t.segOn : `background: transparent; color: ${t.body}`, pick: () => this.setState({ team: i }) })),
+      clientCounts: CLIENTS.map((x, i) => ({ name: x, on: s.clients === i, style: s.clients === i ? t.chipOn : `border: 1px solid ${t.inputBorder}; background: ${t.surface}; color: ${t.text}`, pick: () => this.setState({ clients: i }) })),
+      links: s.links.map((v, i) => ({ id: 'mp-link-' + i, label: i === 0 ? C.linkLabel : 'Social link ' + i, value: v, ph: i === 0 ? C.linkPh : (C.link2Ph || 'instagram.com/yourshop or facebook.com/yourshop'), found: /\./.test(v), kind: linkKind(v), extra: i > 0,
+        removeLabel: 'Remove social link ' + i, remove: () => this.setState({ links: s.links.filter((_, j) => j !== i) }),
+        change: (e) => { const l = s.links.slice(); l[i] = e.target.value.trim(); this.setState({ links: l }); } })),
+      canAddLink: s.links.length < 5, addLinkText: s.links.length > 1 ? 'Add another link' : C.addLink, addLink: () => this.setState({ links: s.links.concat(['']) }), goManual: () => this.go('manual'),
+      skipClient: () => this.say('Your agency workspace opens here, ready to add clients.'),
+      readNow: s.readAt >= 6 ? 'All done. Opening the profile…' : C.readNow[s.readAt], readPct: Math.round(s.readAt / 6 * 100), readLeft: s.readAt >= 6 ? 'Done' : 'About ' + ((6 - s.readAt) * 10) + ' seconds left',
+      readDone: C.readDone.map((x, i) => ({ text: x, done: i < s.readAt, wait: i >= s.readAt, aria: x + (i < s.readAt ? ', done' : ', waiting'), style: i < s.readAt ? `background: ${t.okBg}; color: ${t.okFg}; border: 1px solid transparent` : `background: transparent; color: ${t.muted}; border: 1px dashed ${t.border}` })),
+      rc: { band: s.readAt >= 2 ? C.c1 : t.surface2, logo: (s.readAt >= 2 ? `background: ${C.c1}; color: ${C.ink}` : `background: ${t.surface2}; color: ${t.muted}`) + `; border-radius: ${C.logoRadius}`, initials: s.readAt >= 2 ? C.initials : '', got1: s.readAt >= 1, no1: s.readAt < 1,
+        rows: C.readRows.map((r) => ({ label: r[0], got: s.readAt >= r[1], wait: s.readAt < r[1], chips: r[2], isColours: r[3], w: r[4] })) },
+      hasChecks: guesses > 0, checksLine: guesses + ' things are our best guess. Please look at the ones marked “Please check”.',
+      sections: [
+        { title: C.sec1, rows: mkRows(C.rows1, 'b'), hasMore: false },
+        { title: C.sec2, rows: mkRows(custRows, 'c'), hasMore: true, moreLabel: s.moreCust ? 'Show fewer details' : 'Show ' + (C.rows2.length - 5) + ' more details', toggleMore: () => this.setState({ moreCust: !s.moreCust }) }
+      ],
+      socials: C.socials.map((x, i) => { const on = s.socials[i]; return { isIG: x[0] === 'IG', isFB: x[0] === 'FB', isYT: x[0] === 'YT', isWA: false, name: x[1], handle: x[2], on, aria: 'Use ' + x[1], track: on ? `background: ${t.sel}` : `background: ${t.inputBorder}`, knob: (on ? 'left: 22px; ' : 'left: 2px; ') + `background: ${on ? t.onSel : '#FFFFFF'}`, toggle: () => { const v = s.socials.slice(); v[i] = !v[i]; this.setState({ socials: v }); } }; }),
+      prodCount: C.products.length, prodPicked: s.picked.filter(Boolean).length,
+      products: C.products.slice(0, s.allProducts ? C.products.length : 8).map((x, i) => { const on = s.picked[i]; return { name: x[0], price: x[1], bg: x[2], ink: x[3], hanger: C.icon === 'hanger', pan: C.icon === 'pan', gift: C.icon === 'gift', priceStyle: x[1] === 'Add price' ? `color: ${t.link}; font-weight: 600` : `color: ${t.body}`, on, card: on ? `border: 2px solid ${t.sel}; background: ${t.surface}; color: ${t.text}` : `border: 1px solid ${t.border}; background: ${t.surface}; color: ${t.text}; margin: 1px; opacity: 0.7`, box: box(on), toggle: () => { const v = s.picked.slice(); v[i] = !v[i]; this.setState({ picked: v }); } }; }),
+      moreProducts: !s.allProducts && C.products.length > 8, showAllProducts: () => this.setState({ allProducts: true }),
+      allLabel: s.picked.every(Boolean) ? 'Untick all' : 'Tick all', toggleAll: () => { const all = s.picked.every(Boolean); this.setState({ picked: s.picked.map(() => !all) }); },
+      langs: LANGS.map((x, i) => { const pos = s.langs.indexOf(i); const on = pos >= 0; return { name: x[0], native: x[1], on, main: pos === 0, style: on ? t.chipOn : `border: 1px solid ${t.inputBorder}; background: ${t.surface}; color: ${t.text}`, subStyle: on ? 'opacity: 0.85' : `color: ${t.muted}`, mainStyle: mode === 'dark' ? 'background: #121413; color: #EFF1EF' : 'background: #F5C432; color: #121413',
+        toggle: () => { let v = s.langs.slice(); if (on) v = v.filter((k) => k !== i); else if (v.length < 3) v.push(i); else { this.say('You can pick up to 3 languages. Remove one first.'); return; } this.setState({ langs: v }); } }; }),
+      tones: tones.map((x) => ({ name: x[1], sample: x[2], on: s.tone === x[0], card: selCard(s.tone === x[0]), dot: dot(s.tone === x[0]), pick: () => this.setState({ tone: x[0] }) })),
+      preview: { headline: pv[0], caption: mainLang === 1 ? pv[2] : pv[1], cls: mainLang === 1 ? 'mp-hi-text' : '' },
+      avoid: s.avoid.map((w) => ({ word: w, aria: 'Remove ' + w, remove: () => this.setState({ avoid: s.avoid.filter((x) => x !== w) }) })),
+      avoidDraft: s.avoidDraft, onAvoid: (e) => this.setState({ avoidDraft: e.target.value }),
+      avoidKey: (e) => { if (e.key === 'Enter') { e.preventDefault(); const w = s.avoidDraft.trim(); if (w && !s.avoid.includes(w)) this.setState({ avoid: s.avoid.concat([w]), avoidDraft: '' }); } },
+      avoidSugs: (kind === 'creator' ? ['Religion', 'Weight loss claims', 'Other creators by name'] : ['Religion', 'Price comparisons', 'Discounts above 50%']).filter((w) => !s.avoid.includes(w)).map((w) => ({ word: w, add: () => this.setState({ avoid: s.avoid.concat([w]) }) })),
+      goals: C.goals.filter((x) => C0 !== OFFLINE || hasShop || x[0] !== 'footfall').map((x) => ({ title: x[1], desc: x[2], on: s.goal === x[0], card: selCard(s.goal === x[0]), dot: dot(s.goal === x[0]), pick: () => this.setState({ goal: x[0] }) })),
+      areaCols: 'repeat(' + areas.length + ', minmax(0, 1fr))', areaCls: areas.length > 3 ? 'mp-grid4' : '', isDeliver: areaNow[0] === 'deliver', radii: RADII.map((x) => ({ name: x[1], on: radius === x[0], style: radius === x[0] ? t.segOn : `background: transparent; color: ${t.body}`, pick: () => this.setState({ radius: x[0] }) })), areas: areas.map((x) => ({ name: x[1], on: areaNow[0] === x[0], style: s.area === x[0] ? t.segOn : `background: transparent; color: ${t.body}`, pick: () => this.setState({ area: x[0] }) })),
+      areaHelp: areaNow[2],
+      channels: C.channels.map((x, i) => { const soon = x[2]; const on = s.channels[i]; return { isIG: x[0] === 'IG', isFB: x[0] === 'FB', isYT: x[0] === 'YT', isWA: x[0] === 'WA', name: x[1], sub: x[3], on, soon, card: soon ? `border: 1px dashed ${t.inputBorder}; background: transparent; color: ${t.muted}; margin: 1px; cursor: not-allowed` : on ? `border: 2px solid ${t.sel}; background: ${t.selBg}; color: ${t.text}` : `border: 1px solid ${t.inputBorder}; background: ${t.surface}; color: ${t.text}; margin: 1px`, box: soon ? `border: 2px dashed ${t.border}` : box(on), toggle: () => { if (soon) { this.say(x[1] + ' posting is coming soon.'); return; } const v = s.channels.slice(); v[i] = !v[i]; this.setState({ channels: v }); } }; }),
+      budgets: BUDGETS.map((x) => ({ name: x[1], on: s.budget === x[0], style: s.budget === x[0] ? t.chipOn : `border: 1px solid ${t.inputBorder}; background: ${t.surface}; color: ${t.text}`, pick: () => this.setState({ budget: x[0] }) })),
+      customBudget: s.budget === 'custom', budgetAmt: s.budgetAmt, onBudget: (e) => { const d = e.target.value.replace(/\D/g, '').slice(0, 8); this.setState({ budgetAmt: d ? Number(d).toLocaleString('en-IN') : '' }); },
+      approvers: [['team', 'Our team', 'Someone at Kesar Digital approves each post.'], ['client', 'Someone at the client', 'The owner approves on WhatsApp. No login needed.']].map((x) => ({ title: x[1], desc: x[2], on: s.approver === x[0], card: selCard(s.approver === x[0]), dot: dot(s.approver === x[0]), pick: () => this.setState({ approver: x[0] }) })),
+      approverClient: s.approver === 'client',
+      doneTitle: s.manualPath ? (kind === 'agency' ? nameNow + ' is set up' : 'You are all set, ' + nameNow) : C.doneTitle,
+      doneSub: s.manualPath ? 'Your profile is saved. A few things are left, and you can finish them from your dashboard any time.' : C.doneSub,
+      doneList: s.manualPath ? 'Finish your profile' : C.doneList,
+      doneCount: s.manualPath ? (s.uploaded ? 1 : 0) + ' of 3 done' : '',
+      ...FOUND,
+      nextSteps: s.manualPath ? C0.finish.map((x, i) => { const done = i === 1 && s.uploaded; const fx = i === 2 && FOUND.foundStep ? FOUND.foundStep : x; return { no: String(i + 1), done, notDone: !done, chips: i === 2 && FOUND.foundStep ? FOUND.accChips : [], title: fx[0], desc: done ? 'Done. Your colours and logo come from your photo.' : fx[1], action: done ? '' : x[2], act: () => this.say(i === 1 ? 'Opens the Brand kit page on your dashboard.' : i === 0 ? 'Opens Products on your dashboard.' : 'Opens the connect screen.'), tag: done ? 'Done' : i === 2 ? 'Needed to post' : 'Recommended', badge: done ? `background: ${t.okBg}; color: ${t.okFg}` : i === 2 ? `background: ${t.sel}; color: ${t.onSel}` : `background: ${t.surface2}; color: ${t.text}`, tagStyle: done ? `background: ${t.okBg}; color: ${t.okFg}` : i === 2 ? `background: ${t.selBg}; color: ${t.link}; box-shadow: inset 0 0 0 1px ${t.sel}` : `background: ${t.surface2}; color: ${t.muted}` }; }) : C.next.map((x0, i) => { const x = i === 0 && FOUND.foundStep ? FOUND.foundStep : i === 1 && C0 === OFFLINE && FOUND.foundStep && FOUND.hasFB ? ['Connect WhatsApp Business', 'So we can reply to messages and share updates for you.'] : x0; return ({ no: String(i + 1), done: false, notDone: true, action: '', chips: i === 0 && FOUND.foundStep ? FOUND.accChips : [], title: x[0], desc: x[1], tag: i === 0 ? 'Next' : kind === 'agency' ? 'Any time' : 'After step ' + i, badge: i === 0 ? `background: ${t.sel}; color: ${t.onSel}` : `background: ${t.surface2}; color: ${t.text}`, tagStyle: i === 0 ? `background: ${t.selBg}; color: ${t.link}; box-shadow: inset 0 0 0 1px ${t.sel}` : `background: ${t.surface2}; color: ${t.muted}` }); }),
+      note: s.note,
+      showActions: scrName !== 'reading',
+      canBack: !!backMap[scrName], noBack: !backMap[scrName], backLabel: 'Back', back: () => this.go(backMap[scrName]),
+      primary: scrName === 'reading' ? '' : primaryMap[scrName],
+      next: () => { if (scrName === 'buy' && !s.buy.length) { this.say('Pick at least one way customers buy from you.'); return; } if (scrName === 'link') this.startReading(0); else if (scrName === 'done') this.say(kind === 'agency' ? 'The connect link opens WhatsApp with a message ready to send.' : 'Connecting channels is the next screen we design. It opens Facebook to sign in.'); else if (nextScr) this.go(nextScr); },
+      secondary: scrName === 'reading' ? 'Fill it in myself' : scrName === 'done' ? C.doneSecondary : scrName === 'review' || scrName === 'products' ? 'Skip for now' : '',
+      secondaryGo: () => { if (scrName === 'reading') this.go('manual'); else if (scrName === 'review' || scrName === 'products') this.go('voice'); else this.say('Your workspace opens here once it is designed.'); },
+      readTitleNow: (() => { const l = (s.links[0] || '').replace(/^https?:\/\//, '').replace(/^www\./, '').replace(/\/$/, ''); return !l || l === C.linkVal ? C.readTitle : /maps|goo\.gl/.test(l) ? 'Reading your Google Maps listing' : /instagram\.com\/([^/?#]+)/.test(l) ? 'Reading @' + l.match(/instagram\.com\/([^/?#]+)/)[1] : 'Reading ' + (l.length > 40 ? l.slice(0, 40) + '…' : l); })(),
+      demoRestart: !!this.props.demo && scrName === 'done', restart: () => { clearInterval(this.ti); this.setState({ screen: 'type', manualPath: false, editing: null, note: '' }); window.scrollTo(0, 0); },
+      saveExit: () => { if (this.props.exitHref) { window.location.href = this.props.exitHref; return; } this.say('Saved. Pick up where you left off any time from your account.'); },
+      cardTitle: kind === 'agency' && scrName === 'type' ? 'Your agency card' : C.cardEmpty, cardSub: kind === 'agency' && scrName === 'type' ? 'It fills in with your agency details, then your first client.' : C.cardEmptySub,
+      card: agencyCard ? { band: '#2F3E46', logo: 'background: #2F3E46; color: #F5C432; border-radius: 12px', initials: 'KD', name: 'Kesar Digital', eyebrow: 'Your agency', sub: 'Agency · Jaipur', hasName: true, noName: false, pct: 10, rows: [['Team', TEAMS[s.team]], ['Clients', CLIENTS[s.clients]], ['First client', 'Next step'], ['Reports', 'With your logo']].map((r) => ({ label: r[0], value: r[1], filled: true, empty: false })) } : { band: named ? C.c1 : t.surface2, logo: (named ? `background: ${C.c1}; color: ${C.ink}` : `background: ${t.surface2}; color: ${t.text}`) + `; border-radius: ${C.logoRadius}`, initials: named ? C.initials : '', name: C.name, eyebrow: C.eyebrow, sub: s.manualPath ? (s.uploaded ? 'Colours from your photo' : 'Add a ' + (kind === 'creator' ? 'photo' : 'logo') + ' any time from your dashboard') : (() => { const ki = C.rows1.findIndex((r) => ['Kind of business', 'Niche'].includes(r[0])); const nv = ki >= 0 ? s.vals['b' + ki] : null; return nv && ki >= 0 ? C.sub.replace(C.rows1[ki][1], nv) : C.sub; })(), hasName: named, noName: !named, pct: s.manualPath && scrName === 'done' ? 60 + (s.uploaded ? 15 : 0) : pctMap[scrName] ?? 0,
+        rows: C.cardRows.map((r) => ({ label: r[0], value: rowVal(r), filled: lvl !== 9 && r[2] <= lvl, empty: !(lvl !== 9 && r[2] <= lvl) })) }
+    };
+  }
+}
+
+(function () {
+  var saved = null;
+  try { saved = localStorage.getItem('mp-theme'); } catch (e) {}
+  var theme = saved === 'dark' ? 'dark' : 'light';
+  var bg = theme === 'dark' ? '#121413' : '#F2F4F5';
+  document.body.style.background = bg;
+  var meta = document.querySelector('meta[name="theme-color"]'); if (meta) meta.setAttribute('content', bg);
+  var lastScreen = null;
+  mountPage(Component, { theme: theme, screen: 'type', kind: 'shop', autoplay: false, homeHref: '/', exitHref: '/', demo: true }, document.getElementById('mp-tpl'), document.getElementById('mp-root'), function (v, c) {
+    var mode = v.isDark ? 'dark' : 'light';
+    if (mode !== theme) { theme = mode; try { localStorage.setItem('mp-theme', mode); } catch (e) {} }
+    document.body.style.background = v.t.bg; if (meta) meta.setAttribute('content', v.t.bg);
+    var scr = c.state.screen + (c.state.manualPath ? '-m' : '');
+    if (lastScreen !== null && scr !== lastScreen) window.scrollTo(0, 0);
+    lastScreen = scr;
+  });
+})();
+</script>
+</body>
+</html>

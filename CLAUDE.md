@@ -2,7 +2,7 @@
 
 AI-native marketing automation for local businesses and SMBs (India first). A URL and a budget become a running marketing engine: plan, create, approve, publish, measure, learn. The owner stays in control through graduated autonomy.
 
-Source documents: `MarketPilot_AI_Scope_of_Work.pdf` (full scope), `ARCHITECTURE.md` (how we build it), `DESIGN.md` (UI system), `docs/BUSINESS_BRAIN.md` (memory and knowledge system design, read before touching anything in `modules/memory` or the AI context pipeline). `docs/ONBOARDING.md` (registration, account types, website scan and review flow, read before touching onboarding or the crawler). `docs/COPILOT_AGENT.md` (copilot agent graph, tool registry, approvals, read before touching `modules/agents` or adding agent tools). Read the relevant one before starting work in its area.
+Source documents: `MarketPilot_AI_Scope_of_Work.pdf` (full scope), `ARCHITECTURE.md` (how we build it), `DESIGN.md` (UI system), `docs/BUSINESS_BRAIN.md` (memory and knowledge system design, read before touching anything in `modules/memory` or the AI context pipeline). `docs/ONBOARDING.md` (registration, account types, website scan and review flow, read before touching onboarding or the crawler). `docs/COPILOT_AGENT.md` (copilot agent graph, tool registry, approvals, read before touching `modules/agents` or adding agent tools). `docs/REEL_STUDIO.md` (product reels from idea to storyboard to clips, read before touching `modules/studio/reels` or the `reel.*` AI tasks). Read the relevant one before starting work in its area.
 
 ## Team and constraints
 

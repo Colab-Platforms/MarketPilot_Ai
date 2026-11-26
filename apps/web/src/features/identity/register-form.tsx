@@ -9,9 +9,10 @@ import {
   PASSWORD_MIN_LENGTH,
   registerSchema,
 } from '@marketpilot/contracts';
-import { Alert, Button, Field, Input } from '@marketpilot/ui';
+import { Alert, Button, Field, Input, PasswordInput } from '@marketpilot/ui';
 import { ApiError, apiRequest } from '@/lib/api-client';
 import { useAuthStore } from '@/lib/auth-store';
+import { entryButton, entryInput, entryTitle } from './entry-styles';
 import { GoogleButton, OrDivider } from './google-button';
 
 type FieldErrors = Partial<Record<'name' | 'email' | 'password', string>>;
@@ -63,38 +64,38 @@ export function RegisterForm() {
   }
 
   return (
-    <form onSubmit={onSubmit} noValidate className="flex flex-col gap-4">
-      <div>
-        <h1 className="text-display">Create your account</h1>
-        <p className="mt-1 text-ink-secondary">It takes about two minutes to set up your workspace.</p>
+    <form onSubmit={onSubmit} noValidate className="flex flex-col gap-5">
+      <div className="flex flex-col gap-2">
+        <h1 className={entryTitle}>Create your account</h1>
+        <p className="text-balance text-lead text-ink-secondary">New here? We will set up your account in a minute.</p>
       </div>
 
       {formError ? <Alert tone="danger">{formError}</Alert> : null}
 
-      <GoogleButton label="Sign up with Google" />
-      <OrDivider />
-
       <Field label="Your name" error={errors.name}>
-        <Input name="name" autoComplete="name" autoFocus />
+        <Input name="name" autoComplete="name" autoFocus className={entryInput} />
       </Field>
       <Field label="Email" error={errors.email}>
-        <Input name="email" type="email" autoComplete="email" inputMode="email" />
+        <Input name="email" type="email" autoComplete="email" inputMode="email" placeholder="you@yourshop.in" className={entryInput} />
       </Field>
       <Field
         label="Password"
         helper={`At least ${PASSWORD_MIN_LENGTH} characters.`}
         error={errors.password}
       >
-        <Input name="password" type="password" autoComplete="new-password" />
+        <PasswordInput name="password" autoComplete="new-password" className={entryInput} />
       </Field>
 
-      <Button type="submit" size="lg" loading={register.isPending}>
+      <Button type="submit" size="lg" className={entryButton} loading={register.isPending}>
         Create account
       </Button>
 
-      <p className="text-center text-ink-secondary">
+      <OrDivider />
+      <GoogleButton label="Sign up with Google" className={entryButton} />
+
+      <p className="text-center text-body text-ink-secondary">
         Already have an account?{' '}
-        <Link href="/login" className="text-accent underline underline-offset-2">
+        <Link href="/login" className="font-semibold text-accent underline underline-offset-2">
           Sign in
         </Link>
       </p>

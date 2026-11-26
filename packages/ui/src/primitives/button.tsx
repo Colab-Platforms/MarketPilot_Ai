@@ -23,6 +23,8 @@ const buttonVariants = cva(
         sm: 'h-control-sm px-3',
         md: 'h-control px-4',
         lg: 'h-control-lg px-6',
+        // Marketing calls to action only.
+        xl: 'h-control-xl rounded-lg px-6 text-heading font-bold',
       },
     },
     defaultVariants: { variant: 'primary', size: 'md' },

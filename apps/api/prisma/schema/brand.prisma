@@ -49,6 +49,9 @@ model Brand {
   outboxEvents       OutboxEvent[]
   conversations      Conversation[]
   pendingActions     PendingAction[]
+  studioGenerations  StudioGeneration[]
+  assets             Asset[]
+  reelProjects       ReelProject[]
 
   @@unique([id, workspaceId])
   @@index([workspaceId])

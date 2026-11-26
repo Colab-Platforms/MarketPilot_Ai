@@ -1,4 +1,4 @@
-import { CHANNELS, OBJECTIVES } from '../onboarding/questions';
+import { CHANNELS, CUSTOMER_REACH, OBJECTIVES } from '../onboarding/questions';
 import { LANGUAGES } from '../onboarding/steps';
 import {
   APPROVAL_OPTIONS,
@@ -6,6 +6,7 @@ import {
   CONTENT_TYPE_OPTIONS,
   FREQUENCY_OPTIONS,
   IMAGE_FORMAT_OPTIONS,
+  POST_DESIGN_OPTIONS,
   REEL_DURATION_OPTIONS,
   VIDEO_FORMAT_OPTIONS,
   VOICEOVER_OPTIONS,
@@ -38,6 +39,7 @@ export const MARKETING_FIELDS: readonly ProfileFieldDef[] = [
   field(88, 'goals', 'Advertising budget', 'money', attr('adBudgetMinor'), { helper: 'In rupees, per month.' }),
   field(89, 'goals', 'Marketing campaign frequency', 'select', attr('campaignFrequency'), { options: FREQUENCY_OPTIONS }),
   field(90, 'goals', 'Preferred marketing channels', 'multiselect', col('preferredChannels'), { options: CHANNELS }),
+  field(184, 'goals', 'Where your customers are', 'select', attr('customerReach'), { options: CUSTOMER_REACH }),
   field(91, 'goals', 'Expected marketing outcomes', 'textarea', attr('expectedOutcomes')),
   field(92, 'goals', 'Current marketing challenges', 'textarea', attr('marketingChallenges')),
 
@@ -90,6 +92,10 @@ export const MARKETING_FIELDS: readonly ProfileFieldDef[] = [
   // or are better defaulted; they stay stored for the AI.
   hide(field(122, 'content', 'Preferred video formats', 'multiselect', attr('videoFormats'), { options: VIDEO_FORMAT_OPTIONS })),
   field(123, 'content', 'Preferred image formats', 'multiselect', attr('imageFormats'), { options: IMAGE_FORMAT_OPTIONS }),
+  field(183, 'content', 'Post design style', 'select', attr('postDesignStyle'), {
+    options: POST_DESIGN_OPTIONS,
+    helper: 'How new post images look by default. You can change it for each image.',
+  }),
   hide(field(124, 'content', 'Preferred reel duration', 'select', attr('reelDuration'), { options: REEL_DURATION_OPTIONS })),
   field(125, 'content', 'Preferred content language', 'select', brand('language'), { options: languageOptions }),
   field(126, 'content', 'Secondary languages', 'multiselect', brand('secondaryLanguages'), { options: languageOptions }),

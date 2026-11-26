@@ -1,19 +1,18 @@
 import type { Metadata } from 'next';
-import { Audiences } from '@/features/marketing/audiences';
-import { Bento } from '@/features/marketing/bento';
-import { Control } from '@/features/marketing/control';
-import { Credits } from '@/features/marketing/credits';
+import { Controls } from '@/features/marketing/controls';
 import { Faq } from '@/features/marketing/faq';
 import { FinalCta } from '@/features/marketing/final-cta';
 import { Hero } from '@/features/marketing/hero';
 import { HowItWorks } from '@/features/marketing/how-it-works';
+import { Pricing } from '@/features/marketing/pricing';
+import { SamplePosts } from '@/features/marketing/sample-posts';
 import { SiteFooter } from '@/features/marketing/site-footer';
 import { SiteHeader } from '@/features/marketing/site-header';
 
 export const metadata: Metadata = {
   title: { absolute: 'MarketPilot | Marketing that takes off while you run the shop' },
   description:
-    'Share your website and a budget. MarketPilot plans, creates and publishes your Instagram and Facebook posts once you approve.',
+    'MarketPilot plans a month of posts, makes them in your brand’s voice, and publishes to Instagram and Facebook only after you say yes.',
 };
 
 export default function LandingPage() {
@@ -22,11 +21,10 @@ export default function LandingPage() {
       <SiteHeader />
       <main>
         <Hero />
-        <Bento />
+        <SamplePosts />
         <HowItWorks />
-        <Control />
-        <Audiences />
-        <Credits />
+        <Controls />
+        <Pricing />
         <Faq />
         <FinalCta />
       </main>

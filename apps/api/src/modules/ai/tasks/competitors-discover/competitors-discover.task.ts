@@ -59,6 +59,8 @@ export async function discoverCompetitors(
     planQueries(llm, models.plan, input).then(async (plan) => ({
       plan,
       search: await searchBrands(llm, models.search, models.engine, plan.queries, about),
+
+      
     })),
     recallBrands(llm, models.rank, input),
   ]);

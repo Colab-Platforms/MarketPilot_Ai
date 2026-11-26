@@ -1,0 +1,71 @@
+enum GenerationKind {
+  image
+}
+
+enum GenerationStatus {
+  queued
+  running
+  succeeded
+  failed
+}
+
+// One request from the owner to the studio (ADR 0008). The owner's input is stored as given;
+// the composed prompt is kept so any output can be explained and replayed.
+model StudioGeneration {
+  id                 String           @id @default(uuid(7)) @db.Uuid
+  workspaceId        String           @map("workspace_id") @db.Uuid
+  brandId            String           @map("brand_id") @db.Uuid
+  createdByUserId    String           @map("created_by_user_id") @db.Uuid
+  // Unique per workspace: a retried request returns the first job instead of paying twice.
+  idempotencyKey     String           @map("idempotency_key")
+  kind               GenerationKind
+  status             GenerationStatus @default(queued)
+  input              Json
+  productId          String?          @map("product_id") @db.Uuid
+  // The name at the time of the request, so history reads well after a product is renamed or removed.
+  productName        String?          @map("product_name")
+  requested          Int              @default(1)
+  prompt             String?
+  promptVersion      String?          @map("prompt_version")
+  // The style reference images sent with this request, so outcomes can be traced back to them.
+  styleReferenceUrls String[]         @default([]) @map("style_reference_urls")
+  promptTokens       Int              @default(0) @map("prompt_tokens")
+  completionTokens   Int              @default(0) @map("completion_tokens")
+  costUsd            Float?           @map("cost_usd")
+  errorCode          String?          @map("error_code")
+  message            String?
+  startedAt          DateTime?        @map("started_at")
+  finishedAt         DateTime?        @map("finished_at")
+  createdAt          DateTime         @default(now()) @map("created_at")
+  updatedAt          DateTime         @updatedAt @map("updated_at")
+
+  brand   Brand          @relation(fields: [brandId, workspaceId], references: [id, workspaceId], onDelete: Cascade)
+  outputs StudioOutput[]
+
+  @@unique([id, workspaceId])
+  @@unique([workspaceId, idempotencyKey])
+  @@index([brandId, kind, createdAt])
+  @@index([workspaceId, status])
+  @@map("studio_generation")
+}
+
+// A file a generation produced, stored in media storage.
+model StudioOutput {
+  id           String   @id @default(uuid(7)) @db.Uuid
+  workspaceId  String   @map("workspace_id") @db.Uuid
+  generationId String   @map("generation_id") @db.Uuid
+  url          String
+  mediaType    String   @map("media_type")
+  width        Int?
+  height       Int?
+  // The model that actually produced it, after any fallback.
+  model        String
+  costUsd      Float?   @map("cost_usd")
+  createdAt    DateTime @default(now()) @map("created_at")
+
+  generation StudioGeneration @relation(fields: [generationId, workspaceId], references: [id, workspaceId], onDelete: Cascade)
+
+  @@index([generationId])
+  @@index([workspaceId, createdAt])
+  @@map("studio_output")
+}

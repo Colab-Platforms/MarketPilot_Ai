@@ -23,6 +23,7 @@ export class EmailOtpService {
   private readonly logger = new Logger(EmailOtpService.name);
   private readonly pepper: string;
   private readonly production: boolean;
+  readonly required: boolean;
 
   constructor(
     private readonly prisma: PrismaService,
@@ -31,6 +32,7 @@ export class EmailOtpService {
   ) {
     this.pepper = `email-otp:${config.get('JWT_REFRESH_SECRET', { infer: true })}`;
     this.production = config.get('NODE_ENV', { infer: true }) === 'production';
+    this.required = config.get('EMAIL_VERIFICATION_REQUIRED', { infer: true }) !== false;
   }
 
   async send(user: { id: string; email: string; name: string }): Promise<void> {

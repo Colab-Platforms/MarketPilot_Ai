@@ -1,0 +1,698 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Log in or sign up · MarketPilot</title>
+<meta name="description" content="Log in or create your MarketPilot account with your mobile number or Google.">
+<meta name="theme-color" content="#F2F4F5">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Log in or sign up · MarketPilot">
+<meta property="og:description" content="Log in or create your MarketPilot account with your mobile number or Google.">
+<meta property="og:image" content="/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Anek+Latin:wght@400..800&amp;family=Anek+Devanagari:wght@400..800&amp;family=Noto+Sans:wght@300..700&amp;family=Noto+Sans+Devanagari:wght@300..700&amp;display=swap" rel="stylesheet">
+<style>
+
+body{margin:0}
+html,body{scrollbar-width:none;-ms-overflow-style:none}html::-webkit-scrollbar,body::-webkit-scrollbar{display:none}
+button{font:inherit;cursor:pointer;padding:0}
+input{padding:0}
+button:disabled{cursor:not-allowed}
+button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #F5C432;outline-offset:2px}
+input::placeholder{color:inherit;opacity:.55}
+@keyframes mpfade{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.mp-slide{animation:mpfade 500ms ease both}
+
+.mp-bal{text-wrap:balance}
+.mp-lang{display:inline-flex;align-items:center;justify-content:center;line-height:1}
+.mp-dark{font-weight:370}
+.mp-dark [style*="Anek"][style*="font-weight: 700"]{font-weight:600 !important}
+.mp-dark [style*="font-size: 14px"],.mp-dark [style*="font-size: 12px"]{letter-spacing:.01em}
+.mp-hi [style*="letter-spacing: -"]{letter-spacing:0 !important}
+.mp-hi h1{line-height:1.35 !important}.mp-hi p{line-height:1.7 !important}
+.mp-dark.mp-hi p{line-height:1.75 !important}.mp-dark.mp-hi [style*="font-size: 14px"]{font-size:15px !important}
+@media (prefers-reduced-motion: reduce){.mp-slide{animation:none}}
+@media (max-width: 960px){.mp-left{display:none !important}.mp-only-sm{display:flex !important}.mp-hide-sm{display:none !important}.mp-right{padding:0 !important}.mp-sheet{margin-top:-24px;border-radius:24px 24px 0 0;padding:24px 20px 20px !important}.mp-content{padding:0 0 24px !important;align-items:flex-start !important}.mp-h1{font-size:24px !important;line-height:30px !important}}
+
+</style>
+</head>
+<body style="margin:0;background:#F2F4F5">
+<template id="mp-tpl"><div class="{{rootCls}}" style="font-family: 'Noto Sans', 'Noto Sans Devanagari', sans-serif; min-height: 100vh; display: flex; background: {{t.bg}}; color: {{t.text}}">
+
+  <!-- LEFT: product tour -->
+  <aside class="mp-left" aria-label="What MarketPilot does" style="flex: 0 0 52%; max-width: 760px; margin: 16px 0 16px 16px; border-radius: 16px; position: relative; overflow: hidden; display: flex; flex-direction: column; justify-content: space-between; gap: 24px; padding: 56px 56px 52px; box-sizing: border-box; background: radial-gradient(ellipse 60% 45% at 50% 30%, rgba(255,255,255,0.07), transparent 70%), linear-gradient(180deg, {{t.sky}} 0%, {{t.band}} 70%); color: #FFFFFF">
+    <svg aria-hidden="true" viewBox="0 0 800 360" preserveAspectRatio="none" style="position: absolute; left: 0; right: 0; bottom: 0; width: 100%; height: 46%; pointer-events: none">
+      <path d="M0 150 C 120 90 230 70 340 110 C 450 150 540 60 660 70 C 730 76 770 100 800 115 L800 360 L0 360Z" fill="{{t.hill1}}"></path>
+      <path d="M0 215 C 140 160 260 150 380 190 C 500 230 600 170 700 160 C 750 156 780 165 800 175 L800 360 L0 360Z" fill="{{t.hill2}}"></path>
+      <path d="M0 280 C 160 235 300 240 430 265 C 560 290 680 250 800 240 L800 360 L0 360Z" fill="{{t.hill3}}"></path>
+    </svg>
+    <svg aria-hidden="true" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="position: absolute; right: 64px; top: 52px; opacity: 0.35; transform: rotate(-6deg)"><path d="M22 2 11 13"></path><path d="M22 2 15 22 11 13 2 9z"></path></svg>
+    <div style="flex: 1 1 auto; display: flex; align-items: center; justify-content: center; position: relative; z-index: 1; min-height: 360px">
+      <!-- Plan -->
+      <sc-if value="{{sl.plan}}" hint-placeholder-val="{{ true }}">
+        <div class="mp-slide" style="width: 380px; padding: 24px; box-sizing: border-box; border-radius: 16px; background: #FFFFFF; color: #16222B; box-shadow: 0 40px 80px -30px rgba(0,0,0,0.6)">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px"><span style="font-family: 'Noto Sans', 'Noto Sans Devanagari', sans-serif; font-size: 18px; font-weight: 600">December plan</span><span style="padding: 4px 12px; border-radius: 999px; background: #F5C432; color: #121413; font-size: 12px; font-weight: 700">Christmas · 25 Dec</span></div>
+          <div style="text-align: center; font-size: 12px; font-weight: 700; color: #59666F; display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 4px; margin-bottom: 6px"><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span><span>S</span></div>
+          <div style="display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 4px">
+            <sc-for list="{{cal}}" as="c" hint-placeholder-count="28"><span style="aspect-ratio: 1 / 1; border-radius: 8px; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; {{c.style}}">{{c.d}}</span></sc-for>
+          </div>
+          <div style="display: flex; gap: 12px; margin-top: 14px; font-size: 12px; color: #59666F"><span style="display: flex; align-items: center; gap: 8px"><span style="width: 10px; height: 10px; border-radius: 4px; background: #2F5873"></span>Post</span><span style="display: flex; align-items: center; gap: 8px"><span style="width: 10px; height: 10px; border-radius: 4px; background: #F5C432"></span>Festival</span><span style="margin-left: auto">Best time · 6 pm</span></div>
+        </div>
+      </sc-if>
+      <!-- Create -->
+      <sc-if value="{{sl.create}}" hint-placeholder-val="{{ false }}">
+        <div class="mp-slide" style="width: 320px; padding: 16px; box-sizing: border-box; border-radius: 16px; background: #FFFFFF; color: #16222B; display: flex; flex-direction: column; gap: 12px; box-shadow: 0 40px 80px -30px rgba(0,0,0,0.6)">
+          <div style="display: flex; align-items: center; gap: 12px"><span style="width: 32px; height: 32px; border-radius: 50%; background: #16222B; color: #F5C432; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700">SS</span><b style="font-size: 14px">sharmasweets</b><span style="margin-left: auto; padding: 4px 8px; border-radius: 999px; background: #E8ECEE; font-size: 12px; font-weight: 700">हिंदी · EN</span></div>
+          <div style="height: 220px; border-radius: 16px; padding: 16px; box-sizing: border-box; display: flex; flex-direction: column; justify-content: flex-end; gap: 8px; background: #16222B; color: #FFFFFF"><span style="font-family: 'Anek Devanagari', sans-serif; font-size: 24px; font-weight: 700; line-height: 1.15; color: #F5C432">शादी के डिब्बे ₹499 से</span><span style="font-size: 14px; color: rgba(255,255,255,0.8)">Wedding boxes · order on WhatsApp</span></div>
+          <span style="font-size: 14px; line-height: 1.5; color: #36444E">Shaadi season is here! Fresh kaju katli boxes for your guests, packed the same morning.</span>
+        </div>
+      </sc-if>
+      <!-- Approve -->
+      <sc-if value="{{sl.approve}}" hint-placeholder-val="{{ false }}">
+        <div class="mp-slide" style="position: relative; width: 420px; height: 400px; display: flex; align-items: center; justify-content: center">
+          <div style="width: 320px; padding: 16px; border-radius: 16px; background: #FFFFFF; color: #16222B; box-shadow: 0 40px 80px -30px rgba(0,0,0,0.55); display: flex; flex-direction: column; gap: 12px">
+            <div style="display: flex; justify-content: space-between; align-items: center"><b style="font-size: 14px">Saturday reel</b><span style="padding: 4px 8px; border-radius: 999px; background: #F5C432; color: #121413; font-size: 12px; font-weight: 700">Needs you</span></div>
+            <div style="height: 140px; border-radius: 12px; padding: 16px; box-sizing: border-box; display: flex; align-items: flex-end; background: #16222B; color: #F5C432; font-family: 'Anek Latin', 'Anek Devanagari', sans-serif; font-size: 24px; font-weight: 700; line-height: 1.05">Wedding boxes from ₹499</div>
+            <span style="font-size: 12px; font-weight: 600; color: #05603A">✓ Price matches your menu</span>
+            <div style="display: flex; gap: 8px"><span style="flex: 1 1 auto; padding: 12px; border-radius: 12px; background: #2F5873; color: #FFFFFF; text-align: center; font-size: 14px; font-weight: 700">Approve</span><span style="padding: 12px 16px; border-radius: 12px; border: 1px solid #D9DFE2; font-size: 14px; font-weight: 600">Edit</span></div>
+          </div>
+        </div>
+      </sc-if>
+      <!-- Results -->
+      <sc-if value="{{sl.results}}" hint-placeholder-val="{{ false }}">
+        <div class="mp-slide" style="width: 360px; padding: 24px; box-sizing: border-box; border-radius: 16px; background: #FFFFFF; color: #16222B; display: flex; flex-direction: column; gap: 16px; box-shadow: 0 40px 80px -30px rgba(0,0,0,0.6)">
+          <b style="font-family: 'Noto Sans', 'Noto Sans Devanagari', sans-serif; font-size: 20px; line-height: 28px; font-weight: 600">Your week, in plain words</b>
+          <div style="display: flex; align-items: flex-end; gap: 8px; height: 120px">
+            <sc-for list="{{bars}}" as="b" hint-placeholder-count="7"><div style="flex: 1 1 0; display: flex; flex-direction: column; align-items: center; gap: 4px"><div style="width: 100%; border-radius: 4px; {{b.style}}"></div><span style="font-size: 12px; color: #59666F">{{b.d}}</span></div></sc-for>
+          </div>
+          <span style="padding: 12px 16px; border-radius: 12px; background: #F2F4F5; font-size: 14px; line-height: 1.5">Saturday's reel brought <b>41 profile visits</b>, your best this month.</span>
+        </div>
+      </sc-if>
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 12px; position: relative; z-index: 2; max-width: 560px">
+      <div role="tablist" aria-label="What MarketPilot does" style="display: flex; gap: 8px; flex-wrap: wrap">
+        <sc-for list="{{tabs}}" as="tb" hint-placeholder-count="4"><button type="button" role="tab" aria-selected="{{tb.on}}" onClick="{{tb.pick}}" style="min-height: 44px; padding: 0 16px; border-radius: 999px; font-size: 14px; font-weight: 600; {{tb.style}}">{{tb.label}}</button></sc-for>
+      </div>
+      <h2 class="mp-bal" style="margin: 4px 0 0; min-height: 96px; display: flex; align-items: flex-end; font-family: 'Anek Latin', 'Anek Devanagari', sans-serif; font-size: 40px; font-weight: 700; line-height: 48px; letter-spacing: -0.01em">{{slide.title}}</h2>
+      <p style="margin: 0; min-height: 52px; font-size: 16px; line-height: 26px; color: rgba(255,255,255,0.82)">{{slide.body}}</p>
+    </div>
+  </aside>
+
+  <!-- RIGHT: sign in -->
+  <main class="mp-right" style="flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; padding: 32px 48px; box-sizing: border-box">
+    <div class="mp-hide-sm" style="display: flex; justify-content: space-between; align-items: center; gap: 16px">
+      <a href="{{homeHref}}" aria-label="MarketPilot home" style="display: flex; min-height: 44px; align-items: center; gap: 12px; color: inherit; text-decoration: none">
+        <span style="width: 36px; height: 36px; border-radius: 8px; background: #F5C432; display: flex; align-items: center; justify-content: center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#121413" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 2 11 13"></path><path d="M22 2 15 22 11 13 2 9z"></path></svg></span>
+        <span style="font-family: 'Anek Latin', 'Anek Devanagari', sans-serif; font-weight: 700; font-size: 24px; line-height: 32px; letter-spacing: -0.005em">MarketPilot</span>
+      </a>
+      <div style="display: flex; align-items: center; gap: 8px">
+      <button type="button" onClick="{{toggleTheme}}" aria-label="{{themeLabel}}" title="{{themeLabel}}" style="flex: 0 0 52px; width: 52px; height: 52px; display: flex; align-items: center; justify-content: center; padding: 0; border-radius: 999px; border: 1px solid {{t.border}}; background: {{t.surface}}; color: {{t.text}}"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><sc-if value="{{isLight}}" hint-placeholder-val="{{ true }}"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"></path></sc-if><sc-if value="{{isDark}}" hint-placeholder-val="{{ false }}"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></sc-if></svg></button>
+      <div role="group" aria-label="Language" style="display: inline-flex; padding: 4px; border-radius: 999px; border: 1px solid {{t.border}}; background: {{t.surface}}">
+        <button type="button" aria-pressed="{{isEn}}" onClick="{{setEn}}" class="mp-lang" style="min-height: 44px; padding: 0 16px; border: 0; border-radius: 999px; font-size: 14px; font-weight: 600; {{enStyle}}">English</button>
+        <button type="button" aria-pressed="{{isHi}}" onClick="{{setHi}}" class="mp-lang" style="min-height: 44px; padding: 4px 16px 0; border: 0; border-radius: 999px; font-size: 14px; font-weight: 600; font-family: 'Noto Sans Devanagari', sans-serif; {{hiStyle}}">हिंदी</button>
+      </div>
+      </div>
+    </div>
+
+    <div class="mp-only-sm" style="display: none; position: relative; overflow: hidden; flex-direction: column; gap: 16px; padding: 16px 20px 48px; background: radial-gradient(ellipse 80% 50% at 50% 30%, rgba(255,255,255,0.07), transparent 70%), linear-gradient(180deg, {{t.sky}} 0%, {{t.band}} 70%); color: #FFFFFF">
+      <svg aria-hidden="true" viewBox="0 0 800 360" preserveAspectRatio="none" style="position: absolute; left: 0; right: 0; bottom: 0; width: 100%; height: 150px; pointer-events: none">
+      <path d="M0 150 C 120 90 230 70 340 110 C 450 150 540 60 660 70 C 730 76 770 100 800 115 L800 360 L0 360Z" fill="{{t.hill1}}"></path>
+      <path d="M0 215 C 140 160 260 150 380 190 C 500 230 600 170 700 160 C 750 156 780 165 800 175 L800 360 L0 360Z" fill="{{t.hill2}}"></path>
+      <path d="M0 280 C 160 235 300 240 430 265 C 560 290 680 250 800 240 L800 360 L0 360Z" fill="{{t.hill3}}"></path>
+    </svg>
+      <div style="position: relative; display: flex; justify-content: space-between; align-items: center; gap: 12px">
+        <a href="{{homeHref}}" aria-label="MarketPilot home" style="display: flex; min-height: 44px; align-items: center; gap: 8px; color: inherit; text-decoration: none"><span style="width: 32px; height: 32px; border-radius: 8px; background: #F5C432; display: flex; align-items: center; justify-content: center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#121413" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 2 11 13"></path><path d="M22 2 15 22 11 13 2 9z"></path></svg></span><span style="font-family: 'Anek Latin', 'Anek Devanagari', sans-serif; font-weight: 700; font-size: 20px; line-height: 28px; letter-spacing: -0.005em">MarketPilot</span></a>
+        <div style="display: flex; align-items: center; gap: 8px">
+        <button type="button" onClick="{{toggleTheme}}" aria-label="{{themeLabel}}" title="{{themeLabel}}" style="flex: 0 0 52px; width: 52px; height: 52px; display: flex; align-items: center; justify-content: center; padding: 0; border-radius: 999px; border: 1px solid rgba(255,255,255,0.28); background: transparent; color: #FFFFFF"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><sc-if value="{{isLight}}" hint-placeholder-val="{{ true }}"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"></path></sc-if><sc-if value="{{isDark}}" hint-placeholder-val="{{ false }}"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></sc-if></svg></button>
+        <div role="group" aria-label="Language" style="display: inline-flex; padding: 4px; border-radius: 999px; border: 1px solid rgba(255,255,255,0.28)">
+          <button type="button" aria-pressed="{{isEn}}" onClick="{{setEn}}" class="mp-lang" style="min-height: 44px; padding: 0 12px; border: 0; border-radius: 999px; font-size: 14px; font-weight: 600; {{enHero}}">EN</button>
+          <button type="button" aria-pressed="{{isHi}}" onClick="{{setHi}}" class="mp-lang" style="min-height: 44px; padding: 4px 12px 0; border: 0; border-radius: 999px; font-size: 14px; font-weight: 600; font-family: 'Noto Sans Devanagari', sans-serif; {{hiHero}}">हिंदी</button>
+        </div>
+        </div>
+      </div>
+      <sc-if value="{{heroVisual}}" hint-placeholder-val="{{ true }}">
+      <div aria-hidden="true" style="position: relative; height: 132px; width: 300px; align-self: center">
+        <sc-if value="{{sl.plan}}" hint-placeholder-val="{{ true }}">
+          <div class="mp-slide" style="position: absolute; inset: 0">
+            <div style="position: absolute; left: 0; top: 4px; width: 300px; padding: 12px; box-sizing: border-box; border-radius: 16px; background: #FFFFFF; color: #16222B; box-shadow: 0 22px 40px -16px rgba(0,0,0,0.6)">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; font-size: 12px"><b>December plan</b><span style="padding: 4px 8px; border-radius: 999px; background: #F5C432; color: #121413; font-size: 12px; font-weight: 700">Christmas · 25 Dec</span></div>
+              <div style="text-align: center; font-size: 12px; font-weight: 700; color: #59666F; display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 4px; margin-bottom: 4px"><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span><span>S</span></div>
+              <div style="display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 4px"><sc-for list="{{calMini}}" as="c" hint-placeholder-count="14"><span style="height: 24px; border-radius: 4px; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; {{c.style}}">{{c.d}}</span></sc-for></div>
+            </div>
+          </div>
+        </sc-if>
+        <sc-if value="{{sl.create}}" hint-placeholder-val="{{ false }}">
+          <div class="mp-slide" style="position: absolute; left: 30px; top: 0; width: 240px; padding: 12px; box-sizing: border-box; border-radius: 16px; background: #FFFFFF; color: #16222B; display: flex; gap: 12px; box-shadow: 0 22px 40px -16px rgba(0,0,0,0.6)">
+            <span style="width: 96px; height: 110px; flex: 0 0 96px; border-radius: 12px; padding: 12px; box-sizing: border-box; display: flex; align-items: flex-end; background: #16222B; color: #F5C432; font-family: 'Noto Sans', 'Noto Sans Devanagari', sans-serif; font-size: 14px; font-weight: 600; line-height: 1.2">शादी के डिब्बे ₹499 से</span>
+            <span style="display: flex; flex-direction: column; gap: 8px; font-size: 12px; line-height: 1.45; color: #36444E"><b style="font-size: 12px; color: #16222B">sharmasweets</b>Shaadi season is here! Fresh kaju katli boxes, packed the same morning.<span style="align-self: flex-start; padding: 4px 8px; border-radius: 999px; background: #E8ECEE; font-size: 12px; font-weight: 700; color: #16222B">हिंदी · EN</span></span>
+          </div>
+        </sc-if>
+        <sc-if value="{{sl.approve}}" hint-placeholder-val="{{ false }}">
+          <div class="mp-slide" style="position: absolute; left: 30px; top: 0; width: 240px; padding: 12px; box-sizing: border-box; border-radius: 16px; background: #FFFFFF; color: #16222B; display: flex; flex-direction: column; gap: 8px; box-shadow: 0 22px 40px -16px rgba(0,0,0,0.6)">
+            <div style="display: flex; justify-content: space-between; align-items: center; font-size: 12px"><b>Saturday reel</b><span style="padding: 4px 8px; border-radius: 999px; background: #F5C432; color: #121413; font-size: 12px; font-weight: 700">Needs you</span></div>
+            <span style="font-size: 12px; font-weight: 600; color: #05603A">✓ Price matches your menu</span>
+            <div style="display: flex; gap: 8px"><span style="flex: 1 1 auto; padding: 8px; border-radius: 8px; background: #2F5873; color: #FFFFFF; text-align: center; font-size: 12px; font-weight: 700">Approve</span><span style="padding: 8px 12px; border-radius: 8px; border: 1px solid #D9DFE2; font-size: 12px; font-weight: 600">Edit</span></div>
+          </div>
+        </sc-if>
+        <sc-if value="{{sl.results}}" hint-placeholder-val="{{ false }}">
+          <div class="mp-slide" style="position: absolute; left: 20px; top: 0; width: 260px; padding: 12px; box-sizing: border-box; border-radius: 16px; background: #FFFFFF; color: #16222B; display: flex; flex-direction: column; gap: 8px; box-shadow: 0 22px 40px -16px rgba(0,0,0,0.6)">
+            <div style="display: flex; align-items: flex-end; gap: 4px; height: 64px"><sc-for list="{{barsMini}}" as="b" hint-placeholder-count="7"><span style="flex: 1 1 0; border-radius: 4px; {{b.style}}"></span></sc-for></div>
+            <span style="font-size: 12px; line-height: 1.4"><b>41 profile visits</b> from Saturday's reel</span>
+          </div>
+        </sc-if>
+      </div>
+      </sc-if>
+      <div style="position: relative; display: flex; flex-direction: column; gap: 12px; align-items: center; text-align: center">
+        <span class="mp-bal" style="font-family: 'Noto Sans', 'Noto Sans Devanagari', sans-serif; font-size: 18px; font-weight: 600; line-height: 26px; min-height: 52px; max-width: 300px; display: flex; align-items: center">{{slide.title}}</span>
+        <span aria-hidden="true" style="display: flex; gap: 8px"><sc-for list="{{tabs}}" as="tb" hint-placeholder-count="4"><span style="height: 4px; border-radius: 999px; transition: width 300ms ease; {{tb.dot}}"></span></sc-for></span>
+      </div>
+    </div>
+
+    <div class="mp-sheet" style="flex: 1 1 auto; display: flex; flex-direction: column; position: relative; background: {{t.bg}}">
+    <div class="mp-content" style="flex: 1 1 auto; display: flex; align-items: center; justify-content: center; padding: 32px 0">
+      <div style="width: 100%; max-width: 400px; display: flex; flex-direction: column; gap: 20px">
+        <sc-if value="{{demo}}" hint-placeholder-val="{{ false }}">
+          <div style="align-self: flex-start; display: flex; align-items: center; gap: 8px; padding: 8px 12px; border-radius: 12px; background: {{t.demoBg}}; color: {{t.demoFg}}; font-size: 14px; font-weight: 600"><span style="width: 7px; height: 7px; border-radius: 50%; background: #F5C432"></span>{{L.demo}}</div>
+        </sc-if>
+
+        <!-- START -->
+        <sc-if value="{{scr.start}}" hint-placeholder-val="{{ true }}">
+          <div style="display: flex; flex-direction: column; gap: 8px">
+            <h1 class="mp-h1" style="margin: 0; line-height: 38px; font-family: 'Anek Latin', 'Anek Devanagari', sans-serif; font-size: 30px; font-weight: 700; letter-spacing: -0.005em">{{L.title}}</h1>
+            <p class="mp-bal" style="margin: 0; font-size: 16px; line-height: 26px; color: {{t.body}}">{{L.sub}}</p>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 8px">
+            <label for="mp-phone" style="font-size: 14px; line-height: 20px; font-weight: 500">{{L.mobile}}</label>
+            <div style="display: flex; align-items: center; min-height: 52px; border-radius: 12px; border: {{phoneBorder}}; background: {{t.surface}}; overflow: hidden">
+              <span style="align-self: stretch; display: flex; align-items: center; gap: 8px; padding: 0 16px; border-right: 1px solid {{t.border}}; font-size: 16px; font-weight: 600; color: {{t.text}}">+91</span>
+              <input id="mp-phone" type="tel" inputmode="numeric" autocomplete="tel-national" value="{{phone}}" onChange="{{onPhone}}" onFocus="{{focusOn}}" onBlur="{{focusOff}}" placeholder="98765 43210" aria-describedby="mp-phone-help" style="flex: 1 1 auto; min-width: 0; border: 0; padding: 0 16px; height: 50px; font-size: 16px; letter-spacing: 0.04em; font-variant-numeric: tabular-nums; background: transparent; color: {{t.text}}; outline: none">
+            </div>
+            <span id="mp-phone-help" style="font-size: 14px; {{helpStyle}}">{{phoneHelp}}</span>
+          </div>
+          <button type="button" onClick="{{send}}" style="min-height: 52px; border: 0; border-radius: 12px; font-size: 16px; font-weight: 600; {{sendStyle}}">{{L.send}}</button>
+          <button type="button" onClick="{{sendWa}}" style="align-self: center; min-height: 44px; padding: 0 8px; border: 0; background: transparent; display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 600; {{waStyle}}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.4 8.4 0 0 1-12.3 7.5L3 21l2-5.7A8.5 8.5 0 1 1 21 11.5z"></path></svg>{{L.wa}}</button>
+          <div style="display: flex; align-items: center; gap: 12px; font-size: 14px; color: {{t.muted}}"><span style="flex: 1 1 auto; height: 1px; background: {{t.border}}"></span>{{L.or}}<span style="flex: 1 1 auto; height: 1px; background: {{t.border}}"></span></div>
+          <button type="button" onClick="{{google}}" style="min-height: 52px; display: flex; align-items: center; justify-content: center; gap: 12px; border-radius: 12px; border: 1px solid {{t.inputBorder}}; background: {{t.surface}}; color: {{t.text}}; font-size: 16px; font-weight: 600">
+            <svg width="20" height="20" viewBox="0 0 48 48" aria-hidden="true"><path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3C33.7 32.7 29.2 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.3-.1-2.4-.4-3.5z"></path><path fill="#FF3D00" d="m6.3 14.7 6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"></path><path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.2 0-9.6-3.3-11.3-7.9l-6.5 5C9.5 39.6 16.2 44 24 44z"></path><path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.4-.4-3.5z"></path></svg>
+            {{googleLabel}}
+          </button>
+          <p style="margin: 0; text-align: center; font-size: 12px; line-height: 18px; color: {{t.muted}}">{{L.legal}} <a href="#terms" style="color: {{t.link}}">{{L.terms}}</a> {{L.and}} <a href="#privacy" style="color: {{t.link}}">{{L.privacy}}</a>{{L.legalEnd}}</p>
+        </sc-if>
+
+        <!-- OTP -->
+        <sc-if value="{{scr.otp}}" hint-placeholder-val="{{ false }}">
+          <button type="button" onClick="{{back}}" style="align-self: flex-start; min-height: 44px; padding: 0; border: 0; background: transparent; display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 600; color: {{t.link}}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"></path></svg>{{L.change}}</button>
+          <div style="display: flex; flex-direction: column; gap: 8px">
+            <h1 class="mp-h1" style="margin: 0; line-height: 38px; font-family: 'Anek Latin', 'Anek Devanagari', sans-serif; font-size: 30px; font-weight: 700; letter-spacing: -0.005em">{{L.otpTitle}}</h1>
+            <p class="mp-bal" style="margin: 0; font-size: 16px; line-height: 26px; color: {{t.body}}">{{otpSubLine}} <b style="color: {{t.text}}; white-space: nowrap">+91 {{phoneShown}}</b></p>
+          </div>
+          <div style="position: relative">
+            <label for="mp-otp" style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0)">6-digit code</label>
+            <div aria-hidden="true" style="display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 8px">
+              <sc-for list="{{otpBoxes}}" as="o" hint-placeholder-count="6"><span style="height: 56px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-family: 'Anek Latin', 'Anek Devanagari', sans-serif; font-size: 32px; font-weight: 700; font-variant-numeric: tabular-nums; background: {{t.surface}}; {{o.style}}">{{o.d}}</span></sc-for>
+            </div>
+            <input id="mp-otp" type="text" inputmode="numeric" autocomplete="one-time-code" maxlength="6" value="{{otp}}" onChange="{{onOtp}}" style="position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; font-size: 16px; border: 0">
+          </div>
+          <sc-if value="{{verifying}}" hint-placeholder-val="{{ false }}"><div role="status" style="font-size: 14px; font-weight: 600; color: {{t.muted}}">{{L.verifying}}</div></sc-if>
+          <sc-if value="{{verified}}" hint-placeholder-val="{{ false }}">
+            <div role="status" style="display: flex; align-items: center; gap: 12px; padding: 12px 16px; border-radius: 12px; background: {{t.okBg}}; color: {{t.okFg}}; font-size: 14px; font-weight: 600"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg>{{L.done}}</div>
+          </sc-if>
+          <div style="display: flex; justify-content: space-between; align-items: center; gap: 12px; font-size: 14px; color: {{t.muted}}">
+            <sc-if value="{{waiting}}" hint-placeholder-val="{{ true }}"><span>{{L.resendIn}} 0:{{countdown}}</span></sc-if>
+            <sc-if value="{{canResend}}" hint-placeholder-val="{{ false }}"><button type="button" onClick="{{resend}}" style="min-height: 44px; padding: 0; border: 0; background: transparent; font-size: 14px; font-weight: 700; color: {{t.link}}">{{L.resend}}</button></sc-if>
+            <button type="button" onClick="{{switchChannel}}" style="min-height: 44px; padding: 0; border: 0; background: transparent; font-size: 14px; font-weight: 700; color: {{t.link}}">{{switchLabel}}</button>
+          </div>
+        </sc-if>
+
+        <!-- WELCOME BACK -->
+        <sc-if value="{{scr.welcome}}" hint-placeholder-val="{{ false }}">
+          <div style="display: flex; flex-direction: column; gap: 8px">
+            <h1 class="mp-h1" style="margin: 0; line-height: 38px; font-family: 'Anek Latin', 'Anek Devanagari', sans-serif; font-size: 30px; font-weight: 700; letter-spacing: -0.005em">{{L.welcome}}</h1>
+            <p class="mp-bal" style="margin: 0; font-size: 16px; line-height: 26px; color: {{t.body}}">{{L.welcomeSub}}</p>
+          </div>
+          <sc-for list="{{accounts}}" as="ac" hint-placeholder-count="1">
+          <button type="button" onClick="{{ac.use}}" style="display: flex; align-items: center; gap: 12px; min-height: 72px; padding: 12px 16px; border-radius: 16px; border: 1px solid {{t.inputBorder}}; background: {{t.surface}}; color: {{t.text}}; text-align: left">
+            <span style="width: 44px; height: 44px; flex: 0 0 44px; border-radius: 50%; background: #16222B; color: #F5C432; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 16px">{{ac.initials}}</span>
+            <span style="flex: 1 1 auto; display: flex; flex-direction: column; gap: 4px"><b style="font-size: 16px">{{ac.name}}</b><span style="font-size: 14px; color: {{t.muted}}">{{ac.sub}}</span></span>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"></path></svg>
+          </button>
+          </sc-for>
+          <button type="button" onClick="{{useAnother}}" style="min-height: 52px; border-radius: 12px; border: 1px solid {{t.inputBorder}}; background: transparent; color: {{t.text}}; font-size: 16px; font-weight: 600">{{L.another}}</button>
+          <button type="button" onClick="{{toManage}}" style="align-self: center; min-height: 44px; padding: 0 8px; border: 0; background: transparent; font-size: 14px; font-weight: 600; text-decoration: underline; color: {{t.link}}">{{L.manage}}</button>
+        </sc-if>
+
+        <!-- MANAGE -->
+        <sc-if value="{{scr.manage}}" hint-placeholder-val="{{ false }}">
+          <div style="display: flex; flex-direction: column; gap: 8px">
+            <h1 class="mp-h1" style="margin: 0; line-height: 38px; font-family: 'Anek Latin', 'Anek Devanagari', sans-serif; font-size: 30px; font-weight: 700; letter-spacing: -0.005em">{{L.manageTitle}}</h1>
+            <p class="mp-bal" style="margin: 0; font-size: 16px; line-height: 26px; color: {{t.body}}">{{L.manageSub}}</p>
+          </div>
+          <sc-for list="{{accounts}}" as="ac" hint-placeholder-count="1">
+            <div style="display: flex; align-items: center; gap: 12px; min-height: 72px; padding: 12px 12px 12px 16px; box-sizing: border-box; border-radius: 16px; border: 1px solid {{t.border}}; background: {{t.surface}}">
+              <span style="width: 40px; height: 40px; flex: 0 0 40px; border-radius: 50%; background: #16222B; color: #F5C432; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 14px">{{ac.initials}}</span>
+              <span style="flex: 1 1 auto; display: flex; flex-direction: column; gap: 4px"><b style="font-size: 16px">{{ac.name}}</b><span style="font-size: 14px; color: {{t.muted}}">{{ac.sub}}</span></span>
+              <button type="button" onClick="{{ac.remove}}" style="min-height: 44px; padding: 0 16px; border-radius: 8px; border: 1px solid {{t.inputBorder}}; background: transparent; color: {{t.errFg}}; font-size: 14px; font-weight: 600">{{L.remove}}</button>
+            </div>
+          </sc-for>
+          <sc-if value="{{noAccounts}}" hint-placeholder-val="{{ false }}">
+            <div style="padding: 16px; border-radius: 12px; background: {{t.surface2}}; color: {{t.body}}; font-size: 14px">{{L.noSaved}}</div>
+          </sc-if>
+          <button type="button" onClick="{{manageDone}}" style="min-height: 52px; border: 0; border-radius: 12px; font-size: 16px; font-weight: 600; {{sendStyle}}">{{L.doneBtn}}</button>
+        </sc-if>
+
+        <!-- SIGNED IN -->
+        <sc-if value="{{scr.done}}" hint-placeholder-val="{{ false }}">
+          <span style="width: 56px; height: 56px; border-radius: 50%; background: {{t.okBg}}; color: {{t.okFg}}; display: flex; align-items: center; justify-content: center"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg></span>
+          <div style="display: flex; flex-direction: column; gap: 8px">
+            <h1 class="mp-h1" style="margin: 0; line-height: 38px; font-family: 'Anek Latin', 'Anek Devanagari', sans-serif; font-size: 30px; font-weight: 700; letter-spacing: -0.005em">{{L.doneTitle}}</h1>
+            <p class="mp-bal" style="margin: 0; font-size: 16px; line-height: 26px; color: {{t.body}}">{{L.signedAs}} <b style="color: {{t.text}}; white-space: nowrap">{{signedAs}}</b>. {{L.doneSub}}</p>
+          </div>
+          <button type="button" onClick="{{setup}}" style="min-height: 52px; border: 0; border-radius: 12px; font-size: 16px; font-weight: 600; {{sendStyle}}">{{L.setup}}</button>
+          <sc-if value="{{setupNote}}" hint-placeholder-val="{{ false }}">
+            <div role="status" style="padding: 12px 16px; border-radius: 12px; background: {{t.surface2}}; color: {{t.body}}; font-size: 14px; line-height: 1.5">{{L.setupNote}}</div>
+          </sc-if>
+          <div style="display: flex; gap: 12px">
+            <a href="{{homeHref}}" style="flex: 1 1 0; display: flex; align-items: center; justify-content: center; text-decoration: none; box-sizing: border-box; min-height: 52px; border-radius: 12px; border: 1px solid {{t.inputBorder}}; background: transparent; color: {{t.text}}; font-size: 16px; font-weight: 600">{{L.home}}</a>
+            <button type="button" onClick="{{logout}}" style="flex: 1 1 0; min-height: 52px; border-radius: 12px; border: 1px solid {{t.inputBorder}}; background: transparent; color: {{t.text}}; font-size: 16px; font-weight: 600">{{L.logout}}</button>
+          </div>
+        </sc-if>
+
+      </div>
+    </div>
+
+    <div style="display: flex; justify-content: center; font-size: 14px; color: {{t.muted}}">
+      <a href="#help" style="display: inline-flex; align-items: center; gap: 8px; min-height: 44px; color: {{t.muted}}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.4 8.4 0 0 1-12.3 7.5L3 21l2-5.7A8.5 8.5 0 1 1 21 11.5z"></path></svg>{{L.help}}</a>
+    </div>
+    </div>
+  </main>
+</div></template>
+<div id="mp-root"><div class="" style="font-family: 'Noto Sans', 'Noto Sans Devanagari', sans-serif; min-height: 100vh; display: flex; background: #F2F4F5; color: #16222B">
+
+  
+  <aside class="mp-left" aria-label="What MarketPilot does" style="flex: 0 0 52%; max-width: 760px; margin: 16px 0 16px 16px; border-radius: 16px; position: relative; overflow: hidden; display: flex; flex-direction: column; justify-content: space-between; gap: 24px; padding: 56px 56px 52px; box-sizing: border-box; background: radial-gradient(ellipse 60% 45% at 50% 30%, rgba(255,255,255,0.07), transparent 70%), linear-gradient(180deg, #2B5068 0%, #22445A 70%); color: #FFFFFF">
+    <svg aria-hidden="true" viewBox="0 0 800 360" preserveAspectRatio="none" style="position: absolute; left: 0; right: 0; bottom: 0; width: 100%; height: 46%; pointer-events: none">
+      <path d="M0 150 C 120 90 230 70 340 110 C 450 150 540 60 660 70 C 730 76 770 100 800 115 L800 360 L0 360Z" fill="#33607A"></path>
+      <path d="M0 215 C 140 160 260 150 380 190 C 500 230 600 170 700 160 C 750 156 780 165 800 175 L800 360 L0 360Z" fill="#234559"></path>
+      <path d="M0 280 C 160 235 300 240 430 265 C 560 290 680 250 800 240 L800 360 L0 360Z" fill="#172F3E"></path>
+    </svg>
+    <svg aria-hidden="true" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="position: absolute; right: 64px; top: 52px; opacity: 0.35; transform: rotate(-6deg)"><path d="M22 2 11 13"></path><path d="M22 2 15 22 11 13 2 9z"></path></svg>
+    <div style="flex: 1 1 auto; display: flex; align-items: center; justify-content: center; position: relative; z-index: 1; min-height: 360px">
+      
+      
+        <div class="mp-slide" style="width: 380px; padding: 24px; box-sizing: border-box; border-radius: 16px; background: #FFFFFF; color: #16222B; box-shadow: 0 40px 80px -30px rgba(0,0,0,0.6)">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px"><span style="font-family: 'Noto Sans', 'Noto Sans Devanagari', sans-serif; font-size: 18px; font-weight: 600">December plan</span><span style="padding: 4px 12px; border-radius: 999px; background: #F5C432; color: #121413; font-size: 12px; font-weight: 700">Christmas · 25 Dec</span></div>
+          <div style="text-align: center; font-size: 12px; font-weight: 700; color: #59666F; display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 4px; margin-bottom: 6px"><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span><span>S</span></div>
+          <div style="display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 4px">
+            <span style="aspect-ratio: 1 / 1; border-radius: 8px; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; background: transparent"></span><span style="aspect-ratio: 1 / 1; border-radius: 8px; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; background: #EEF1F2; color: #59666F">1</span><span style="aspect-ratio: 1 / 1; border-radius: 8px; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; background: #2F5873; color: #FFFFFF">2</span><span style="aspect-ratio: 1 / 1; border-radius: 8px; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; background: #EEF1F2; color: #59666F">3</span><span style="aspect-ratio: 1 / 1; border-radius: 8px; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; background: #2F5873; color: #FFFFFF">4</span><span style="aspect-ratio: 1 / 1; border-radius: 8px; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; background: #EEF1F2; color: #59666F">5</span><span style="aspect-ratio: 1 / 1; border-radius: 8px; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; background: #2F5873; color: #FFFFFF">6</span><span style="aspect-ratio: 1 / 1; border-radius: 8px; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; background: #EEF1F2; color: #59666F">7</span><span style="aspect-ratio: 1 / 1; border-radius: 8px; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; background: #EEF1F2; color: #59666F">8</span><span style="aspect-ratio: 1 / 1; border-radius: 8px; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; background: #2F5873; color: #FFFFFF">9</span><span style="aspect-ratio: 1 / 1; border-radius: 8px; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; background: #EEF1F2; color: #59666F">10</span><span style="aspect-ratio: 1 / 1; border-radius: 8px; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; background: #2F5873; color: #FFFFFF">11</span><span style="aspect-ratio: 1 / 1; border-radius: 8px; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; background: #EEF1F2; color: #59666F">12</span><span style="aspect-ratio: 1 / 1; border-radius: 8px; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; background: #2F5873; color: #FFFFFF">13</span><span style="aspect-ratio: 1 / 1; border-radius: 8px; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; background: #EEF1F2; color: #59666F">14</span><span style="aspect-ratio: 1 / 1; border-radius: 8px; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; background: #EEF1F2; color: #59666F">15</span><span style="aspect-ratio: 1 / 1; border-radius: 8px; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; background: #2F5873; color: #FFFFFF">16</span><span style="aspect-ratio: 1 / 1; border-radius: 8px; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; background: #EEF1F2; color: #59666F">17</span><span style="aspect-ratio: 1 / 1; border-radius: 8px; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; background: #2F5873; color: #FFFFFF">18</span><span style="aspect-ratio: 1 / 1; border-radius: 8px; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; background: #2F5873; color: #FFFFFF">19</span><span style="aspect-ratio: 1 / 1; border-radius: 8px; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; background: #EEF1F2; color: #59666F">20</span><span style="aspect-ratio: 1 / 1; border-radius: 8px; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; background: #EEF1F2; color: #59666F">21</span><span style="aspect-ratio: 1 / 1; border-radius: 8px; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; background: #EEF1F2; color: #59666F">22</span><span style="aspect-ratio: 1 / 1; border-radius: 8px; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; background: #2F5873; color: #FFFFFF">23</span><span style="aspect-ratio: 1 / 1; border-radius: 8px; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; background: #EEF1F2; color: #59666F">24</span><span style="aspect-ratio: 1 / 1; border-radius: 8px; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; background: #F5C432; color: #121413">25</span><span style="aspect-ratio: 1 / 1; border-radius: 8px; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; background: #EEF1F2; color: #59666F">26</span><span style="aspect-ratio: 1 / 1; border-radius: 8px; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; background: #2F5873; color: #FFFFFF">27</span>
+          </div>
+          <div style="display: flex; gap: 12px; margin-top: 14px; font-size: 12px; color: #59666F"><span style="display: flex; align-items: center; gap: 8px"><span style="width: 10px; height: 10px; border-radius: 4px; background: #2F5873"></span>Post</span><span style="display: flex; align-items: center; gap: 8px"><span style="width: 10px; height: 10px; border-radius: 4px; background: #F5C432"></span>Festival</span><span style="margin-left: auto">Best time · 6 pm</span></div>
+        </div>
+      
+      
+      
+      
+      
+      
+      
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 12px; position: relative; z-index: 2; max-width: 560px">
+      <div role="tablist" aria-label="What MarketPilot does" style="display: flex; gap: 8px; flex-wrap: wrap">
+        <button type="button" role="tab" aria-selected="true" style="min-height: 44px; padding: 0 16px; border-radius: 999px; font-size: 14px; font-weight: 600; border: 1px solid #FFFFFF; background: #FFFFFF; color: #16222B">Plan</button><button type="button" role="tab" aria-selected="false" style="min-height: 44px; padding: 0 16px; border-radius: 999px; font-size: 14px; font-weight: 600; border: 1px solid rgba(255,255,255,0.3); background: transparent; color: rgba(255,255,255,0.85)">Create</button><button type="button" role="tab" aria-selected="false" style="min-height: 44px; padding: 0 16px; border-radius: 999px; font-size: 14px; font-weight: 600; border: 1px solid rgba(255,255,255,0.3); background: transparent; color: rgba(255,255,255,0.85)">Approve</button><button type="button" role="tab" aria-selected="false" style="min-height: 44px; padding: 0 16px; border-radius: 999px; font-size: 14px; font-weight: 600; border: 1px solid rgba(255,255,255,0.3); background: transparent; color: rgba(255,255,255,0.85)">Results</button>
+      </div>
+      <h2 class="mp-bal" style="margin: 4px 0 0; min-height: 96px; display: flex; align-items: flex-end; font-family: 'Anek Latin', 'Anek Devanagari', sans-serif; font-size: 40px; font-weight: 700; line-height: 48px; letter-spacing: -0.01em">A month of posts, planned for you</h2>
+      <p style="margin: 0; min-height: 52px; font-size: 16px; line-height: 26px; color: rgba(255,255,255,0.82)">Paste your website or Instagram. MarketPilot plans 30 days around festivals, wedding season and your busy days.</p>
+    </div>
+  </aside>
+
+  
+  <main class="mp-right" style="flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; padding: 32px 48px; box-sizing: border-box">
+    <div class="mp-hide-sm" style="display: flex; justify-content: space-between; align-items: center; gap: 16px">
+      <a href="/" aria-label="MarketPilot home" style="display: flex; min-height: 44px; align-items: center; gap: 12px; color: inherit; text-decoration: none">
+        <span style="width: 36px; height: 36px; border-radius: 8px; background: #F5C432; display: flex; align-items: center; justify-content: center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#121413" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 2 11 13"></path><path d="M22 2 15 22 11 13 2 9z"></path></svg></span>
+        <span style="font-family: 'Anek Latin', 'Anek Devanagari', sans-serif; font-weight: 700; font-size: 24px; line-height: 32px; letter-spacing: -0.005em">MarketPilot</span>
+      </a>
+      <div style="display: flex; align-items: center; gap: 8px">
+      <button type="button" aria-label="Switch to dark mode" title="Switch to dark mode" style="flex: 0 0 52px; width: 52px; height: 52px; display: flex; align-items: center; justify-content: center; padding: 0; border-radius: 999px; border: 1px solid #D9DFE2; background: #FFFFFF; color: #16222B"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"></path></svg></button>
+      <div role="group" aria-label="Language" style="display: inline-flex; padding: 4px; border-radius: 999px; border: 1px solid #D9DFE2; background: #FFFFFF">
+        <button type="button" aria-pressed="true" class="mp-lang" style="min-height: 44px; padding: 0 16px; border: 0; border-radius: 999px; font-size: 14px; font-weight: 600; background: #16222B; color: #FFFFFF">English</button>
+        <button type="button" aria-pressed="false" class="mp-lang" style="min-height: 44px; padding: 4px 16px 0; border: 0; border-radius: 999px; font-size: 14px; font-weight: 600; font-family: 'Noto Sans Devanagari', sans-serif; background: transparent; color: #36444E">हिंदी</button>
+      </div>
+      </div>
+    </div>
+
+    <div class="mp-only-sm" style="display: none; position: relative; overflow: hidden; flex-direction: column; gap: 16px; padding: 16px 20px 48px; background: radial-gradient(ellipse 80% 50% at 50% 30%, rgba(255,255,255,0.07), transparent 70%), linear-gradient(180deg, #2B5068 0%, #22445A 70%); color: #FFFFFF">
+      <svg aria-hidden="true" viewBox="0 0 800 360" preserveAspectRatio="none" style="position: absolute; left: 0; right: 0; bottom: 0; width: 100%; height: 150px; pointer-events: none">
+      <path d="M0 150 C 120 90 230 70 340 110 C 450 150 540 60 660 70 C 730 76 770 100 800 115 L800 360 L0 360Z" fill="#33607A"></path>
+      <path d="M0 215 C 140 160 260 150 380 190 C 500 230 600 170 700 160 C 750 156 780 165 800 175 L800 360 L0 360Z" fill="#234559"></path>
+      <path d="M0 280 C 160 235 300 240 430 265 C 560 290 680 250 800 240 L800 360 L0 360Z" fill="#172F3E"></path>
+    </svg>
+      <div style="position: relative; display: flex; justify-content: space-between; align-items: center; gap: 12px">
+        <a href="/" aria-label="MarketPilot home" style="display: flex; min-height: 44px; align-items: center; gap: 8px; color: inherit; text-decoration: none"><span style="width: 32px; height: 32px; border-radius: 8px; background: #F5C432; display: flex; align-items: center; justify-content: center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#121413" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 2 11 13"></path><path d="M22 2 15 22 11 13 2 9z"></path></svg></span><span style="font-family: 'Anek Latin', 'Anek Devanagari', sans-serif; font-weight: 700; font-size: 20px; line-height: 28px; letter-spacing: -0.005em">MarketPilot</span></a>
+        <div style="display: flex; align-items: center; gap: 8px">
+        <button type="button" aria-label="Switch to dark mode" title="Switch to dark mode" style="flex: 0 0 52px; width: 52px; height: 52px; display: flex; align-items: center; justify-content: center; padding: 0; border-radius: 999px; border: 1px solid rgba(255,255,255,0.28); background: transparent; color: #FFFFFF"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"></path></svg></button>
+        <div role="group" aria-label="Language" style="display: inline-flex; padding: 4px; border-radius: 999px; border: 1px solid rgba(255,255,255,0.28)">
+          <button type="button" aria-pressed="true" class="mp-lang" style="min-height: 44px; padding: 0 12px; border: 0; border-radius: 999px; font-size: 14px; font-weight: 600; background: #FFFFFF; color: #16222B">EN</button>
+          <button type="button" aria-pressed="false" class="mp-lang" style="min-height: 44px; padding: 4px 12px 0; border: 0; border-radius: 999px; font-size: 14px; font-weight: 600; font-family: 'Noto Sans Devanagari', sans-serif; background: transparent; color: rgba(255,255,255,0.85)">हिंदी</button>
+        </div>
+        </div>
+      </div>
+      
+      <div aria-hidden="true" style="position: relative; height: 132px; width: 300px; align-self: center">
+        
+          <div class="mp-slide" style="position: absolute; inset: 0">
+            <div style="position: absolute; left: 0; top: 4px; width: 300px; padding: 12px; box-sizing: border-box; border-radius: 16px; background: #FFFFFF; color: #16222B; box-shadow: 0 22px 40px -16px rgba(0,0,0,0.6)">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; font-size: 12px"><b>December plan</b><span style="padding: 4px 8px; border-radius: 999px; background: #F5C432; color: #121413; font-size: 12px; font-weight: 700">Christmas · 25 Dec</span></div>
+              <div style="text-align: center; font-size: 12px; font-weight: 700; color: #59666F; display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 4px; margin-bottom: 4px"><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span><span>S</span></div>
+              <div style="display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 4px"><span style="height: 24px; border-radius: 4px; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; background: #EEF1F2; color: #59666F">14</span><span style="height: 24px; border-radius: 4px; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; background: #EEF1F2; color: #59666F">15</span><span style="height: 24px; border-radius: 4px; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; background: #2F5873; color: #FFFFFF">16</span><span style="height: 24px; border-radius: 4px; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; background: #EEF1F2; color: #59666F">17</span><span style="height: 24px; border-radius: 4px; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; background: #2F5873; color: #FFFFFF">18</span><span style="height: 24px; border-radius: 4px; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; background: #2F5873; color: #FFFFFF">19</span><span style="height: 24px; border-radius: 4px; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; background: #EEF1F2; color: #59666F">20</span><span style="height: 24px; border-radius: 4px; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; background: #EEF1F2; color: #59666F">21</span><span style="height: 24px; border-radius: 4px; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; background: #EEF1F2; color: #59666F">22</span><span style="height: 24px; border-radius: 4px; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; background: #2F5873; color: #FFFFFF">23</span><span style="height: 24px; border-radius: 4px; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; background: #EEF1F2; color: #59666F">24</span><span style="height: 24px; border-radius: 4px; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; background: #F5C432; color: #121413">25</span><span style="height: 24px; border-radius: 4px; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; background: #EEF1F2; color: #59666F">26</span><span style="height: 24px; border-radius: 4px; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; background: #2F5873; color: #FFFFFF">27</span></div>
+            </div>
+          </div>
+        
+        
+        
+        
+      </div>
+      
+      <div style="position: relative; display: flex; flex-direction: column; gap: 12px; align-items: center; text-align: center">
+        <span class="mp-bal" style="font-family: 'Noto Sans', 'Noto Sans Devanagari', sans-serif; font-size: 18px; font-weight: 600; line-height: 26px; min-height: 52px; max-width: 300px; display: flex; align-items: center">A month of posts, planned for you</span>
+        <span aria-hidden="true" style="display: flex; gap: 8px"><span style="height: 4px; border-radius: 999px; transition: width 300ms ease; width: 28px; background: #F5C432"></span><span style="height: 4px; border-radius: 999px; transition: width 300ms ease; width: 10px; background: rgba(255,255,255,0.35)"></span><span style="height: 4px; border-radius: 999px; transition: width 300ms ease; width: 10px; background: rgba(255,255,255,0.35)"></span><span style="height: 4px; border-radius: 999px; transition: width 300ms ease; width: 10px; background: rgba(255,255,255,0.35)"></span></span>
+      </div>
+    </div>
+
+    <div class="mp-sheet" style="flex: 1 1 auto; display: flex; flex-direction: column; position: relative; background: #F2F4F5">
+    <div class="mp-content" style="flex: 1 1 auto; display: flex; align-items: center; justify-content: center; padding: 32px 0">
+      <div style="width: 100%; max-width: 400px; display: flex; flex-direction: column; gap: 20px">
+        
+          <div style="align-self: flex-start; display: flex; align-items: center; gap: 8px; padding: 8px 12px; border-radius: 12px; background: #FFF4CC; color: #6A4D00; font-size: 14px; font-weight: 600"><span style="width: 7px; height: 7px; border-radius: 50%; background: #F5C432"></span>Demo: any 10-digit number and any 6-digit code work</div>
+        
+
+        
+        
+          <div style="display: flex; flex-direction: column; gap: 8px">
+            <h1 class="mp-h1" style="margin: 0; line-height: 38px; font-family: 'Anek Latin', 'Anek Devanagari', sans-serif; font-size: 30px; font-weight: 700; letter-spacing: -0.005em">Log in or sign up</h1>
+            <p class="mp-bal" style="margin: 0; font-size: 16px; line-height: 26px; color: #36444E">New here? We will set up your account in a minute.</p>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 8px">
+            <label for="mp-phone" style="font-size: 14px; line-height: 20px; font-weight: 500">Mobile number</label>
+            <div style="display: flex; align-items: center; min-height: 52px; border-radius: 12px; border: 1px solid #8A949B; background: #FFFFFF; overflow: hidden">
+              <span style="align-self: stretch; display: flex; align-items: center; gap: 8px; padding: 0 16px; border-right: 1px solid #D9DFE2; font-size: 16px; font-weight: 600; color: #16222B">+91</span>
+              <input id="mp-phone" type="tel" inputmode="numeric" autocomplete="tel-national" value="" placeholder="98765 43210" aria-describedby="mp-phone-help" style="flex: 1 1 auto; min-width: 0; border: 0; padding: 0 16px; height: 50px; font-size: 16px; letter-spacing: 0.04em; font-variant-numeric: tabular-nums; background: transparent; color: #16222B; outline: none">
+            </div>
+            <span id="mp-phone-help" style="font-size: 14px; color: #59666F">We will send a 6-digit code by SMS.</span>
+          </div>
+          <button type="button" style="min-height: 52px; border: 0; border-radius: 12px; font-size: 16px; font-weight: 600; background: #2F5873; color: #FFFFFF">Send code</button>
+          <button type="button" style="align-self: center; min-height: 44px; padding: 0 8px; border: 0; background: transparent; display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 600; color: #2F5873"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.4 8.4 0 0 1-12.3 7.5L3 21l2-5.7A8.5 8.5 0 1 1 21 11.5z"></path></svg>Get the code on WhatsApp instead</button>
+          <div style="display: flex; align-items: center; gap: 12px; font-size: 14px; color: #59666F"><span style="flex: 1 1 auto; height: 1px; background: #D9DFE2"></span>or<span style="flex: 1 1 auto; height: 1px; background: #D9DFE2"></span></div>
+          <button type="button" style="min-height: 52px; display: flex; align-items: center; justify-content: center; gap: 12px; border-radius: 12px; border: 1px solid #8A949B; background: #FFFFFF; color: #16222B; font-size: 16px; font-weight: 600">
+            <svg width="20" height="20" viewBox="0 0 48 48" aria-hidden="true"><path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3C33.7 32.7 29.2 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.3-.1-2.4-.4-3.5z"></path><path fill="#FF3D00" d="m6.3 14.7 6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"></path><path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.2 0-9.6-3.3-11.3-7.9l-6.5 5C9.5 39.6 16.2 44 24 44z"></path><path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.4-.4-3.5z"></path></svg>
+            Continue with Google
+          </button>
+          <p style="margin: 0; text-align: center; font-size: 12px; line-height: 18px; color: #59666F">By continuing, you agree to our <a href="#terms" style="color: #2F5873">Terms</a> and <a href="#privacy" style="color: #2F5873">Privacy Policy</a>.</p>
+        
+
+        
+        
+
+        
+        
+
+        
+        
+
+        
+        
+
+      </div>
+    </div>
+
+    <div style="display: flex; justify-content: center; font-size: 14px; color: #59666F">
+      <a href="#help" style="display: inline-flex; align-items: center; gap: 8px; min-height: 44px; color: #59666F"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.4 8.4 0 0 1-12.3 7.5L3 21l2-5.7A8.5 8.5 0 1 1 21 11.5z"></path></svg>Need help? Chat with us on WhatsApp</a>
+    </div>
+    </div>
+  </main>
+</div></div>
+<script>
+/* Tiny template runtime for the MarketPilot landing page.
+   Reads the page template, fills {{holes}}, repeats <sc-for>, branches <sc-if>,
+   wires events, and patches the live DOM in place on every state change. */
+(function () {
+  function look(scope, path) {
+    path = path.trim();
+    if (path === 'true') return true;
+    if (path === 'false') return false;
+    if (/^-?\d+(\.\d+)?$/.test(path)) return +path;
+    var parts = path.split('.'), v = scope[parts[0]];
+    for (var i = 1; i < parts.length; i++) { if (v == null) return undefined; v = v[parts[i]]; }
+    return v;
+  }
+  function interp(str, scope) {
+    return str.replace(/\{\{([^}]+)\}\}/g, function (m, p) {
+      var v = look(scope, p);
+      return v == null || typeof v === 'function' ? '' : String(v);
+    });
+  }
+  function hole(str) { var m = str.match(/^\s*\{\{([^}]+)\}\}\s*$/); return m ? m[1] : null; }
+
+  // Build a light virtual tree from the template node and the current values.
+  function build(node, scope, out) {
+    var kids = node.childNodes;
+    for (var i = 0; i < kids.length; i++) {
+      var ch = kids[i];
+      if (ch.nodeType === 3) { out.push({ text: interp(ch.nodeValue, scope) }); continue; }
+      if (ch.nodeType !== 1) continue;
+      var tag = ch.localName;
+      if (tag === 'sc-for') {
+        var list = look(scope, hole(ch.getAttribute('list')) || '') || [];
+        var as = ch.getAttribute('as');
+        for (var j = 0; j < list.length; j++) {
+          var sub = Object.create(scope); sub[as] = list[j]; sub.$index = j;
+          build(ch, sub, out);
+        }
+        continue;
+      }
+      if (tag === 'sc-if') {
+        if (look(scope, hole(ch.getAttribute('value')) || '')) build(ch, scope, out);
+        continue;
+      }
+      var v = { tag: tag, ns: ch.namespaceURI, attrs: {}, events: {}, ref: null, children: [] };
+      for (var a = 0; a < ch.attributes.length; a++) {
+        var at = ch.attributes[a], name = at.name;
+        if (name.indexOf('hint-') === 0) continue;
+        var h = hole(at.value);
+        var val = h ? look(scope, h) : interp(at.value, scope);
+        if (/^on[a-z]/i.test(name)) { if (typeof val === 'function') { var evn = name.slice(2).toLowerCase(); if (evn === 'change' && (tag === 'input' || tag === 'textarea')) evn = 'input'; v.events[evn] = val; } continue; }
+        if (name === 'ref') { if (typeof val === 'function') v.ref = val; continue; }
+        if (typeof val === 'function') continue;
+        if (val === false || val == null) { if (name.indexOf('aria-') === 0) v.attrs[name] = 'false'; continue; }
+        v.attrs[name] = String(val);
+      }
+      build(ch, scope, v.children);
+      out.push(v);
+    }
+    return out;
+  }
+
+  function create(v) {
+    if (v.text != null) return document.createTextNode(v.text);
+    var el = v.ns && v.ns !== 'http://www.w3.org/1999/xhtml' ? document.createElementNS(v.ns, v.tag) : document.createElement(v.tag);
+    update(el, v);
+    return el;
+  }
+  function update(el, v) {
+    var old = el.__attrs || {};
+    for (var k in v.attrs) if (old[k] !== v.attrs[k]) el.setAttribute(k, v.attrs[k]);
+    for (var k2 in old) if (!(k2 in v.attrs)) el.removeAttribute(k2);
+    el.__attrs = v.attrs;
+    if ((v.tag === 'input' || v.tag === 'textarea') && 'value' in v.attrs && el.value !== v.attrs.value) el.value = v.attrs.value;
+    el.__h = el.__h || {};
+    for (var e in v.events) {
+      if (!el.__h[e]) (function (name) { el.addEventListener(name, function (ev) { if (el.__h[name]) el.__h[name](ev); }); })(e);
+      el.__h[e] = v.events[e];
+    }
+    for (var e2 in el.__h) if (!v.events[e2]) el.__h[e2] = null;
+    patch(el, v.children);
+    if (v.tag === 'select' && 'value' in v.attrs && el.value !== v.attrs.value) el.value = v.attrs.value;
+    if (v.ref) v.ref(el);
+  }
+  function same(dom, v) {
+    if (v.text != null) return dom.nodeType === 3;
+    return dom.nodeType === 1 && dom.localName === v.tag && dom.namespaceURI === (v.ns || dom.namespaceURI);
+  }
+  function patch(parent, vnodes) {
+    var doms = parent.childNodes;
+    for (var i = 0; i < vnodes.length; i++) {
+      var v = vnodes[i], d = doms[i];
+      if (d && same(d, v)) {
+        if (v.text != null) { if (d.nodeValue !== v.text) d.nodeValue = v.text; }
+        else update(d, v);
+      } else {
+        var n = create(v);
+        if (d) parent.replaceChild(n, d); else parent.appendChild(n);
+      }
+    }
+    while (doms.length > vnodes.length) parent.removeChild(parent.lastChild);
+  }
+
+  window.DCLogic = function (props) { this.props = props || {}; this.state = {}; };
+  window.DCLogic.prototype.setState = function (partial) {
+    var p = typeof partial === 'function' ? partial(this.state) : partial;
+    for (var k in p) this.state[k] = p[k];
+    this.__schedule && this.__schedule();
+  };
+  window.DCLogic.prototype.forceUpdate = function () { this.__schedule && this.__schedule(); };
+
+  window.mountPage = function (Component, props, tpl, root, onRender) {
+    var c = new Component(props), queued = false;
+    function render() {
+      queued = false;
+      var vals = c.renderVals();
+      patch(root, build(tpl.content, vals, []));
+      if (onRender) onRender(vals, c);
+    }
+    c.__schedule = function () { if (!queued) { queued = true; requestAnimationFrame(render); } };
+    render();
+    if (c.componentDidMount) c.componentDidMount();
+    return c;
+  };
+})();
+
+</script>
+<script>
+
+const THEMES = {
+  light: { bg: '#F2F4F5', surface: '#FFFFFF', surface2: '#E8ECEE', border: '#D9DFE2', inputBorder: '#8A949B', text: '#16222B', body: '#36444E', muted: '#59666F', link: '#2F5873', cta: '#2F5873', onCta: '#FFFFFF', ctaOff: '#C4CDD2', onCtaOff: '#59666F', band: '#22445A', sky: '#2B5068', hill1: '#33607A', hill2: '#234559', hill3: '#172F3E', okBg: '#DCFAE6', okFg: '#05603A', demoBg: '#FFF4CC', demoFg: '#6A4D00', errFg: '#B42318', segOn: 'background: #16222B; color: #FFFFFF' },
+  dark: { bg: '#121413', surface: '#1A1D1C', surface2: '#232726', border: '#313635', inputBorder: '#747C7A', text: '#EFF1EF', body: '#D3D8D6', muted: '#A2AAA7', link: '#A8C3CE', cta: '#EFF1EF', onCta: '#121413', ctaOff: '#313635', onCtaOff: '#A2AAA7', band: '#1B3646', sky: '#21405A', hill1: '#28495E', hill2: '#1A3445', hill3: '#10222C', okBg: '#0F2E1E', okFg: '#7EDBA6', demoBg: '#2E2608', demoFg: '#F5D77A', errFg: '#FDA29B', segOn: 'background: #EFF1EF; color: #121413' }
+};
+const TEXT = {
+  en: { title: 'Log in or sign up', sub: 'New here? We will set up your account in a minute.', google: 'Continue with Google', or: 'or', mobile: 'Mobile number', helper: 'We will send a 6-digit code by SMS.', invalid: 'Enter a 10-digit mobile number.', send: 'Send code', wa: 'Get the code on WhatsApp instead', legal: 'By continuing, you agree to our', terms: 'Terms', and: 'and', privacy: 'Privacy Policy', legalEnd: '.', change: 'Change number', otpTitle: 'Enter the code', otpSms: 'We sent a 6-digit code by SMS to', otpWa: 'We sent a 6-digit code on WhatsApp to', verify: 'Verify and continue', verifying: 'Checking…', done: 'You are in. Setting up your shop…', resendIn: 'Resend code in', resend: 'Resend code', viaSms: 'Sent by SMS', viaWa: 'Sent on WhatsApp', welcome: 'Welcome back', welcomeSub: 'Pick the account for your business.', another: 'Use another account', manage: 'Manage saved accounts', fTerms: 'Terms', fPrivacy: 'Privacy', help: 'Need help? Chat with us on WhatsApp', demo: 'Demo: any 10-digit number and any 6-digit code work', googleBusy: 'Connecting to Google…', manageTitle: 'Saved accounts', manageSub: 'Remove accounts you no longer use on this device.', remove: 'Remove', noSaved: 'No accounts are saved on this device.', doneBtn: 'Done', doneTitle: 'You are in', signedAs: 'Signed in as', doneSub: 'Next, we set up your shop from your website or Instagram.', setup: 'Set up my shop', setupNote: 'Shop setup is the next onboarding screen. It is being designed now.', home: 'Back to home', logout: 'Log out', yourShop: 'Your shop', googleAcct: 'Google account', viaGoogle: 'Signed in with Google', waSwitch: 'Get it on WhatsApp', smsSwitch: 'Get it by SMS' },
+  hi: { title: 'लॉग इन या साइन अप करें', sub: 'नए हैं? हम एक मिनट में आपका खाता बना देंगे।', google: 'Google से जारी रखें', or: 'या', mobile: 'मोबाइल नंबर', helper: 'हम SMS से 6 अंकों का कोड भेजेंगे।', invalid: '10 अंकों का मोबाइल नंबर डालें।', send: 'कोड भेजें', wa: 'कोड WhatsApp पर पाएं', legal: 'जारी रखकर आप हमारी', terms: 'शर्तें', and: 'और', privacy: 'गोपनीयता नीति', legalEnd: ' स्वीकार करते हैं।', change: 'नंबर बदलें', otpTitle: 'कोड डालें', otpSms: 'हमने SMS से 6 अंकों का कोड भेजा है', otpWa: 'हमने WhatsApp पर 6 अंकों का कोड भेजा है', verify: 'सत्यापित करें और आगे बढ़ें', verifying: 'जांच हो रही है…', done: 'आप अंदर हैं। आपकी दुकान तैयार हो रही है…', resendIn: 'कोड दोबारा भेजें', resend: 'कोड दोबारा भेजें', viaSms: 'SMS से भेजा गया', viaWa: 'WhatsApp पर भेजा गया', welcome: 'फिर से स्वागत है', welcomeSub: 'अपने व्यवसाय का खाता चुनें।', another: 'दूसरा खाता इस्तेमाल करें', manage: 'सेव किए गए खाते', fTerms: 'शर्तें', fPrivacy: 'गोपनीयता', help: 'मदद चाहिए? WhatsApp पर बात करें', demo: 'डेमो: कोई भी 10 अंकों का नंबर और 6 अंकों का कोड चलेगा', googleBusy: 'Google से जुड़ रहे हैं…', manageTitle: 'सेव किए गए खाते', manageSub: 'जो खाते इस डिवाइस पर इस्तेमाल नहीं करते, उन्हें हटाएं।', remove: 'हटाएं', noSaved: 'इस डिवाइस पर कोई खाता सेव नहीं है।', doneBtn: 'हो गया', doneTitle: 'आप अंदर हैं', signedAs: 'साइन इन:', doneSub: 'अब आपकी वेबसाइट या Instagram से आपकी दुकान सेट करते हैं।', setup: 'मेरी दुकान सेट करें', setupNote: 'दुकान सेटअप अगली ऑनबोर्डिंग स्क्रीन है। उसका डिज़ाइन चल रहा है।', home: 'होम पर जाएं', logout: 'लॉग आउट', yourShop: 'आपकी दुकान', googleAcct: 'Google खाता', viaGoogle: 'Google से साइन इन', waSwitch: 'WhatsApp पर पाएं', smsSwitch: 'SMS से पाएं' }
+};
+const SLIDES = [
+  ['Plan', 'A month of posts, planned for you', 'Paste your website or Instagram. MarketPilot plans 30 days around festivals, wedding season and your busy days.'],
+  ['Create', 'Posts in your voice, in Hindi or English', 'Captions, posts and short reels made from your own products and offers, ready in minutes.'],
+  ['Approve', 'Nothing goes live without your yes', 'Every post waits for you. Approve, edit or skip from your computer or phone.'],
+  ['Results', 'Results in plain words, every week', 'A short note on what worked, and next week’s plan changes to match.']
+];
+const SLIDES_HI = [
+  ['योजना', 'आपके लिए पूरे महीने की पोस्ट की योजना', 'अपनी वेबसाइट या Instagram का लिंक डालें। MarketPilot त्योहारों, शादी के सीज़न और आपके व्यस्त दिनों के हिसाब से 30 दिन की योजना बनाता है।'],
+  ['बनाएं', 'आपकी आवाज़ में पोस्ट, हिंदी या अंग्रेज़ी में', 'आपके अपने प्रोडक्ट और ऑफ़र से कैप्शन, पोस्ट और छोटी रील, मिनटों में तैयार।'],
+  ['मंज़ूरी', 'आपकी हां के बिना कुछ भी लाइव नहीं होता', 'हर पोस्ट आपका इंतज़ार करती है। कंप्यूटर या फ़ोन से मंज़ूर करें, बदलें या छोड़ दें।'],
+  ['नतीजे', 'हर हफ़्ते, आसान शब्दों में नतीजे', 'क्या काम किया, इस पर एक छोटा नोट, और अगले हफ़्ते की योजना उसी हिसाब से बदलती है।']
+];
+const PLANNED = { 2: 'r', 4: 'p', 6: 'y', 9: 'p', 11: 'r', 13: 'p', 16: 'p', 18: 'y', 19: 'r', 23: 'p', 25: 'x', 27: 'r' };
+const SAMPLE = [{ id: '9876543210', kind: 'phone', name: 'Sharma Sweets', initials: 'SS' }];
+const mask = (p) => '+91 ' + p.slice(0, 2) + 'XXX X' + p.slice(6);
+const loadAcc = () => { try { const v = JSON.parse(localStorage.getItem('mp-accounts') || '[]'); return Array.isArray(v) ? v : []; } catch (e) { return []; } };
+const saveAcc = (v) => { try { localStorage.setItem('mp-accounts', JSON.stringify(v)); } catch (e) {} };
+const fmtPhone = (p) => p.length > 5 ? p.slice(0, 5) + ' ' + p.slice(5) : p;
+
+class Component extends DCLogic {
+  constructor(p) {
+    super(p);
+    const persist = !!(p && p.persist);
+    const accounts = persist ? loadAcc() : SAMPLE.slice();
+    let scr = p && p.screen ? p.screen : 'start';
+    if (scr === 'auto') scr = accounts.length ? 'welcome' : 'start';
+    this.state = { accounts, persist, googleBusy: false, setupNote: false, doneVia: 'phone', screen: scr, lang: 'en', phone: scr === 'start' ? '' : '9876543210', otp: scr === 'otp' ? '4821' : '', via: 'sms', countdown: 24, slide: Math.max(0, ['plan', 'create', 'approve', 'results'].indexOf(p && p.slide ? p.slide : 'plan')), auto: true, verifying: false, verified: false, touched: false, focused: false };
+  }
+  componentDidMount() {
+    this.t1 = setInterval(() => { if (this.state.auto && (this.props.autoplay ?? true) !== false) this.setState({ slide: (this.state.slide + 1) % 4 }); }, 4500);
+    this.t2 = setInterval(() => { if (this.state.screen === 'otp' && this.state.countdown > 0) this.setState({ countdown: this.state.countdown - 1 }); }, 1000);
+  }
+  componentWillUnmount() { clearInterval(this.t1); clearInterval(this.t2); clearTimeout(this.t3); clearTimeout(this.t4); }
+  finish(kind) {
+    const s = this.state;
+    const id = kind === 'google' ? 'google' : s.phone;
+    const old = s.accounts.filter((a) => a.id !== id);
+    const keep = s.accounts.find((a) => a.id === id);
+    const acc = keep || (kind === 'google' ? { id, kind, name: '', initials: 'G' } : { id, kind, name: '', initials: '' });
+    const accounts = [acc].concat(old).slice(0, 3);
+    if (s.persist) saveAcc(accounts);
+    this.setState({ accounts, screen: 'done', doneVia: kind, verified: false, googleBusy: false, setupNote: false });
+  }
+  renderVals() {
+    const s = this.state;
+    const mode = s.mode || this.props.theme || 'light';
+    const t = THEMES[mode] || THEMES.light;
+    const L = TEXT[s.lang];
+    const valid = s.phone.length === 10;
+    const showErr = s.touched && !valid;
+    const go = (via) => () => { if (!valid) { this.setState({ touched: true }); return; } this.setState({ screen: 'otp', via, otp: '', countdown: 30, verified: false, verifying: false }); };
+    const otpOk = s.otp.length === 6;
+    const SLD = s.lang === 'hi' ? SLIDES_HI : SLIDES;
+    const sl = SLD[s.slide];
+    return {
+      rootCls: (mode === 'dark' ? 'mp-dark' : '') + (s.lang === 'hi' ? ' mp-hi' : ''),
+      isLight: mode !== 'dark', isDark: mode === 'dark', themeLabel: s.lang === 'hi' ? (mode === 'dark' ? 'लाइट मोड' : 'डार्क मोड') : (mode === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'), toggleTheme: () => this.setState({ mode: mode === 'dark' ? 'light' : 'dark' }),
+      t, L, homeHref: this.props.homeHref ?? '#', isEn: s.lang === 'en', isHi: s.lang === 'hi',
+      enStyle: s.lang === 'en' ? t.segOn : `background: transparent; color: ${t.body}`,
+      hiStyle: s.lang === 'hi' ? t.segOn : `background: transparent; color: ${t.body}`,
+      enHero: s.lang === 'en' ? 'background: #FFFFFF; color: #16222B' : 'background: transparent; color: rgba(255,255,255,0.85)',
+      hiHero: s.lang === 'hi' ? 'background: #FFFFFF; color: #16222B' : 'background: transparent; color: rgba(255,255,255,0.85)',
+      setEn: () => this.setState({ lang: 'en' }), setHi: () => this.setState({ lang: 'hi' }),
+      scr: { start: s.screen === 'start', otp: s.screen === 'otp', welcome: s.screen === 'welcome', manage: s.screen === 'manage', done: s.screen === 'done' },
+      demo: !!this.props.demo,
+      googleLabel: s.googleBusy ? L.googleBusy : L.google,
+      google: () => { if (s.googleBusy) return; this.setState({ googleBusy: true }); this.t4 = setTimeout(() => this.finish('google'), 900); },
+      accounts: s.accounts.map((a) => ({
+        initials: a.initials || (a.kind === 'google' ? 'G' : 'YS'),
+        name: a.name || (a.kind === 'google' ? L.googleAcct : L.yourShop),
+        sub: a.kind === 'google' ? L.viaGoogle : mask(a.id),
+        use: () => a.kind === 'google' ? this.finish('google') : this.setState({ screen: 'otp', phone: a.id, via: 'sms', otp: '', countdown: 30, verified: false }),
+        remove: () => { const v = s.accounts.filter((x) => x.id !== a.id); if (s.persist) saveAcc(v); this.setState({ accounts: v }); }
+      })),
+      noAccounts: s.accounts.length === 0,
+      toManage: () => this.setState({ screen: 'manage' }),
+      manageDone: () => this.setState({ screen: s.accounts.length ? 'welcome' : 'start', phone: '' }),
+      signedAs: s.doneVia === 'google' ? L.googleAcct : '+91 ' + fmtPhone(s.phone || '9876543210'),
+      setupNote: s.setupNote, setup: () => { if (this.props.setupHref) { window.location.href = this.props.setupHref; return; } this.setState({ setupNote: true }); },
+      logout: () => this.setState({ screen: s.accounts.length ? 'welcome' : 'start', phone: '', otp: '', setupNote: false }),
+      phone: s.phone, phoneShown: fmtPhone(s.phone),
+      onPhone: (e) => { let v = e.target.value.replace(/\D/g, ''); if (v.length > 10 && /^(91|0)/.test(v)) v = v.slice(-10); v = v.slice(0, 10); this.setState({ phone: v, touched: s.touched && v.length < 10 }); },
+      phoneBorder: showErr ? `2px solid ${t.errFg}` : `1px solid ${t.inputBorder}`,
+      phoneHelp: showErr ? L.invalid : L.helper, helpStyle: showErr ? `color: ${t.errFg}; font-weight: 600` : `color: ${t.muted}`,
+      cantSend: !valid, send: go('sms'), sendWa: go('wa'),
+      sendStyle: `background: ${t.cta}; color: ${t.onCta}`, waStyle: `color: ${t.link}`,
+      focusOn: () => this.setState({ focused: true }), focusOff: () => this.setState({ focused: false }), heroVisual: !s.focused,
+      back: () => this.setState({ screen: 'start', verified: false }),
+      otpSubLine: s.via === 'wa' ? L.otpWa : L.otpSms, verifying: s.verifying,
+      switchLabel: s.via === 'wa' ? L.smsSwitch : L.waSwitch, switchChannel: () => this.setState({ via: s.via === 'wa' ? 'sms' : 'wa', countdown: 30, otp: '' }),
+      otp: s.otp, onOtp: (e) => { const v = e.target.value.replace(/\D/g, '').slice(0, 6); this.setState({ otp: v, verified: false, verifying: v.length === 6 }); clearTimeout(this.t3); if (v.length === 6) this.t3 = setTimeout(() => { this.setState({ verifying: false, verified: true }); this.t4 = setTimeout(() => this.finish('phone'), 1000); }, 900); },
+      otpBoxes: Array.from({ length: 6 }, (_, i) => ({ d: s.otp[i] || '', style: i === Math.min(s.otp.length, 5) && !otpOk ? `border: 2px solid ${t.link}` : `border: 1px solid ${s.otp[i] ? t.inputBorder : t.border}` })),
+      verified: s.verified, waiting: s.countdown > 0, canResend: s.countdown === 0,
+      countdown: String(s.countdown).padStart(2, '0'), resend: () => this.setState({ countdown: 30 }),
+      useAnother: () => this.setState({ screen: 'start', phone: '' }),
+      tabs: SLD.map((x, i) => ({ label: x[0], on: i === s.slide,
+        style: i === s.slide ? 'border: 1px solid #FFFFFF; background: #FFFFFF; color: #16222B' : 'border: 1px solid rgba(255,255,255,0.3); background: transparent; color: rgba(255,255,255,0.85)',
+        dot: i === s.slide ? 'width: 28px; background: #F5C432' : 'width: 10px; background: rgba(255,255,255,0.35)',
+        pick: () => this.setState({ slide: i, auto: false }) })),
+      sl: { plan: s.slide === 0, create: s.slide === 1, approve: s.slide === 2, results: s.slide === 3 },
+      slide: { title: sl[1], body: sl[2] },
+      cal: Array.from({ length: 28 }, (_, i) => { const d = i, k = PLANNED[d];
+        return i === 0 ? { d: '', style: 'background: transparent' } : { d, style: k === 'x' ? 'background: #F5C432; color: #121413' : k ? 'background: #2F5873; color: #FFFFFF' : 'background: #EEF1F2; color: #59666F' }; }),
+      calMini: Array.from({ length: 14 }, (_, i) => { const d = i + 14, k = PLANNED[d];
+        return { d, style: k === 'x' ? 'background: #F5C432; color: #121413' : k ? 'background: #2F5873; color: #FFFFFF' : 'background: #EEF1F2; color: #59666F' }; }),
+      barsMini: [26, 35, 30, 41, 39, 64, 47].map((h, i) => ({ style: `height: ${h}px; background: ${i === 5 ? '#F5C432' : '#C9D3D8'}` })),
+      bars: [38, 52, 44, 61, 58, 100, 74].map((h, i) => ({ d: 'MTWTFSS'[i], style: `height: ${h}px; background: ${i === 5 ? '#F5C432' : '#C9D3D8'}` }))
+    };
+  }
+}
+
+(function () {
+  var saved = null;
+  try { saved = localStorage.getItem('mp-theme'); } catch (e) {}
+  var theme = saved === 'dark' ? 'dark' : 'light';
+  var bg = theme === 'dark' ? '#121413' : '#F2F4F5';
+  document.body.style.background = bg;
+  var meta = document.querySelector('meta[name="theme-color"]'); if (meta) meta.setAttribute('content', bg);
+  mountPage(Component, { theme: theme, screen: 'auto', slide: 'plan', autoplay: true, homeHref: '/', setupHref: '/setup/', persist: true, demo: true }, document.getElementById('mp-tpl'), document.getElementById('mp-root'), function (v) {
+    var mode = v.isDark ? 'dark' : 'light';
+    if (mode !== theme) { theme = mode; try { localStorage.setItem('mp-theme', mode); } catch (e) {} document.body.style.background = v.t.bg; if (meta) meta.setAttribute('content', v.t.bg); }
+  });
+})();
+</script>
+</body>
+</html>

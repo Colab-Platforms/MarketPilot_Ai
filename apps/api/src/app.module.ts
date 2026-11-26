@@ -4,6 +4,7 @@ import { AppConfigModule } from '@/config';
 import { AllExceptionsFilter } from '@/common';
 import { EmailModule } from '@/infra/email';
 import { LlmModule } from '@/infra/llm-providers';
+import { MediaAssemblyModule } from '@/infra/media-assembly';
 import { PrismaModule } from '@/infra/prisma';
 import { RedisModule } from '@/infra/redis';
 import { StorageModule } from '@/infra/storage';
@@ -30,6 +31,7 @@ import { AdminModule } from '@/modules/admin';
     PrismaModule,
     EmailModule,
     LlmModule,
+    MediaAssemblyModule,
     RedisModule,
     StorageModule,
     HealthModule,

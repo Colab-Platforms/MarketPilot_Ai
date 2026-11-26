@@ -11,7 +11,8 @@ export interface BrandBasicsInput {
   name: string;
   websiteUrl?: string;
   city?: string;
-  language: string;
+  // Left out, the brand keeps its languages (the setup Voice step sets them).
+  language?: string;
 }
 
 // A profile column value the owner has approved, from their own input or a website scan.

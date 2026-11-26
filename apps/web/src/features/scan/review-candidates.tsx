@@ -54,10 +54,10 @@ function price(product: ProductCandidate): string | null {
 
 function Section({ title, hint, children }: { title: string; hint?: string; children: React.ReactNode }) {
   return (
-    <section className="flex flex-col gap-3">
+    <section className="flex flex-col gap-2 rounded-xl border border-line bg-surface px-4 pb-2 pt-5 md:px-6">
       <div>
-        <h2 className="text-heading">{title}</h2>
-        {hint ? <p className="text-caption text-ink-secondary">{hint}</p> : null}
+        <h2 className="text-title font-semibold">{title}</h2>
+        {hint ? <p className="text-body text-ink-tertiary">{hint}</p> : null}
       </div>
       {children}
     </section>
@@ -68,7 +68,7 @@ function ProfileRow({ candidate, rows }: { candidate: ProfileCandidate; rows: Ro
   const checked = rows.isChecked(candidate.id);
   const Control = candidate.field === 'description' ? Textarea : Input;
   return (
-    <li className="flex items-start gap-3 rounded-md border border-line bg-surface p-4">
+    <li className="flex items-start gap-3 border-t border-line py-4">
       <Checkbox
         checked={checked}
         onChange={() => rows.toggle(candidate.id)}
@@ -96,7 +96,7 @@ function AiRow({ candidate, rows }: { candidate: AiCandidate; rows: RowState }) 
   const checked = rows.isChecked(candidate.id);
   const field = candidateAsField(candidate);
   return (
-    <li className="flex items-start gap-3 rounded-md border border-line bg-surface p-4">
+    <li className="flex items-start gap-3 border-t border-line py-4">
       <Checkbox
         checked={checked}
         onChange={() => rows.toggle(candidate.id)}
@@ -146,7 +146,7 @@ function SimpleRow({
     <li>
       <label
         htmlFor={checkId}
-        className="flex min-h-touch cursor-pointer items-center gap-3 rounded-md border border-line bg-surface px-4 py-3 hover:bg-subtle"
+        className="flex min-h-touch cursor-pointer items-center gap-3 border-t border-line py-3 hover:bg-subtle"
       >
         <Checkbox id={checkId} checked={rows.isChecked(id)} onChange={() => rows.toggle(id)} />
         <span className="min-w-0 flex-1">
@@ -175,7 +175,7 @@ export function ReviewCandidates({ candidates, rows }: { candidates: ScanCandida
     <div className="flex flex-col gap-8">
       {profile.length > 0 ? (
         <Section title="About your business" hint="Edit anything that is not quite right.">
-          <ul className="flex flex-col gap-2">
+          <ul className="flex flex-col">
             {profile.map((candidate) => (
               <ProfileRow key={candidate.id} candidate={candidate} rows={rows} />
             ))}
@@ -191,7 +191,7 @@ export function ReviewCandidates({ candidates, rows }: { candidates: ScanCandida
             {groups.map(({ section, items }) => (
               <div key={section.id} className="flex flex-col gap-2">
                 <h3 className="text-label text-ink-secondary">{section.title}</h3>
-                <ul className="flex flex-col gap-2">
+                <ul className="flex flex-col">
                   {items.map((candidate) => (
                     <AiRow key={candidate.id} candidate={candidate} rows={rows} />
                   ))}
@@ -203,7 +203,7 @@ export function ReviewCandidates({ candidates, rows }: { candidates: ScanCandida
       ) : null}
       {social.length > 0 ? (
         <Section title="Social profiles" hint="We will ask you to connect these later.">
-          <ul className="flex flex-col gap-2">
+          <ul className="flex flex-col">
             {social.map((candidate) => (
               <SimpleRow
                 key={candidate.id}
@@ -218,7 +218,7 @@ export function ReviewCandidates({ candidates, rows }: { candidates: ScanCandida
       ) : null}
       {products.length > 0 ? (
         <Section title={`Products (${products.length})`} hint="Untick any that are not yours to promote.">
-          <ul className="flex flex-col gap-2">
+          <ul className="flex flex-col">
             {products.map((candidate) => (
               <SimpleRow key={candidate.id} id={candidate.id} rows={rows} title={candidate.name} detail={price(candidate)} />
             ))}

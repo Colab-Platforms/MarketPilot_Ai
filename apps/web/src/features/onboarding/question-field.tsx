@@ -1,6 +1,9 @@
 import type { QuestionDef } from '@marketpilot/contracts';
 import { ChoiceCard, Field, FieldGroup, Input, Select, Textarea } from '@marketpilot/ui';
 
+// Setup sizing: larger text and stronger borders, as in the approved design.
+const controlClass = 'rounded-lg border-line-strong text-lead';
+
 export type AnswerValue = string | string[];
 
 interface QuestionFieldProps {
@@ -21,6 +24,7 @@ export function QuestionField({ question, value, error, onChange }: QuestionFiel
       return (
         <Field {...common}>
           <Input
+            className={`h-control-lg pl-4 ${controlClass}`}
             value={text}
             maxLength={question.maxLength}
             inputMode={question.kind === 'money' ? 'numeric' : undefined}
@@ -32,6 +36,7 @@ export function QuestionField({ question, value, error, onChange }: QuestionFiel
       return (
         <Field {...common}>
           <Textarea
+            className={`px-4 py-3 ${controlClass}`}
             value={text}
             maxLength={question.maxLength}
             onChange={(event) => onChange(event.target.value)}
@@ -41,7 +46,7 @@ export function QuestionField({ question, value, error, onChange }: QuestionFiel
     case 'select':
       return (
         <Field {...common}>
-          <Select value={text} onChange={(event) => onChange(event.target.value)}>
+          <Select className={`h-control-lg pl-4 ${controlClass}`} value={text} onChange={(event) => onChange(event.target.value)}>
             <option value="">Choose one</option>
             {question.options?.map((option) => (
               <option key={option.value} value={option.value}>

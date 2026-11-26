@@ -32,31 +32,42 @@ Letter-spacing: -0.01em on 22px and above, 0 elsewhere. Maximum line length 68 c
 
 ## 3. Colour
 
-Warm neutrals, one accent, separate semantic colours. No gradients in product UI. Values are starting points; contrast is verified against WCAG 2.2 AA.
+"Monsoon Calm": cool slate neutrals, a navy accent for actions, a monsoon-yellow highlight, separate semantic colours. No gradients in product UI. Contrast is verified against WCAG 2.2 AA. Source design: `docs/design/MarketPilot-landing-monsoon-calm (1).html`.
 
-### Neutrals (stone)
-
-| Token | Light | Dark |
-|---|---|---|
-| `bg-canvas` | #FAF9F7 | #131211 |
-| `bg-surface` | #FFFFFF | #1B1A18 |
-| `bg-subtle` | #F3F1EE | #232120 |
-| `bg-muted` | #E9E6E1 | #2C2A28 |
-| `border-default` | #E2DED8 | #34312F |
-| `border-strong` | #C9C4BC | #4A4643 |
-| `text-primary` | #1C1A17 | #F3F1EE |
-| `text-secondary` | #5E5A54 | #B5B0A9 |
-| `text-tertiary` | #8A857E | #8A857E |
-
-### Accent (deep teal)
+### Neutrals (slate)
 
 | Token | Light | Dark |
 |---|---|---|
-| `accent-solid` | #0F6B66 | #3FB5AD |
-| `accent-solid-hover` | #0B5854 | #5CC7BF |
-| `accent-subtle` | #E3F2F0 | #14302E |
-| `accent-border` | #A9D6D1 | #1F5A56 |
-| `on-accent` | #FFFFFF | #0B1B1A |
+| `bg-canvas` | #F2F4F5 | #121413 |
+| `bg-surface` | #FFFFFF | #1A1D1C |
+| `bg-subtle` | #E8ECEE | #232726 |
+| `bg-muted` | #DDE3E6 | #2A2F2D |
+| `border-default` | #D9DFE2 | #313635 |
+| `border-strong` | #B6C0C6 | #454B49 |
+| `text-primary` | #16222B | #EFF1EF |
+| `text-secondary` | #36444E | #D3D8D6 |
+| `text-tertiary` | #59666F | #A2AAA7 |
+
+### Accent (navy; primary buttons, links, focus rings)
+
+| Token | Light | Dark |
+|---|---|---|
+| `accent-solid` | #2F5873 | #EFF1EF |
+| `accent-solid-hover` | #24465C | #D3D8D6 |
+| `accent-subtle` | #E3ECF2 | #1E2B33 |
+| `accent-border` | #A9C2D3 | #3A5568 |
+| `on-accent` | #FFFFFF | #121413 |
+
+### Highlight (monsoon yellow; badges, progress, selection marks)
+
+| Token | Light | Dark |
+|---|---|---|
+| `highlight-solid` | #F5C432 | #F5C432 |
+| `on-highlight` | #121413 | #121413 |
+| `highlight-subtle` | #FFF4CC | #322D17 |
+| `highlight-text` | #6A4D00 | #F5C432 |
+
+Yellow is never used as text or as a focus ring on light surfaces (it fails contrast); focus rings use `accent-solid`.
 
 ### Semantic
 
@@ -144,8 +155,9 @@ WCAG 2.2 AA minimum: 4.5:1 text contrast, 3:1 for UI boundaries, visible focus o
 
 The public landing page may use a display face and larger type. These are marketing-only and never used in the product UI.
 
-- Display face: **Fraunces**, loaded only by the `(marketing)` route group, applied with `font-display`.
-- Extra sizes: `text-section` 40 / 48, `text-banner` 48 / 52, `text-hero` 64 / 68, weight 500. On mobile headings fall back to `text-display`.
-- Theme: every section follows the global light or dark theme. Alternate `bg-canvas`, `bg-surface` and `bg-subtle` for rhythm; never hardcode `data-theme` on a section.
-- Sample content (posts, numbers, businesses) is always labelled as a sample. No invented testimonials, customer counts or prices.
-- Ambient motion (the sample post rows) must be pausable and is disabled under `prefers-reduced-motion`.
+- Faces: **Bricolage Grotesque** for display (`font-display`) and **Noto Sans** + Noto Sans Devanagari for body, loaded only by the `(marketing)` route group, which sets `data-surface="marketing"`. The product UI keeps Geist.
+- Extra sizes (fluid, so phones need no override): `text-hero` clamp(40-80px), `text-section` clamp(36-68px), `text-banner` clamp(44-112px), weight 700; `text-lead` 17 / 27, `text-lead-lg` 19 / 30, `text-stat` 40 / 44 weight 800.
+- Extra tokens: radius `xl` 20 and `2xl` 28, shadows `card` and `window`, spacing `24` (96 px) for section rhythm, `control-xl` 56 px CTA buttons (`Button size="xl"`), sample tile colours `tile-ink`, `tile-sky`, `tile-navy`, `tile-white`, the closing `band` and `glass`. Pattern fills (dots, stripes, marker underline) live in `features/marketing/marketing.css` and reference tokens only.
+- Theme: every section follows the global light or dark theme, except the closing band and sample tiles, which keep fixed colours. Never hardcode `data-theme` on a section.
+- Sample content (posts, numbers, businesses) is always labelled as a sample. No invented testimonials or customer counts. Prices shown are the indicative launch prices approved with the landing design and must be labelled as indicative.
+- Ambient motion must be pausable and is disabled under `prefers-reduced-motion`. The design's flying-plane animation is not implemented for this reason.

@@ -3,6 +3,7 @@ import { AiModule } from '@/modules/ai';
 import { BrandModule } from '@/modules/brand';
 import { MemoryAgentTools, MemoryModule } from '@/modules/memory';
 import { ProfileAgentTools, ProfileModule } from '@/modules/profile';
+import { StudioAgentTools, StudioModule } from '@/modules/studio';
 import { ConversationStore } from './conversations/conversation-store';
 import { Summariser } from './conversations/summariser';
 import { CopilotController } from './copilot/copilot.controller';
@@ -17,13 +18,14 @@ import { ToolRunner } from './runtime/tool-runner';
 
 // Every module that contributes copilot tools is listed here (docs/COPILOT_AGENT.md section 2).
 @Module({
-  imports: [AiModule, BrandModule, MemoryModule, ProfileModule],
+  imports: [AiModule, BrandModule, MemoryModule, ProfileModule, StudioModule],
   controllers: [CopilotController],
   providers: [
     {
       provide: ToolRegistry,
-      inject: [MemoryAgentTools, ProfileAgentTools],
-      useFactory: (memory: MemoryAgentTools, profile: ProfileAgentTools) => new ToolRegistry([memory, profile]),
+      inject: [MemoryAgentTools, ProfileAgentTools, StudioAgentTools],
+      useFactory: (memory: MemoryAgentTools, profile: ProfileAgentTools, studio: StudioAgentTools) =>
+        new ToolRegistry([memory, profile, studio]),
     },
     ToolRanker,
     ExecutionGate,

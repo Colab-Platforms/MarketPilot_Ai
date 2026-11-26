@@ -4,6 +4,8 @@ export { MemoryAgentTools } from './agent-tools';
 export type { Passage, RetrievalResult, RetrieveOptions } from './knowledge/retrieval/retriever';
 export type { BrandContext, ContextRequest } from './knowledge/context/context-builder';
 export type { ContextFact, Offering } from './knowledge/context/assemble';
+export type { VisualContext, VisualProduct } from './knowledge/context/visual-context';
+export type { ReelContext, ReelContextProduct } from './knowledge/context/reel-context';
 export { KnowledgeModule } from './knowledge/knowledge.module';
 export { ScanService } from './knowledge/scan.service';
 export { ScanReviewService } from './knowledge/scan-review.service';

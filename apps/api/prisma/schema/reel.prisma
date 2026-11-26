@@ -1,0 +1,185 @@
+enum ReelStatus {
+  ideating
+  ideas_ready
+  storyboarding
+  storyboard_ready
+}
+
+// One product reel from brief to storyboard (docs/REEL_STUDIO.md). The brief is stored as given;
+// the cast is small JSON because it is always read and written whole.
+model ReelProject {
+  id              String     @id @default(uuid(7)) @db.Uuid
+  workspaceId     String     @map("workspace_id") @db.Uuid
+  brandId         String     @map("brand_id") @db.Uuid
+  createdByUserId String     @map("created_by_user_id") @db.Uuid
+  // Unique per workspace: a retried create returns the first reel instead of paying twice.
+  idempotencyKey  String     @map("idempotency_key")
+  // The key of the last paid step (more ideas, choose, rewrite), so a retried request is a no-op.
+  lastActionKey   String?    @map("last_action_key")
+  status          ReelStatus @default(ideating)
+  brief           Json
+  productId       String?    @map("product_id") @db.Uuid
+  // The name at the time of the request, so history reads well after a rename or removal.
+  productName     String     @map("product_name")
+  chosenIdeaId    String?    @map("chosen_idea_id") @db.Uuid
+  cast            Json       @default("[]")
+  // The product's photos when pictures were last drawn. Keyframes are compared against these,
+  // so a page refresh never has to read the Brain to tell whether a picture is outdated.
+  productImageUrls String[]  @default([]) @map("product_image_urls")
+  message         String?
+  // When the running step began; a step still open long after this was lost to a restart.
+  stepStartedAt   DateTime   @default(now()) @map("step_started_at")
+  promptTokens    Int        @default(0) @map("prompt_tokens")
+  completionTokens Int       @default(0) @map("completion_tokens")
+  costUsd         Float      @default(0) @map("cost_usd")
+  createdAt       DateTime   @default(now()) @map("created_at")
+  updatedAt       DateTime   @updatedAt @map("updated_at")
+
+  brand  Brand       @relation(fields: [brandId, workspaceId], references: [id, workspaceId], onDelete: Cascade)
+  ideas   ReelIdea[]
+  scenes  ReelScene[]
+  takes   ReelTake[]
+  renders ReelRender[]
+
+  @@unique([id, workspaceId])
+  @@unique([workspaceId, idempotencyKey])
+  @@index([brandId, createdAt])
+  @@index([workspaceId, status])
+  @@map("reel_project")
+}
+
+// One idea the model proposed. Ideas are never edited; asking again adds a batch.
+model ReelIdea {
+  id            String   @id @default(uuid(7)) @db.Uuid
+  workspaceId   String   @map("workspace_id") @db.Uuid
+  projectId     String   @map("project_id") @db.Uuid
+  batch         Int
+  position      Int
+  content       Json
+  promptVersion String   @map("prompt_version")
+  createdAt     DateTime @default(now()) @map("created_at")
+
+  project ReelProject @relation(fields: [projectId, workspaceId], references: [id, workspaceId], onDelete: Cascade)
+
+  @@index([projectId, batch, position])
+  @@map("reel_idea")
+}
+
+// One scene of the storyboard. Positions are rewritten on reorder, so they are not unique.
+model ReelScene {
+  id          String   @id @default(uuid(7)) @db.Uuid
+  workspaceId String   @map("workspace_id") @db.Uuid
+  projectId   String   @map("project_id") @db.Uuid
+  position    Int
+  spec        Json
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  project ReelProject @relation(fields: [projectId, workspaceId], references: [id, workspaceId], onDelete: Cascade)
+
+  @@index([projectId, position])
+  @@map("reel_scene")
+}
+
+enum ReelTakeKind {
+  portrait
+  keyframe
+  clip
+}
+
+enum ReelTakeStatus {
+  queued
+  running
+  succeeded
+  failed
+}
+
+// One attempt at a picture: a cast portrait or a scene keyframe (docs/REEL_STUDIO.md section 3).
+// Takes are kept after success so the owner can switch back; only `selected` changes.
+model ReelTake {
+  id              String         @id @default(uuid(7)) @db.Uuid
+  workspaceId     String         @map("workspace_id") @db.Uuid
+  projectId       String         @map("project_id") @db.Uuid
+  createdByUserId String         @map("created_by_user_id") @db.Uuid
+  kind            ReelTakeKind
+  // The cast id ("c1") for a portrait, the scene id for a keyframe.
+  subject         String
+  // Exactly what the picture was drawn from, and its hash. A take whose hash matches the
+  // subject's current details is up to date; drawing again with the same hash reuses it.
+  inputs          Json
+  inputsHash      String         @map("inputs_hash")
+  selected        Boolean        @default(false)
+  status          ReelTakeStatus @default(queued)
+  url             String?
+  width           Int?
+  height          Int?
+  model           String?
+  prompt          String?
+  promptVersion   String?        @map("prompt_version")
+  costUsd         Float?         @map("cost_usd")
+  errorCode       String?        @map("error_code")
+  message         String?
+  // Clips only. The provider owns the job: we keep its id, poll it, and copy the result.
+  route           String?
+  providerJobId   String?        @map("provider_job_id")
+  // Which VIDEO_MODELS entry the clip is on; a refusal moves it to the next one.
+  attempt         Int            @default(0)
+  durationSeconds Float?         @map("duration_seconds")
+  // When the clip scanner should look at this take next, and until when one scanner holds it.
+  pollAfter       DateTime?      @map("poll_after")
+  leaseUntil      DateTime?      @map("lease_until")
+  startedAt       DateTime?      @map("started_at")
+  finishedAt      DateTime?      @map("finished_at")
+  createdAt       DateTime       @default(now()) @map("created_at")
+
+  project ReelProject @relation(fields: [projectId, workspaceId], references: [id, workspaceId], onDelete: Cascade)
+
+  @@index([projectId, kind, subject, createdAt])
+  @@index([workspaceId, kind, createdAt])
+  @@index([workspaceId, status])
+  @@index([kind, status, pollAfter])
+  @@map("reel_take")
+}
+
+// One assembly of a reel's clips into the finished video (ADR 0012). The spec and its hash say
+// exactly which clips, lengths and texts went in, so an unchanged reel is never assembled twice.
+model ReelRender {
+  id              String         @id @default(uuid(7)) @db.Uuid
+  workspaceId     String         @map("workspace_id") @db.Uuid
+  projectId       String         @map("project_id") @db.Uuid
+  createdByUserId String         @map("created_by_user_id") @db.Uuid
+  inputs          Json
+  inputsHash      String         @map("inputs_hash")
+  status          ReelTakeStatus @default(queued)
+  url             String?
+  durationSeconds Float?         @map("duration_seconds")
+  assetId         String?        @map("asset_id") @db.Uuid
+  message         String?
+  // Claims by the assembly scanner; a render that keeps failing stops after a few tries.
+  attempts        Int            @default(0)
+  leaseUntil      DateTime?      @map("lease_until")
+  startedAt       DateTime?      @map("started_at")
+  finishedAt      DateTime?      @map("finished_at")
+  createdAt       DateTime       @default(now()) @map("created_at")
+
+  project ReelProject @relation(fields: [projectId, workspaceId], references: [id, workspaceId], onDelete: Cascade)
+
+  @@index([projectId, createdAt])
+  @@index([status, leaseUntil])
+  @@map("reel_render")
+}
+
+// Public reel trends for a category and market, found by web search and shared by every
+// workspace in that market. It holds no tenant data, so it has no workspace_id and no RLS.
+model TrendDigest {
+  id            String   @id @default(uuid(7)) @db.Uuid
+  // Normalised category, subcategory and market area, e.g. "sweet shop|mithai|pune".
+  topicKey      String   @unique @map("topic_key")
+  items         Json
+  sources       String[] @default([])
+  promptVersion String   @map("prompt_version")
+  createdAt     DateTime @default(now()) @map("created_at")
+  expiresAt     DateTime @map("expires_at")
+
+  @@map("trend_digest")
+}

@@ -1,6 +1,6 @@
 import { createHash } from 'node:crypto';
 import * as cheerio from 'cheerio';
-import type { SocialProviderName } from '@marketpilot/contracts';
+import { normalizeHost, SOCIAL_HOSTS, type SocialProviderName } from '@marketpilot/contracts';
 
 export interface ParsedPage {
   url: string;
@@ -35,16 +35,6 @@ const MAX_IMAGES = 60;
 const MAX_JSON_LD_BYTES = 300_000;
 const SKIP_EXTENSIONS = /\.(jpe?g|png|gif|webp|svg|ico|pdf|zip|rar|mp4|mp3|avi|mov|css|js|xml|json|docx?|xlsx?)$/i;
 
-const SOCIAL_HOSTS: { provider: SocialProviderName; hosts: string[] }[] = [
-  { provider: 'instagram', hosts: ['instagram.com'] },
-  { provider: 'facebook', hosts: ['facebook.com', 'fb.com'] },
-  { provider: 'youtube', hosts: ['youtube.com'] },
-  { provider: 'linkedin', hosts: ['linkedin.com'] },
-  { provider: 'x', hosts: ['x.com', 'twitter.com'] },
-  { provider: 'tiktok', hosts: ['tiktok.com'] },
-  { provider: 'pinterest', hosts: ['pinterest.com'] },
-  { provider: 'whatsapp', hosts: ['wa.me', 'api.whatsapp.com'] },
-];
 // Website builders and the networks themselves put their own profiles in footers
 // ("Powered by Wix", "Follow us on Facebook"). Those are never the business's profile.
 const VENDOR_HANDLES = new Set([
@@ -108,7 +98,7 @@ export function socialFrom(href: string): { provider: SocialProviderName; url: s
   } catch {
     return null;
   }
-  const host = url.hostname.replace(/^www\./, '').replace(/^m\./, '').toLowerCase();
+  const host = normalizeHost(url.hostname);
   const match = SOCIAL_HOSTS.find((entry) => entry.hosts.includes(host));
   if (!match) return null;
   const path = url.pathname.replace(/\/+$/, '');

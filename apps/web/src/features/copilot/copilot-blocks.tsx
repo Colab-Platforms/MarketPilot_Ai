@@ -1,6 +1,7 @@
 import { Check, Clock, ExternalLink, X } from 'lucide-react';
 import { Badge, Button } from '@marketpilot/ui';
 import type { ApprovalBlock, ApprovalStatus, SourcesBlock, UiBlock } from '@marketpilot/contracts';
+import { ImageGenerationBlockView } from '@/features/studio/image-generation-block';
 
 export function SourcesList({ block }: { block: SourcesBlock }) {
   return (
@@ -95,5 +96,12 @@ export function ApprovalCard({ block, busy, onDecide }: ApprovalCardProps) {
 }
 
 export function BlockView({ block, busy, onDecide }: { block: UiBlock } & Omit<ApprovalCardProps, 'block'>) {
-  return block.type === 'sources' ? <SourcesList block={block} /> : <ApprovalCard block={block} busy={busy} onDecide={onDecide} />;
+  switch (block.type) {
+    case 'sources':
+      return <SourcesList block={block} />;
+    case 'approval':
+      return <ApprovalCard block={block} busy={busy} onDecide={onDecide} />;
+    case 'image_generation':
+      return <ImageGenerationBlockView block={block} />;
+  }
 }

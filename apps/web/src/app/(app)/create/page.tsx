@@ -1,8 +1,8 @@
 import type { Metadata } from 'next';
-import { PageHeader } from '@/components/page-header';
+import { CreatePage } from '@/features/studio/create-page';
 
 export const metadata: Metadata = { title: 'Create' };
 
-export default function CreatePage() {
-  return <PageHeader title="Create" description="Generate posts, images and reels in your brand style." />;
+export default function Page() {
+  return <CreatePage />;
 }

@@ -26,6 +26,8 @@ export interface ChatTurn {
   steps: ToolStep[];
   state: 'streaming' | 'done' | 'stopped' | 'failed';
   error: string | null;
+  // Reference images the owner added with this message; shown only while the chat is open.
+  images?: string[];
 }
 
 const fromMessage = (m: CopilotMessage): ChatTurn => ({ ...m, steps: [], state: 'done', error: null });
@@ -132,10 +134,10 @@ export function useCopilotChat() {
   );
 
   const send = useCallback(
-    async (text: string) => {
+    async (text: string, images: string[] = []) => {
       const trimmed = text.trim();
       if (!trimmed || streaming) return;
-      setTurns((current) => [...current, newTurn('user', trimmed, 'done')]);
+      setTurns((current) => [...current, { ...newTurn('user', trimmed, 'done'), images }]);
       let id = conversationId;
       if (!id) {
         try {

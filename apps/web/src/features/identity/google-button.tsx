@@ -13,9 +13,9 @@ function GoogleMark() {
   );
 }
 
-export function GoogleButton({ label }: { label: string }) {
+export function GoogleButton({ label, className }: { label: string; className?: string }) {
   return (
-    <Button asChild variant="secondary" size="lg">
+    <Button asChild variant="secondary" size="lg" className={`border-line-strong ${className ?? ''}`}>
       <a href={`${env.apiUrl}/auth/google/start`}>
         <GoogleMark />
         {label}
@@ -28,7 +28,7 @@ export function OrDivider() {
   return (
     <div className="flex items-center gap-3 text-ink-tertiary" role="separator" aria-label="or">
       <span className="h-px flex-1 bg-line" />
-      <span className="text-caption">or</span>
+      <span className="text-body">or</span>
       <span className="h-px flex-1 bg-line" />
     </div>
   );

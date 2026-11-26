@@ -1,6 +1,8 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { EmbeddingService } from './knowledge/embedding.service';
 import { ContextBuilder, type BrandContext, type ContextRequest } from './knowledge/context/context-builder';
+import { ReelContextReader, type ReelContext, type ReelContextRequest } from './knowledge/context/reel-context';
+import { VisualContextReader, type VisualContext } from './knowledge/context/visual-context';
 import { EntityIndexer } from './knowledge/entities/entity-indexer';
 import { Retriever, type RetrievalResult, type RetrieveOptions } from './knowledge/retrieval/retriever';
 
@@ -14,12 +16,27 @@ export class MemoryService {
     private readonly embeddings: EmbeddingService,
     private readonly retriever: Retriever,
     private readonly contexts: ContextBuilder,
+    private readonly visuals: VisualContextReader,
+    private readonly reels: ReelContextReader,
   ) {}
 
   // Everything an AI task needs to know about the business, in one block within a token
   // budget: confirmed core facts, the live catalogue, and the most relevant passages.
   buildContext(workspaceId: string, brandId: string, request: ContextRequest): Promise<BrandContext> {
     return this.contexts.build(workspaceId, brandId, request);
+  }
+
+  // What an image task needs: confirmed visual identity, the owner's past posts as style
+  // references and, if given, one product with its photos. `product` is null when the id is
+  // not one of this brand's products.
+  visualContext(workspaceId: string, brandId: string, productId: string | null): Promise<VisualContext> {
+    return this.visuals.read(workspaceId, brandId, productId);
+  }
+
+  // What a reel task needs: the brand without its catalogue, the one product the reel is about
+  // (null when the id is not this brand's), the market for trends, and the brief's defaults.
+  reelContext(workspaceId: string, brandId: string, request: ReelContextRequest): Promise<ReelContext> {
+    return this.reels.read(workspaceId, brandId, request);
   }
 
   // The passages most relevant to a question, from the website, profile and catalogue,

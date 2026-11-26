@@ -6,23 +6,23 @@ import {
   type ConverseResult,
   type EmbedRequest,
   type EmbedResult,
-  type LlmUsage,
   type StructuredRequest,
   type StructuredResult,
 } from './llm.port';
+import {
+  DEFAULT_TIMEOUT_MS,
+  abortError,
+  postToOpenRouter,
+  privacyOf,
+  sendToOpenRouter,
+  toUsage,
+  type OpenRouterSettings,
+  type OpenRouterUsage as Usage,
+} from './openrouter-http';
 import { TurnAccumulator, readSseChunks } from './openrouter-stream';
 
-export interface OpenRouterSettings {
-  apiKey: string;
-  baseUrl: string;
-  strictPrivacy: boolean;
-}
+export type { OpenRouterSettings } from './openrouter-http';
 
-const DEFAULT_TIMEOUT_MS = 90_000;
-
-interface ErrorBody {
-  error?: { message?: string; code?: number | string };
-}
 interface Annotation {
   type?: string;
   url_citation?: { url?: string };
@@ -33,13 +33,6 @@ function citedUrls(annotations: Annotation[] | undefined): string[] {
     a.type === 'url_citation' && typeof a.url_citation?.url === 'string' ? [a.url_citation.url] : [],
   );
   return [...new Set(urls)];
-}
-
-interface Usage {
-  prompt_tokens?: number;
-  completion_tokens?: number;
-  total_tokens?: number;
-  cost?: number;
 }
 
 export class OpenRouterAdapter extends LlmPort {
@@ -160,46 +153,16 @@ export class OpenRouterAdapter extends LlmPort {
   }
 
   private privacy(): Record<string, unknown> {
-    return this.settings.strictPrivacy ? { zdr: true, data_collection: 'deny' } : {};
+    return privacyOf(this.settings);
   }
 
-  private async post(path: string, body: unknown, timeoutMs = DEFAULT_TIMEOUT_MS): Promise<unknown> {
-    const response = await this.send(path, body, AbortSignal.timeout(timeoutMs));
-    try {
-      return await response.json();
-    } catch {
-      throw new LlmError('upstream', 'The model gateway returned an unreadable response');
-    }
+  private post(path: string, body: unknown, timeoutMs?: number): Promise<unknown> {
+    return postToOpenRouter(this.settings, path, body, timeoutMs);
   }
 
-  private async send(path: string, body: unknown, signal: AbortSignal): Promise<Response> {
-    let response: Response;
-    try {
-      response = await fetch(`${this.settings.baseUrl}${path}`, {
-        method: 'POST',
-        headers: {
-          authorization: `Bearer ${this.settings.apiKey}`,
-          'content-type': 'application/json',
-          'x-title': 'MarketPilot',
-        },
-        body: JSON.stringify(body),
-        signal,
-      });
-    } catch (error) {
-      throw abortError(error);
-    }
-    if (!response.ok) throw await toError(response);
-    return response;
+  private send(path: string, body: unknown, signal: AbortSignal): Promise<Response> {
+    return sendToOpenRouter(this.settings, path, body, signal);
   }
-}
-
-// The owner pressing Stop aborts with AbortError, which is a cancellation, not a timeout.
-function abortError(error: unknown): LlmError {
-  // Checked by name: the abort error is a DOMException, which is not an Error in every runtime.
-  const name = (error as { name?: string } | null)?.name;
-  if (name === 'TimeoutError') return new LlmError('timeout', 'The model took too long to answer');
-  if (name === 'AbortError') return new LlmError('cancelled', 'The request was cancelled');
-  return new LlmError('upstream', 'Could not reach the model gateway');
 }
 
 function withTimeout(signal: AbortSignal | undefined, timeoutMs: number): AbortSignal {
@@ -226,37 +189,6 @@ function toWireMessage(message: ChatMessage): Record<string, unknown> {
     default:
       return { role: message.role, content: message.content };
   }
-}
-
-// Error bodies can echo prompt text, so only status and the gateway's short message are kept.
-async function toError(response: Response): Promise<LlmError> {
-  const body = (await response.json().catch(() => null)) as ErrorBody | null;
-  const message = (body?.error?.message ?? '').slice(0, 160);
-  switch (response.status) {
-    case 401:
-    case 403:
-      return new LlmError('auth', 'The model gateway rejected the API key');
-    case 402:
-      return new LlmError('insufficient_credits', 'The model gateway account is out of credits');
-    case 404:
-      return new LlmError(
-        'no_provider',
-        `No provider meets the privacy and format requirements for this model${message ? `: ${message}` : ''}`,
-      );
-    case 429:
-      return new LlmError('rate_limited', 'The model gateway is rate limiting requests');
-    default:
-      return new LlmError('upstream', `The model gateway failed with status ${response.status}`);
-  }
-}
-
-function toUsage(model: string, usage: Usage | undefined): LlmUsage {
-  return {
-    model,
-    promptTokens: usage?.prompt_tokens ?? 0,
-    completionTokens: usage?.completion_tokens ?? 0,
-    costUsd: typeof usage?.cost === 'number' ? usage.cost : null,
-  };
 }
 
 function parseJson(content: string): unknown {

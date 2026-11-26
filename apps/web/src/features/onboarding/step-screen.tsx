@@ -10,9 +10,10 @@ import {
 import { Alert, Button, Skeleton } from '@marketpilot/ui';
 import { BasicsStep } from './basics-step';
 import { useOnboarding } from './onboarding-api';
-import { QuestionStep } from './question-step';
+import { GoalsStep } from './goals-step';
 import { ReviewStep } from './review-step';
 import { TypeStep } from './type-step';
+import { VoiceStep } from './voice-step';
 
 export function OnboardingLoading() {
   return (
@@ -82,7 +83,8 @@ export function StepScreen({ rawStep }: { rawStep: string }) {
     case 'review':
       return <ReviewStep key={key} state={state} />;
     case 'about':
+      return <VoiceStep key={key} state={state} />;
     case 'goals':
-      return <QuestionStep key={key} step={parsed.data} state={state} />;
+      return <GoalsStep key={key} state={state} />;
   }
 }

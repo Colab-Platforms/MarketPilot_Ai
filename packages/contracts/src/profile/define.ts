@@ -1,4 +1,5 @@
 import type { QuestionOption } from '../onboarding/questions';
+import { IMAGE_DESIGNS } from '../studio/image';
 import type {
   FieldKind,
   FieldSource,
@@ -134,6 +135,10 @@ export const REEL_DURATION_OPTIONS = options(
   ['60', 'About 60 seconds'],
   ['90', 'Up to 90 seconds'],
 );
+export const POST_DESIGN_OPTIONS: readonly QuestionOption[] = IMAGE_DESIGNS.map((d) => ({
+  value: d.value,
+  label: `${d.label}: ${d.hint.charAt(0).toLowerCase()}${d.hint.slice(1)}`,
+}));
 export const CAPTION_LENGTH_OPTIONS = options(
   ['short', 'Short (one or two lines)'],
   ['medium', 'Medium'],

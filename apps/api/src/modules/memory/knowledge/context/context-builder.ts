@@ -5,6 +5,7 @@ import { PrismaService } from '@/infra/prisma';
 import { BrandProfileService } from '@/modules/brand';
 import { Retriever } from '../retrieval/retriever';
 import { assembleContext, type AssembledContext, type ContextFact, type Offering } from './assemble';
+import { confirmedFacts, fieldsOf } from './profile-facts';
 
 const DEFAULT_BUDGET_TOKENS = 2_500;
 const MIN_BUDGET_TOKENS = 600;
@@ -38,12 +39,13 @@ const CORE_FACT_KEYS = [
   'preferredHashtags',
 ] as const;
 
-const CONFIRMED = new Set(['owner', 'website', 'ai', 'connected']);
 
 export interface ContextRequest {
   // What the context is for, in plain words: the owner's question or the task's goal.
   objective: string;
   budgetTokens?: number;
+  // A task about one known product leaves the catalogue out and spends the budget on passages.
+  withCatalogue?: boolean;
 }
 
 export interface BrandContext extends AssembledContext {
@@ -52,21 +54,10 @@ export interface BrandContext extends AssembledContext {
 }
 
 function coreFacts(profile: ProfileResponse): ContextFact[] {
-  const byKey = new Map(profile.sections.flatMap((s) => s.fields).map((f) => [f.key, f]));
-  return CORE_FACT_KEYS.flatMap((key) => {
-    const field = byKey.get(key);
-    if (!field || !CONFIRMED.has(field.status) || field.value === null) return [];
-    const label = (raw: string) => field.options?.find((o) => o.value === raw)?.label ?? raw;
-    const value = Array.isArray(field.value)
-      ? field.value.map(label).join(', ')
-      : typeof field.value === 'boolean'
-        ? field.value ? 'Yes' : 'No'
-        : label(String(field.value));
-    return value.trim() ? [{ key, label: field.label, value }] : [];
-  });
+  return confirmedFacts(fieldsOf(profile), CORE_FACT_KEYS);
 }
 
-function price(minor: number | null, currency: string): string | null {
+export function price(minor: number | null, currency: string): string | null {
   if (minor === null) return null;
   const amount = (minor / 100).toLocaleString('en-IN', { maximumFractionDigits: 2 });
   return currency === 'INR' ? `₹${amount}` : `${currency} ${amount}`;
@@ -136,7 +127,10 @@ export class ContextBuilder {
       {
         brandName: records.profile.brand.name,
         facts: coreFacts(records.profile),
-        offerings: [...records.products.map(productOffering), ...records.services.map(serviceOffering)],
+        offerings:
+          request.withCatalogue === false
+            ? []
+            : [...records.products.map(productOffering), ...records.services.map(serviceOffering)],
         passages: retrieval.passages,
       },
       budget,

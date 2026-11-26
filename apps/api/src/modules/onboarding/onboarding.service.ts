@@ -7,6 +7,7 @@ import {
   ONBOARDING_STEPS,
   onboardingStepSchema,
   onboardingStepsFor,
+  postLanguagesSchema,
   questionStepSchema,
   reviewStepSchema,
   typeStepSchema,
@@ -17,9 +18,10 @@ import {
 import { DomainError, parseWithSchema } from '@/common';
 import { PrismaService, type TenantTx } from '@/infra/prisma';
 import type { AuthPrincipal } from '@/modules/identity';
-import { BrandService, type BrandSnapshot } from '@/modules/brand';
+import { BrandProfileService, BrandService, type BrandSnapshot } from '@/modules/brand';
 import { ScanReviewService, ScanService } from '@/modules/memory';
 import { buildProfilePatch } from './profile-patch';
+import { basicsProfileValues, postLanguageValues } from './setup-profile-values';
 
 const OWNER_ROLES = new Set(['owner', 'admin']);
 
@@ -28,6 +30,7 @@ export class OnboardingService {
   constructor(
     private readonly prisma: PrismaService,
     private readonly brands: BrandService,
+    private readonly profiles: BrandProfileService,
     private readonly scans: ScanService,
     private readonly review: ScanReviewService,
   ) {}
@@ -145,6 +148,10 @@ export class OnboardingService {
           language: input.language,
         });
         await tx.workspace.update({ where: { id: principal.workspaceId }, data: { name: input.brandName } });
+        const profileValues = basicsProfileValues(input);
+        if (Object.keys(profileValues).length > 0) {
+          await this.profiles.update(tx, { workspaceId: principal.workspaceId, userId: principal.userId }, profileValues);
+        }
         return { stored: input, brand: updated };
       }
       case 'review': {
@@ -159,13 +166,23 @@ export class OnboardingService {
       }
       case 'about':
       case 'goals': {
-        const answers = parseWithSchema(questionStepSchema(step, session.track), body);
+        const { postLanguages: rawLanguages, ...rest } = asRecord(body as Prisma.JsonValue);
+        const answers = parseWithSchema(questionStepSchema(step, session.track), rest);
         await this.brands.applyProfile(
           tx,
           principal.workspaceId,
           brand.id,
           buildProfilePatch(step, session.track, answers),
         );
+        if (step === 'about' && rawLanguages !== undefined) {
+          const postLanguages = parseWithSchema(postLanguagesSchema, rawLanguages);
+          await this.profiles.update(
+            tx,
+            { workspaceId: principal.workspaceId, userId: principal.userId },
+            postLanguageValues(postLanguages),
+          );
+          return { stored: { ...answers, postLanguages }, brand: await this.brands.snapshot(tx, brand.id) };
+        }
         return { stored: answers };
       }
     }

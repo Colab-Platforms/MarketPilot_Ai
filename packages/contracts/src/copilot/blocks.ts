@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { imageFormatSchema } from '../studio/image';
 
 // Typed UI the copilot can show beside its text. The model never emits HTML; the server builds
 // these from tool results and the web app renders each type with its own component.
@@ -36,8 +37,22 @@ export const approvalBlockSchema = z.object({
   status: approvalStatusSchema,
 });
 
-export const uiBlockSchema = z.discriminatedUnion('type', [sourcesBlockSchema, approvalBlockSchema]);
+// A studio job started from chat. The web app follows its progress through the studio API,
+// so the block itself never goes stale when the job finishes.
+export const imageGenerationBlockSchema = z.object({
+  type: z.literal('image_generation'),
+  generationId: z.string().uuid(),
+  format: imageFormatSchema,
+  variants: z.number().int().min(1),
+});
+
+export const uiBlockSchema = z.discriminatedUnion('type', [
+  sourcesBlockSchema,
+  approvalBlockSchema,
+  imageGenerationBlockSchema,
+]);
 
 export type SourcesBlock = z.infer<typeof sourcesBlockSchema>;
 export type ApprovalBlock = z.infer<typeof approvalBlockSchema>;
+export type ImageGenerationBlock = z.infer<typeof imageGenerationBlockSchema>;
 export type UiBlock = z.infer<typeof uiBlockSchema>;

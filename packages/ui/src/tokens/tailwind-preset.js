@@ -22,6 +22,23 @@ module.exports = {
         line: 'var(--accent-border)',
         on: 'var(--on-accent)',
       },
+      highlight: {
+        DEFAULT: 'var(--highlight-solid)',
+        on: 'var(--on-highlight)',
+        subtle: 'var(--highlight-subtle)',
+        text: 'var(--highlight-text)',
+        marker: 'var(--highlight-marker)',
+      },
+      tile: {
+        ink: 'var(--tile-ink)',
+        sky: 'var(--tile-sky)',
+        navy: 'var(--tile-navy)',
+        white: 'var(--tile-white)',
+        mist: 'var(--tile-mist)',
+        mute: 'var(--tile-mute)',
+      },
+      band: 'var(--band)',
+      glass: 'var(--glass)',
       success: { DEFAULT: 'var(--success-solid)', subtle: 'var(--success-subtle)' },
       warning: { DEFAULT: 'var(--warning-solid)', subtle: 'var(--warning-subtle)' },
       danger: { DEFAULT: 'var(--danger-solid)', subtle: 'var(--danger-subtle)' },
@@ -40,12 +57,16 @@ module.exports = {
       8: '32px',
       12: '48px',
       16: '64px',
+      // Marketing section rhythm only.
+      24: '96px',
     },
     borderRadius: {
       none: '0',
       sm: 'var(--radius-sm)',
       md: 'var(--radius-md)',
       lg: 'var(--radius-lg)',
+      xl: 'var(--radius-xl)',
+      '2xl': 'var(--radius-2xl)',
       full: '9999px',
     },
     boxShadow: {
@@ -53,6 +74,8 @@ module.exports = {
       1: 'var(--shadow-1)',
       2: 'var(--shadow-2)',
       3: 'var(--shadow-3)',
+      card: 'var(--shadow-card)',
+      window: 'var(--shadow-window)',
     },
     fontFamily: {
       sans: 'var(--font-sans)',
@@ -67,9 +90,13 @@ module.exports = {
       label: ['13px', { lineHeight: '18px', fontWeight: '500' }],
       caption: ['12px', { lineHeight: '16px', fontWeight: '400' }],
       metric: ['28px', { lineHeight: '32px', fontWeight: '600' }],
-      section: ['40px', { lineHeight: '48px', fontWeight: '500', letterSpacing: '-0.01em' }],
-      banner: ['48px', { lineHeight: '52px', fontWeight: '500', letterSpacing: '-0.01em' }],
-      hero: ['64px', { lineHeight: '68px', fontWeight: '500', letterSpacing: '-0.01em' }],
+      // Marketing only (DESIGN.md section 10). Fluid sizes so phones fall back without extra classes.
+      lead: ['17px', { lineHeight: '27px', fontWeight: '400' }],
+      'lead-lg': ['19px', { lineHeight: '30px', fontWeight: '400' }],
+      stat: ['40px', { lineHeight: '44px', fontWeight: '800', letterSpacing: '-0.03em' }],
+      section: ['clamp(36px, 5vw, 68px)', { lineHeight: '0.98', fontWeight: '700', letterSpacing: '-0.022em' }],
+      hero: ['clamp(40px, 5.6vw, 80px)', { lineHeight: '1', fontWeight: '700', letterSpacing: '-0.022em' }],
+      banner: ['clamp(44px, 7.4vw, 112px)', { lineHeight: '0.92', fontWeight: '700', letterSpacing: '-0.022em' }],
     },
     screens: {
       sm: '360px',
@@ -90,6 +117,8 @@ module.exports = {
         'control-sm': '32px',
         'control-lg': '48px',
         topbar: '56px',
+        // Marketing call-to-action buttons.
+        'control-xl': '56px',
         tile: '240px',
         chart: '220px',
         'chart-sm': '160px',
@@ -97,8 +126,13 @@ module.exports = {
         thumb: '96px',
         // Copilot bottom sheet on mobile (DESIGN.md section 5).
         sheet: '85dvh',
+        // A vertical video player sized by height, so a 9:16 frame fits any screen.
+        preview: '60dvh',
       },
-      maxWidth: { page: '1200px', content: '720px', form: '400px', prose: '68ch' },
+      // tour: the product tour panel beside sign-in and setup.
+      maxWidth: { page: '1200px', content: '720px', form: '400px', prose: '68ch', tour: '760px' },
+      // A full-size image or video in a dialog, leaving room for its details below.
+      maxHeight: { preview: '60dvh' },
       width: {
         tile: '168px',
         sidebar: '232px',
@@ -109,19 +143,15 @@ module.exports = {
         'control-sm': '32px',
         control: '40px',
         thumb: '96px',
+        // Narrow side cards in marketing mock-ups.
+        aside: '240px',
+        // The phone frame in the landing hero.
+        phone: '208px',
       },
       // Square sizes: the page-level completeness ring.
       size: { ring: '80px' },
       minWidth: { menu: '240px', table: '560px' },
       minHeight: { touch: '44px' },
-      keyframes: {
-        marquee: { to: { transform: 'translateX(-50%)' } },
-        'marquee-reverse': { from: { transform: 'translateX(-50%)' }, to: { transform: 'translateX(0)' } },
-      },
-      animation: {
-        marquee: 'marquee 90s linear infinite',
-        'marquee-reverse': 'marquee-reverse 90s linear infinite',
-      },
     },
   },
 };

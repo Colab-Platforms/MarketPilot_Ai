@@ -1,0 +1,25 @@
+# MarketPilot onboarding demo: login and business setup. Static site, no build step.
+[build]
+  publish = "."
+
+[[redirects]]
+  from = "/login"
+  to = "/"
+  status = 301
+
+[[redirects]]
+  from = "/signup"
+  to = "/"
+  status = 301
+
+[[redirects]]
+  from = "/setup"
+  to = "/setup/"
+  status = 301
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Cache-Control = "public, max-age=0, must-revalidate"

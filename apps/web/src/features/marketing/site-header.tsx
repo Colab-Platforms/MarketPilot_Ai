@@ -1,32 +1,29 @@
 import Link from 'next/link';
-import { Navigation } from 'lucide-react';
 import { Button } from '@marketpilot/ui';
 import { ThemeToggle } from '@/components/theme-toggle';
+import { Logo } from './logo';
 import { Container, focusRing } from './section';
 
-const links = [
-  { href: '#what-it-does', label: 'What it does' },
-  { href: '#how-it-works', label: 'How it works' },
-  { href: '#control', label: 'Your controls' },
+export const sectionLinks = [
+  { href: '#how', label: 'How it works' },
+  { href: '#controls', label: 'Your controls' },
+  { href: '#pricing', label: 'Pricing' },
   { href: '#faq', label: 'Questions' },
 ];
 
 export function SiteHeader() {
   return (
-    <header className="sticky top-0 z-10 border-b border-line bg-canvas">
-      <Container className="flex h-16 items-center justify-between">
-        <Link href="/" className={`flex items-center gap-2 rounded-sm text-heading ${focusRing}`}>
-          <span className="flex size-8 items-center justify-center rounded-sm bg-accent text-accent-on">
-            <Navigation className="size-4" strokeWidth={1.5} aria-hidden="true" />
-          </span>
-          MarketPilot
+    <header className="bg-canvas">
+      <Container className="flex h-16 items-center justify-between gap-4">
+        <Link href="/" aria-label="MarketPilot home" className={`rounded-sm ${focusRing}`}>
+          <Logo />
         </Link>
         <nav aria-label="Main" className="hidden items-center gap-6 lg:flex">
-          {links.map((link) => (
+          {sectionLinks.map((link) => (
             <a
               key={link.href}
               href={link.href}
-              className={`rounded-sm text-label text-ink-secondary transition-colors duration-fast ease-standard hover:text-ink ${focusRing}`}
+              className={`rounded-sm text-body font-medium text-ink-secondary transition-colors duration-fast ease-standard hover:text-ink ${focusRing}`}
             >
               {link.label}
             </a>
@@ -34,10 +31,10 @@ export function SiteHeader() {
         </nav>
         <div className="flex items-center gap-2">
           <ThemeToggle />
-          <Button asChild variant="ghost">
+          <Button asChild variant="ghost" className="hidden md:inline-flex">
             <Link href="/login">Sign in</Link>
           </Button>
-          <Button asChild>
+          <Button asChild className="font-bold">
             <Link href="/register">Get started</Link>
           </Button>
         </div>

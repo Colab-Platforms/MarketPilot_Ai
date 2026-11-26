@@ -43,7 +43,12 @@ export class AuthService {
     try {
       const { user, workspace } = await this.prisma.$transaction(async (tx) => {
         const user = await tx.user.create({
-          data: { email: input.email, name: input.name, passwordHash },
+          data: {
+            email: input.email,
+            name: input.name,
+            passwordHash,
+            emailVerifiedAt: this.otp.required ? null : new Date(),
+          },
         });
         const workspace = await tx.workspace.create({ data: { name: `${input.name}'s workspace` } });
         await tx.membership.create({
@@ -51,7 +56,7 @@ export class AuthService {
         });
         return { user, workspace };
       });
-      await this.sendVerificationQuietly(user);
+      if (this.otp.required) await this.sendVerificationQuietly(user);
       return await this.startSession({ user, workspace, role: 'owner' }, meta);
     } catch (error) {
       if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === 'P2002') {
@@ -138,11 +143,11 @@ export class AuthService {
   ): Promise<AuthResult> {
     const user = await this.prisma.user.update({
       where: { id: userId },
-      data: { name: input.name, passwordHash },
+      data: { name: input.name, passwordHash, ...(this.otp.required ? {} : { emailVerifiedAt: new Date() }) },
     });
     // Whoever held the account before must lose it, including their open sessions.
     await this.sessions.revokeAllForUser(userId);
-    await this.sendVerificationQuietly(user);
+    if (this.otp.required) await this.sendVerificationQuietly(user);
     return this.signInExisting(user, meta);
   }
 

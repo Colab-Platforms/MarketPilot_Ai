@@ -5,9 +5,10 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useMutation } from '@tanstack/react-query';
 import { authSessionResponseSchema, loginSchema } from '@marketpilot/contracts';
-import { Alert, Button, Field, Input } from '@marketpilot/ui';
+import { Alert, Button, Field, Input, PasswordInput } from '@marketpilot/ui';
 import { ApiError, apiRequest } from '@/lib/api-client';
 import { useAuthStore } from '@/lib/auth-store';
+import { entryButton, entryInput, entryTitle } from './entry-styles';
 import { GOOGLE_ERRORS, GoogleButton, OrDivider } from './google-button';
 
 type FieldErrors = Partial<Record<'email' | 'password', string>>;
@@ -52,31 +53,31 @@ export function LoginForm({ googleError }: { googleError?: string }) {
   }
 
   return (
-    <form onSubmit={onSubmit} noValidate className="flex flex-col gap-4">
-      <div>
-        <h1 className="text-display">Sign in</h1>
-        <p className="mt-1 text-ink-secondary">Welcome back.</p>
+    <form onSubmit={onSubmit} noValidate className="flex flex-col gap-5">
+      <div className="flex flex-col gap-2">
+        <h1 className={entryTitle}>Welcome back</h1>
+        <p className="text-balance text-lead text-ink-secondary">Log in with the email you signed up with.</p>
       </div>
 
       {formError ? <Alert tone="danger">{formError}</Alert> : null}
 
-      <GoogleButton label="Continue with Google" />
-      <OrDivider />
-
       <Field label="Email" error={errors.email}>
-        <Input name="email" type="email" autoComplete="email" inputMode="email" autoFocus />
+        <Input name="email" type="email" autoComplete="email" inputMode="email" placeholder="you@yourshop.in" autoFocus className={entryInput} />
       </Field>
       <Field label="Password" error={errors.password}>
-        <Input name="password" type="password" autoComplete="current-password" />
+        <PasswordInput name="password" autoComplete="current-password" className={entryInput} />
       </Field>
 
-      <Button type="submit" size="lg" loading={login.isPending}>
-        Sign in
+      <Button type="submit" size="lg" className={entryButton} loading={login.isPending}>
+        Log in
       </Button>
 
-      <p className="text-center text-ink-secondary">
+      <OrDivider />
+      <GoogleButton label="Continue with Google" className={entryButton} />
+
+      <p className="text-center text-body text-ink-secondary">
         New here?{' '}
-        <Link href="/register" className="text-accent underline underline-offset-2">
+        <Link href="/register" className="font-semibold text-accent underline underline-offset-2">
           Create an account
         </Link>
       </p>

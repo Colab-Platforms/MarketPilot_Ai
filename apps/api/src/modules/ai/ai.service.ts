@@ -4,6 +4,7 @@ import type { ZodType, ZodTypeDef } from 'zod';
 import type { Env } from '@/config';
 import type { EvidencePage } from './tasks/profile-extract/evidence';
 import {
+  ImagePort,
   LlmError,
   LlmPort,
   type ChatMessage,
@@ -18,10 +19,33 @@ import {
   type CompetitorDiscoveryInput,
   type CompetitorDiscoveryResult,
 } from './tasks/competitors-discover/competitors-discover.task';
+import {
+  ImageGenerationFailed,
+  generateImage,
+  generateWithFallback,
+  type ComposedImageRequest,
+  type ImageAttempt,
+  type ImageGenerateResult,
+} from './tasks/image-generate/image-generate.task';
+import {
+  composeKeyframePrompt,
+  composePortraitPrompt,
+  type ReelKeyframeBrief,
+  type ReelPortraitBrief,
+} from './tasks/reel/reel-image-prompt';
+import type { ImageBrief } from './tasks/image-generate/image-prompt';
 import { extractProducts, type ProductExtractResult } from './tasks/products-extract/products-extract.task';
 import { extractProfileFields, type ProfileExtractInput, type ProfileExtractResult } from './tasks/profile-extract/profile-extract.task';
+import { proposeReelIdeas, type ReelIdeasInput, type ReelIdeasResult } from './tasks/reel/reel-ideas.task';
+import {
+  rewriteReelScene,
+  writeReelStoryboard,
+  type ReelSceneRewriteInput,
+  type ReelStoryboardInput,
+} from './tasks/reel/reel-storyboard.task';
+import { findReelTrends, type ReelTrendsInput, type ReelTrendsResult } from './tasks/reel/reel-trends.task';
 import type { ModelTier } from './tasks/task-definition';
-import { CONVERSE_TASKS, STRUCTURED_TASKS, type ConverseTask, type StructuredTask } from './tasks/task-routing';
+import { CONVERSE_TASKS, REEL_TASKS, STRUCTURED_TASKS, type ConverseTask, type StructuredTask } from './tasks/task-routing';
 
 // ADR 0002: vectors are halfvec(1024).
 export const EMBEDDING_DIMENSIONS = 1024;
@@ -55,11 +79,14 @@ export class AiService {
   readonly embeddingModel: string;
   private readonly tierModels: Record<ModelTier, string | undefined>;
   private readonly search: { search: string; engine: WebSearchEngine };
+  private readonly imageModels: readonly string[];
 
   constructor(
     private readonly llm: LlmPort,
+    private readonly images: ImagePort,
     config: ConfigService<Env, true>,
   ) {
+    this.imageModels = config.get('OPENROUTER_MODEL_IMAGE', { infer: true });
     this.extractModel = config.get('OPENROUTER_MODEL_EXTRACT', { infer: true });
     this.embeddingModel = config.get('OPENROUTER_MODEL_EMBED', { infer: true });
     const reasoning = config.get('OPENROUTER_MODEL_REASONING', { infer: true });
@@ -100,6 +127,59 @@ export class AiService {
     );
     this.logCall('competitors.discover', result.usage, Date.now() - started, null);
     return result;
+  }
+
+  get imagesAvailable(): boolean {
+    return this.images.available;
+  }
+
+  // One image for a brief, from the first configured model that succeeds.
+  generateImage(brief: ImageBrief): Promise<ImageGenerateResult> {
+    return this.logged('image.generate', () => generateImage(this.images, this.imageModels, brief));
+  }
+
+  private drawWithFallback(request: ComposedImageRequest): Promise<ImageGenerateResult> {
+    return this.logged(request.task, () => generateWithFallback(this.images, this.imageModels, request));
+  }
+
+  private async logged(task: string, run: () => Promise<ImageGenerateResult>): Promise<ImageGenerateResult> {
+    try {
+      const result = await run();
+      for (const attempt of result.attempts) this.logAttempt(task, attempt);
+      return result;
+    } catch (error) {
+      if (error instanceof ImageGenerationFailed) for (const attempt of error.attempts) this.logAttempt(task, attempt);
+      throw error;
+    }
+  }
+
+  // Public reel trends for a category and market, from one web search (ADR 0007).
+  findReelTrends(input: ReelTrendsInput): Promise<ReelTrendsResult> {
+    return this.timed('reel.trends', () => findReelTrends(this.llm, { model: this.search.search, engine: this.search.engine }, input));
+  }
+
+  proposeReelIdeas(input: ReelIdeasInput): Promise<ReelIdeasResult> {
+    return this.timed('reel.ideas', () => proposeReelIdeas(this.llm, this.modelFor(REEL_TASKS['reel.ideas']), input));
+  }
+
+  writeReelStoryboard(input: ReelStoryboardInput): ReturnType<typeof writeReelStoryboard> {
+    return this.timed('reel.storyboard', () =>
+      writeReelStoryboard(this.llm, this.modelFor(REEL_TASKS['reel.storyboard']), input),
+    );
+  }
+
+  rewriteReelScene(input: ReelSceneRewriteInput): ReturnType<typeof rewriteReelScene> {
+    return this.timed('reel.scene.rewrite', () =>
+      rewriteReelScene(this.llm, this.modelFor(REEL_TASKS['reel.scene.rewrite']), input),
+    );
+  }
+
+  generateReelPortrait(brief: ReelPortraitBrief): Promise<ImageGenerateResult> {
+    return this.drawWithFallback(composePortraitPrompt(brief));
+  }
+
+  generateReelKeyframe(brief: ReelKeyframeBrief): Promise<ImageGenerateResult> {
+    return this.drawWithFallback(composeKeyframePrompt(brief));
   }
 
   embed(texts: string[]): Promise<EmbedResult> {
@@ -150,6 +230,13 @@ export class AiService {
     return { data: parsed.data, usage: response.usage };
   }
 
+  private async timed<T extends { usage: LlmUsage }>(task: string, run: () => Promise<T>): Promise<T> {
+    const started = Date.now();
+    const result = await run();
+    this.logCall(task, result.usage, Date.now() - started, null);
+    return result;
+  }
+
   // One line per model call: never prompt or answer text, only what it cost and how long it took.
   private logCall(task: string, usage: LlmUsage, latencyMs: number, firstTextMs: number | null): void {
     const cost = usage.costUsd === null ? 'n/a' : `$${usage.costUsd.toFixed(5)}`;
@@ -157,6 +244,14 @@ export class AiService {
     this.logger.log(
       `${task} model=${usage.model} latency=${latencyMs}ms${firstText} tokens=${usage.promptTokens}+${usage.completionTokens} cost=${cost}`,
     );
+  }
+
+  private logAttempt(task: string, attempt: ImageAttempt): void {
+    if (attempt.usage) {
+      this.logCall(task, attempt.usage, attempt.latencyMs, null);
+      return;
+    }
+    this.logger.warn(`${task} model=${attempt.model} latency=${attempt.latencyMs}ms failed=${attempt.failure}`);
   }
 
   private modelFor(tier: ModelTier): string {
