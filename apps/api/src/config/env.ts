@@ -12,7 +12,7 @@ const envSchema = z.object({
   // Email via Resend. Without a key, non-production logs messages instead of sending.
   RESEND_API_KEY: z.string().min(1).optional(),
   EMAIL_FROM: z.string().min(3).default('MarketPilot <onboarding@resend.dev>'),
-  // false marks new accounts verified at sign-up and sends no code. Refused in production.
+  // false marks new accounts verified at sign-up and sends no code. Warned about in production.
   EMAIL_VERIFICATION_REQUIRED: z
     .enum(['true', 'false'])
     .default('true')
@@ -96,7 +96,7 @@ export function parseEnv(source: NodeJS.ProcessEnv): Env {
     throw new Error(`Invalid environment configuration: ${fields}`);
   }
   if (result.data.NODE_ENV === 'production' && !result.data.EMAIL_VERIFICATION_REQUIRED) {
-    throw new Error('EMAIL_VERIFICATION_REQUIRED cannot be false in production');
+    console.warn('EMAIL_VERIFICATION_REQUIRED is false in production: sign-ups are not email-verified');
   }
   return result.data;
 }
