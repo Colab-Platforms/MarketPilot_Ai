@@ -8,6 +8,7 @@ const alertVariants = cva('rounded-md border px-4 py-3 text-body', {
       danger: 'border-danger bg-danger-subtle text-ink',
       success: 'border-success bg-success-subtle text-ink',
       info: 'border-info bg-info-subtle text-ink',
+      warning: 'border-warning bg-warning-subtle text-ink',
     },
   },
   defaultVariants: { tone: 'info' },

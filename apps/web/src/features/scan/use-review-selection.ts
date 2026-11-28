@@ -2,10 +2,7 @@ import { useState } from 'react';
 import { profileFieldValueSchemas, type ReviewDecision, type ScanCandidate } from '@marketpilot/contracts';
 import { fromDraft, isChanged, toDraft, validateDraft, type Draft } from '@/features/fields/field-draft';
 import { candidateAsField } from './candidate-field';
-import type { RowState } from './review-candidates';
-
-type ProfileCandidate = Extract<ScanCandidate, { kind: 'business_profile' }>;
-type AiCandidate = Extract<ScanCandidate, { kind: 'profile_field' }>;
+import type { RowState } from './row-state';
 
 // What the owner has ticked and edited in a list of scan results. Everything starts
 // ticked; nothing is saved until the caller submits the decisions.
@@ -28,12 +25,21 @@ export function useReviewSelection(candidates: ScanCandidate[]) {
           if (!next.delete(id)) next.add(id);
           return next;
         }),
-      valueOf: (candidate: ProfileCandidate) => edits[candidate.id] ?? candidate.value,
+      setChecked: (ids, checked) =>
+        setUnchecked((current) => {
+          const next = new Set(current);
+          for (const id of ids) {
+            if (checked) next.delete(id);
+            else next.add(id);
+          }
+          return next;
+        }),
+      valueOf: (candidate) => edits[candidate.id] ?? candidate.value,
       edit: (id, value) => {
         setEdits((current) => ({ ...current, [id]: value }));
         clearErrors(id);
       },
-      draftOf: (candidate: AiCandidate) => drafts[candidate.id] ?? toDraft(candidateAsField(candidate)),
+      draftOf: (candidate) => drafts[candidate.id] ?? toDraft(candidateAsField(candidate)),
       editDraft: (id, draft) => {
         setDrafts((current) => ({ ...current, [id]: draft }));
         clearErrors(id);

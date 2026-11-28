@@ -134,6 +134,8 @@ export function ScanPanel({ brand, logoUrl, canEdit, onAddWebsite }: ScanPanelPr
           </div>
           <ReviewCandidates
             candidates={candidates}
+            brandName={brand.name}
+            host={brand.websiteUrl ? hostOf(brand.websiteUrl) : hostOf(scan?.url ?? '')}
             rows={selection.rowsFor(serverErrors, (id) => setServerErrors(({ [id]: _cleared, ...rest }) => rest))}
           />
           {applyError ? <Alert tone="danger">{applyError}</Alert> : null}

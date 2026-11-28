@@ -8,19 +8,20 @@ interface FieldInputProps {
   field: ProfileFieldState;
   draft: Draft;
   error?: string;
+  hideLabel?: boolean;
   onChange: (draft: Draft) => void;
 }
 
 const helperFor = (field: ProfileFieldState) =>
   field.kind === 'tags' ? (field.helper ? `${field.helper} Separate items with commas.` : 'Separate items with commas.') : field.helper;
 
-export function FieldInput({ field, draft, error, onChange }: FieldInputProps) {
+export function FieldInput({ field, draft, error, hideLabel, onChange }: FieldInputProps) {
   const text = Array.isArray(draft) ? '' : draft;
 
   if (field.kind === 'multiselect') {
     const selected = Array.isArray(draft) ? draft : [];
     return (
-      <FieldGroup legend={field.label} helper={field.helper} error={error}>
+      <FieldGroup legend={field.label} helper={field.helper} error={error} hideLegend={hideLabel}>
         <div className="flex flex-col gap-1">
           {(field.options ?? []).map((option) => (
             <label key={option.value} className="flex min-h-touch cursor-pointer items-center gap-3 text-body">
@@ -41,7 +42,7 @@ export function FieldInput({ field, draft, error, onChange }: FieldInputProps) {
   }
 
   return (
-    <Field label={field.label} helper={helperFor(field)} error={error}>
+    <Field label={field.label} helper={helperFor(field)} error={error} hideLabel={hideLabel}>
       {field.kind === 'textarea' ? (
         <Textarea rows={4} value={text} maxLength={field.maxLength} onChange={(e) => onChange(e.target.value)} />
       ) : field.kind === 'select' || field.kind === 'yesno' ? (

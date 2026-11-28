@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
-import { RefreshCw } from 'lucide-react';
+import { Info, RefreshCw } from 'lucide-react';
 import type { OnboardingState, ScanCandidate, ScanState } from '@marketpilot/contracts';
 import { Alert, Button, Progress, Skeleton, Spinner } from '@marketpilot/ui';
 import { ReviewCandidates } from '@/features/scan/review-candidates';
@@ -110,9 +110,12 @@ export function ReviewStep({ state }: { state: OnboardingState }) {
       onSubmit={onSubmit}
       aside={
         hasResults ? (
-          <p className="rounded-xl bg-subtle p-4 text-body text-ink-secondary">
-            <b className="font-semibold text-ink">From your website</b> means we copied it.{' '}
-            <b className="font-semibold text-ink">Suggested by AI</b> means we guessed, so a quick look helps.
+          <p className="flex gap-3 rounded-xl bg-subtle p-4 text-body text-ink-secondary">
+            <Info className="mt-0.5 size-5 shrink-0" strokeWidth={2} aria-hidden="true" />
+            <span>
+              <b className="font-semibold text-ink">From your website</b> means we copied it.{' '}
+              <b className="font-semibold text-ink">Please check</b> means we guessed, so a quick look helps.
+            </span>
           </p>
         ) : undefined
       }
@@ -129,7 +132,7 @@ export function ReviewStep({ state }: { state: OnboardingState }) {
       {!active && scan && !failed && scan.ai.message && scan.ai.status !== 'ok' ? (
         <Alert tone="info">{scan.ai.message} What we found from your website is still shown below.</Alert>
       ) : null}
-      {hasResults ? <ReviewCandidates candidates={candidates} rows={rows} /> : null}
+      {hasResults ? <ReviewCandidates candidates={candidates} rows={rows} brandName={state.brand.name} host={host} /> : null}
 
       {!active || startFailed ? (
         <div className="flex flex-wrap gap-2">

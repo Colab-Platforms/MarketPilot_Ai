@@ -6,13 +6,15 @@ interface FieldProps {
   helper?: string;
   error?: string;
   optional?: boolean;
+  // Keeps the label for screen readers when the same words are already shown just above.
+  hideLabel?: boolean;
   className?: string;
   children: ReactElement<{ id?: string; 'aria-describedby'?: string; 'aria-invalid'?: boolean }>;
 }
 
 // Label above, helper below, error replaces helper. Wires id and aria attributes
 // onto the single control passed as children.
-export function Field({ label, helper, error, optional, className, children }: FieldProps) {
+export function Field({ label, helper, error, optional, hideLabel, className, children }: FieldProps) {
   const id = useId();
   const messageId = `${id}-message`;
   const message = error ?? helper;
@@ -26,7 +28,7 @@ export function Field({ label, helper, error, optional, className, children }: F
 
   return (
     <div className={cn('flex flex-col gap-1', className)}>
-      <label htmlFor={id} className="text-label text-ink">
+      <label htmlFor={id} className={cn('text-label text-ink', hideLabel && 'sr-only')}>
         {label}
         {optional ? <span className="ml-1 text-ink-tertiary">(optional)</span> : null}
       </label>
@@ -44,10 +46,22 @@ export function Field({ label, helper, error, optional, className, children }: F
   );
 }
 
-export function FieldGroup({ legend, helper, error, children }: { legend: string; helper?: string; error?: string; children: ReactNode }) {
+export function FieldGroup({
+  legend,
+  helper,
+  error,
+  hideLegend,
+  children,
+}: {
+  legend: string;
+  helper?: string;
+  error?: string;
+  hideLegend?: boolean;
+  children: ReactNode;
+}) {
   return (
     <fieldset className="flex flex-col gap-2">
-      <legend className="text-label text-ink">{legend}</legend>
+      <legend className={cn('text-label text-ink', hideLegend && 'sr-only')}>{legend}</legend>
       {helper && !error ? <p className="text-caption text-ink-secondary">{helper}</p> : null}
       {children}
       {error ? (
